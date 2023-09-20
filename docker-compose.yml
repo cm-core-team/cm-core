@@ -1,0 +1,11 @@
+version: 3.2.0
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/root/app
