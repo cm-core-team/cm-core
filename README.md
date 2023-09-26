@@ -21,5 +21,5 @@ This will run in watch mode, so any changes to the code will be reflected in the
 - To seed the database, run in the `backend/` folder:
 
 ```bash
-go run scripts/main.go
+go run scripts/seed.go
 ```
