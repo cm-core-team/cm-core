@@ -2,6 +2,7 @@ package meetingfinder
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -29,6 +30,8 @@ func FindLocalMeetings(location UserLocation, languageCode string) []models.Cong
 	queryParams.Add("longitude", location.Longitude)
 	queryParams.Add("searchLanguageCode", languageCode)
 	urlObj.RawQuery = queryParams.Encode()
+
+	fmt.Println("URL:", urlObj.String())
 
 	res, err := http.Get(urlObj.String())
 	if err != nil {
