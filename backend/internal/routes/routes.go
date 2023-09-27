@@ -9,9 +9,17 @@ import (
 func SetupRoutes() *gin.Engine {
 	r := gin.Default()
 
-	// Endpoints here
-	r.GET("/api/v1/hello", handlers.Hello)
-	r.GET("/api/v1/meetings", handlers.FindLocalMeetings)
+	base := r.Group("/api/v1")
+
+	/* Endpoints */
+
+	base.GET("/hello", handlers.Hello)
+
+	// Meetings / Congregations
+	base.GET("/meetings", handlers.FindLocalMeetings)
+
+	// Users
+	base.POST("/user/create", handlers.CreateUser)
 
 	return r
 }
