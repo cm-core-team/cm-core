@@ -23,5 +23,9 @@ type User struct {
 	CongregationID uint
 	Congregation   Congregation
 
-	JoinToken Token `gorm:"foreignKey:UserID"`
+	JoinToken *Token `gorm:"foreignKey:UserID"`
+}
+
+func (user *User) Create(db *gorm.DB) {
+	db.Create(&user)
 }

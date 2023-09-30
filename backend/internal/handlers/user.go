@@ -1,43 +1,35 @@
 package handlers
 
 import (
-	"backend/internal/models"
+	"backend/internal/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
-type UserDTO struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+// CreateUser creates a new user
+func CreateUser(ctx *gin.Context) {
+	var userDto services.UserDTO
+
+	err := ctx.BindJSON(&userDto)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+	user, err := services.CreateUserInDB(userDto, db)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, user)
 }
 
-// CreateUser creates a new user
-func CreateUser(c *gin.Context) {
-	var userDto UserDTO
-
-	err := c.BindJSON(&userDto)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Hash user password
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userDto.Password), 8)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Remove password from response
-	userDto.Password = ""
-
-	// Create user
-	user := models.User{
-		Email:        userDto.Email,
-		PasswordHash: string(hashedPassword),
-	}
-
-	c.JSON(http.StatusOK, user)
+func VerifyUser(ctx *gin.Context) {
+	/**
+	 * TODO: Verify that a user's password hash matches the one in the DB
+	 */
 }
