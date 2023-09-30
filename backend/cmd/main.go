@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/internal/middleware"
 	"backend/internal/models"
 	"backend/internal/routes"
 
@@ -23,5 +24,7 @@ func main() {
 	models.SetupModels(db)
 
 	r := routes.SetupRoutes()
+
+	r.Use(middleware.DatabaseSession(db))
 	r.Run("0.0.0.0:8080")
 }
