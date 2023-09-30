@@ -8,28 +8,53 @@ import (
 	"gorm.io/gorm"
 )
 
-// CreateUser creates a new user
 func CreateUser(ctx *gin.Context) {
-	var userDto services.UserDTO
+	/**
+	 * Create a new user in the DB
+	 */
 
-	err := ctx.BindJSON(&userDto)
+	var dto services.CreateUserDTO
+
+	err := ctx.BindJSON(&dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
-	user, err := services.CreateUserInDB(userDto, db)
+	user, err := services.CreateUserInDB(dto, db)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusCreated, user)
 }
 
-func VerifyUser(ctx *gin.Context) {
+func VerifyToken(ctx *gin.Context) {
 	/**
-	 * TODO: Verify that a user's password hash matches the one in the DB
+	 * Verify that a user's token matches it's assigned token
 	 */
+
+	var dto services.JoinTokenMatchDTO
+	err := ctx.BindJSON(&dto)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+	err = services.VerifyToken(dto, db)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	err = services.BindUserToCongregation(dto, db)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{"message": "Token matches"})
 }

@@ -21,7 +21,7 @@ type User struct {
 	Type UserType
 
 	CongregationID uint
-	Congregation   Congregation
+	Congregation   Congregation `gorm:"foreignKey:CongregationID"`
 
 	JoinToken *Token `gorm:"foreignKey:UserID"`
 }

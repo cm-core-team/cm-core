@@ -7,6 +7,7 @@ type Token struct {
 
 	TokenValue string
 
-	UserID         uint
-	CongregationID uint
+	UserID          uint
+	CongregationID  uint
+	CreatedByUserId uint
 }
