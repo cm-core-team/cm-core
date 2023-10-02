@@ -6,12 +6,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes() *gin.Engine {
-	r := gin.Default()
+func SetupRoutes(r *gin.Engine) *gin.Engine {
+	base := r.Group("/api/v1")
 
-	// Endpoints here
-	r.GET("/api/v1/hello", handlers.Hello)
-	r.GET("/api/v1/meetings", handlers.FindLocalMeetings)
+	/* Endpoints */
+
+	base.GET("/hello", handlers.Hello)
+
+	// Meetings / Congregations
+	base.GET("/meetings", handlers.FindLocalMeetings)
+
+	// Users
+	base.POST("/user/create", handlers.CreateUser)
+	base.POST("/user/verify-token", handlers.VerifyToken)
 
 	return r
 }
