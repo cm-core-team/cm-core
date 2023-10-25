@@ -5,6 +5,19 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme/provider";
 
+// TODO #15
+// The shadcn nav menu does not seem to be working
+// import {
+//   NavigationMenu,
+//   NavigationMenuContent,
+//   NavigationMenuIndicator,
+//   NavigationMenuItem,
+//   NavigationMenuLink,
+//   NavigationMenuList,
+//   NavigationMenuTrigger,
+//   NavigationMenuViewport,
+// } from "@/components/ui/navigation-menu";
+
 export const metadata: Metadata = {
   title: "Cong Manager",
   description: "",
@@ -31,7 +44,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="relative flex min-h-screen flex-col">
-            {/* SITE HEADER */}
             <div className="flex-1">{children}</div>
             {/* SITE FOOTER */}
             <Toaster />
