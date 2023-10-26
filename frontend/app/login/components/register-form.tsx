@@ -16,11 +16,23 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  firstName: z.string().min(2).max(20),
-  lastName: z.string().min(2).max(20),
+  firstName: z
+    .string()
+    .min(2, "Your first name should have at least 2 characters")
+    .max(20, "Your first name should not have more than 20 characters"),
+  lastName: z
+    .string()
+    .min(2, "Your last name should have at least 2 characters")
+    .max(20, "Your last name should not have more than 2 characters"),
   email: z.string().email("Invalid email"),
-  username: z.string().min(2).max(20),
-  password: z.string().min(8),
+  username: z
+    .string()
+    .min(2, "Your username should have at least 2 characters")
+    .max(20, "Your username should not have more than 20 characters"),
+  password: z
+    .string()
+    .min(8, "Your password should have a minimum of 8 characters")
+    .max(50, "Your password should not have more than 50 characters"),
 });
 
 export function RegisterForm() {

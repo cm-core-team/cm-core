@@ -16,8 +16,14 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
-  password: z.string().min(8),
+  username: z
+    .string()
+    .min(2, "Your username should have at least 2 characters")
+    .max(50, "Your username should not have more than 20 characters"),
+  password: z
+    .string()
+    .min(8, "Invalid password")
+    .max(50, "Your password should not have more than 50 characters"),
 });
 
 export function LoginForm() {
