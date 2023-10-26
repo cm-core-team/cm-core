@@ -16,17 +16,17 @@ export default function Login() {
   };
 
   return (
-    <div className="w-96">
+    <div className="min-h-screen min-w-full flex flex-col justify-center items-center">
       {formState === "login" ? (
-        <div className="flex flex-col text-center">
-          <h1>Login to your account</h1>
-          <p>
+        <div className="flex flex-col text-center w-96">
+          <h1 className="text-2xl font-bold pb-3">Login</h1>
+          <p className="pb-3">
             Don&apos;t have an account?{" "}
             <span
               onClick={() => {
                 changeForm();
               }}
-              className="hover:shadow-md"
+              className="hover:shadow-md font-bold"
             >
               Register
             </span>
@@ -34,15 +34,15 @@ export default function Login() {
           <LoginForm />
         </div>
       ) : (
-        <div className="flex flex-col text-center">
-          <h1>Create a new account</h1>
-          <p>
+        <div className="flex flex-col text-center w-96">
+          <h1 className="text-2xl font-bold pb-3">Create a new account</h1>
+          <p className="pb-3">
             Already made an account?{" "}
             <span
               onClick={() => {
                 changeForm();
               }}
-              className="hover:shadow-md"
+              className="hover:shadow-md font-bold"
             >
               Login
             </span>
