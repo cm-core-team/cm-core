@@ -34,7 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <NavigationMenu>
+          <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
@@ -43,7 +43,7 @@ export default function RootLayout({
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
-          </NavigationMenu> */}
+          </NavigationMenu>
 
           {children}
         </ThemeProvider>
