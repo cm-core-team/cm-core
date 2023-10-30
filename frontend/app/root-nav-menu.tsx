@@ -9,15 +9,14 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./components/theme-mode-toggle";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { Github } from "lucide-react";
 
 export function RootNavMenu(): JSX.Element {
   return (
-    <div className="m-4 flex flex-row justify-end">
+    <div className="min-h-[5vh] m-4 flex flex-row justify-end items-center">
       <NavigationMenu>
         <NavigationMenuList>
-          <div className="flex flex-row gap-2 items-center justify-center">
+          <div className="flex flex-row gap-4 items-center justify-center">
             <NavigationMenuItem>
               <NavigationMenuTrigger>Features</NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -37,17 +36,17 @@ export function RootNavMenu(): JSX.Element {
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <ModeToggle />
-            </NavigationMenuItem>
+
             <NavigationMenuItem>
               <NavigationMenuLink
                 href="https://github.com/j-koziel/cong-manager"
                 target="_blank"
-                className="p-2 rounded transition-[0.5s] hover:bg-slate-700"
               >
-                <FontAwesomeIcon icon={faGithub} size="xl" />
+                <Github />
               </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <ModeToggle />
             </NavigationMenuItem>
           </div>
         </NavigationMenuList>

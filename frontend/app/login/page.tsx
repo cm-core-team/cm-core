@@ -16,7 +16,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen min-w-full flex flex-col justify-center items-center">
+    <div className="min-h-[95vh] min-w-full flex flex-col justify-center items-center">
       {formState === "login" ? (
         <div className="flex flex-col text-center w-96">
           <h1 className="text-2xl font-bold pb-3">Login</h1>
