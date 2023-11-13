@@ -11,5 +11,10 @@ export function GetWeeklyMeetings() {
     });
   }, []);
 
-  return <>{userCoords}</>;
+  return (
+    <>
+      <div>{userCoords?.latitude}</div>
+      <div>{userCoords?.longitude}</div>
+    </>
+  );
 }
