@@ -1,6 +1,9 @@
 import axios from "axios";
 import { backendRoutes } from "../config";
+import { z } from "zod";
+
+const fetchMeetingsSchema = z.object({});
 
 export async function fetchLocalMeetings() {
-  axios.get(backendRoutes.getLocalMeetings);
+  const response = axios.get(backendRoutes.getLocalMeetings);
 }
