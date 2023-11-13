@@ -43,7 +43,6 @@ export function RootNavMenu(): JSX.Element {
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     href="https://github.com/j-koziel/cong-manager"
