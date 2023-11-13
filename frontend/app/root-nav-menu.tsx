@@ -8,7 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ModeToggle } from "./components/theme-mode-toggle";
+import { ModeToggle } from "../components/theme-mode-toggle";
 import { Github } from "lucide-react";
 
 export function RootNavMenu(): JSX.Element {
