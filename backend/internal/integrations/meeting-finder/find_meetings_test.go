@@ -8,8 +8,8 @@ import (
 
 func TestFindLocalMeetings(t *testing.T) {
 	meetings := meetingfinder.FindLocalMeetings(meetingfinder.UserLocation{
-		Latitude:  "40.7128",
-		Longitude: "74.0060",
+		Latitude:  "51.5152544",
+		Longitude: "-0.6365793",
 	}, "E")
 
 	if len(meetings) == 0 {
