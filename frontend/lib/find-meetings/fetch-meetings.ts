@@ -4,6 +4,10 @@ import { z } from "zod";
 
 const fetchMeetingsSchema = z.object({});
 
-export async function fetchLocalMeetings() {
-  const response = axios.get(backendRoutes.getLocalMeetings);
+export async function fetchLocalMeetings(latitude: number, longitude: number) {
+  const response = axios({
+    method: "GET",
+    url: backendRoutes.getLocalMeetings,
+    data: {},
+  });
 }

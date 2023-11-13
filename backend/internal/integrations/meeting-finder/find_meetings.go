@@ -9,6 +9,8 @@ import (
 
 	"backend/internal/integrations/meeting-finder/dtos"
 	"backend/internal/models"
+
+	"github.com/mitchellh/mapstructure"
 )
 
 type UserLocation struct {
@@ -16,7 +18,7 @@ type UserLocation struct {
 	Longitude string
 }
 
-func FindLocalMeetings(location UserLocation, languageCode string) []models.Congregation {
+func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Congregation, error) {
 	baseEndpoint := "https://apps.jw.org/api/public/meeting-search/weekly-meetings"
 	urlObj, err := url.Parse(baseEndpoint)
 	if err != nil {
@@ -35,29 +37,41 @@ func FindLocalMeetings(location UserLocation, languageCode string) []models.Cong
 
 	res, err := http.Get(urlObj.String())
 	if err != nil {
-		panic(err.Error())
+		return []models.Congregation{}, err
 	}
+
 	defer res.Body.Close()
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		panic(err.Error())
+		return []models.Congregation{}, err
 	}
 
 	jsonContent := string(body)
 	var meetings dtos.GeoLocationList
-	json.Unmarshal([]byte(jsonContent), &meetings)
+	err = json.Unmarshal([]byte(jsonContent), &meetings)
+	if err != nil {
+		return []models.Congregation{}, err
+	}
 
 	// Convert DTOs to Congregation
 	var congregations []models.Congregation
 	for _, meeting := range meetings.Locations {
+		var phones []models.CongregationPhone
+		err := mapstructure.Decode(meeting.Properties.Phones, &phones)
+		if err != nil {
+			return []models.Congregation{}, err
+		}
+
 		congregations = append(congregations, models.Congregation{
-			Name:    meeting.Properties.OrgName,
-			Area:    meeting.Properties.OrgType,
-			Address: meeting.Properties.Address,
-			Users:   []models.User{}, // Empty until a user is added
+			Name:         meeting.Properties.OrgName,
+			Area:         meeting.Properties.OrgType,
+			Address:      meeting.Properties.Address,
+			PhoneNumbers: phones,
+			Users:        []models.User{}, // Empty until a user is added
 		})
+
 	}
 
-	return congregations
+	return congregations, nil
 }

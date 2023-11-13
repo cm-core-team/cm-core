@@ -7,10 +7,14 @@ import (
 )
 
 func TestFindLocalMeetings(t *testing.T) {
-	meetings := meetingfinder.FindLocalMeetings(meetingfinder.UserLocation{
+	meetings, err := meetingfinder.FindLocalMeetings(meetingfinder.UserLocation{
 		Latitude:  "51.5152544",
 		Longitude: "-0.6365793",
 	}, "E")
+
+	if err != nil {
+		t.Error(err)
+	}
 
 	if len(meetings) == 0 {
 		t.Error("Expected to find meetings")
