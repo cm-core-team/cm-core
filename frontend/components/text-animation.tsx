@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import BlinkingCursor from "./blinking-cursor";
 
 export default function TextAnim() {
-  const baseText = "Manage a congregation with ease.";
+  const baseText =
+    "For God is a God not of disorder but of peace. - 1 Corinthians 14:33";
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const displayText = useTransform(rounded, (latest) =>
@@ -22,7 +23,7 @@ export default function TextAnim() {
   }, [count]);
 
   return (
-    <span className="text-2xl">
+    <span className="text-4xl">
       <motion.span>{displayText}</motion.span>
       <BlinkingCursor />
     </span>
