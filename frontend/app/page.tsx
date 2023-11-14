@@ -32,9 +32,9 @@ export default function Home() {
       <div className="flex flex-col items-center gap-y-12">
         <h1 className="text-xl font-bold">Our features:</h1>
         <ul className="w-screen flex flex-col gap-y-12 px-12">
-          {features.map((feature, i) => {
-            return <FeatureItem feature={feature} key={i} />;
-          })}
+          {features.map((feature, i) => (
+            <FeatureItem feature={feature} key={i} />
+          ))}
         </ul>
       </div>
     </main>
