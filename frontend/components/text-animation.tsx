@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect } from "react";
 import BlinkingCursor from "./blinking-cursor";
+import React from "react";
 
 export default function TextAnim() {
   // The typing animation was copied from this article:
@@ -14,11 +15,14 @@ export default function TextAnim() {
     baseText.slice(0, latest)
   );
 
+  const [isAnimationCompleted, setIsAnimationCompleted] = React.useState(false);
+
   useEffect(() => {
     const controls = animate(count, baseText.length, {
       type: "tween", // Not really needed because adding a duration will force "tween"
-      duration: 1.2,
+      duration: 2,
       ease: "easeInOut",
+      onComplete: () => setIsAnimationCompleted(true),
     });
     return controls.stop;
   }, [count]);
@@ -27,7 +31,7 @@ export default function TextAnim() {
     <div className="flex flex-col">
       <span className="text-4xl">
         <motion.span>{displayText}</motion.span>
-        <BlinkingCursor />
+        {!isAnimationCompleted && <BlinkingCursor />}
       </span>
       <motion.a
         href="https://wol.jw.org/en/wol/dx/r1/lp-e/1001070150/28803"
