@@ -63,14 +63,18 @@ func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Con
 			return []models.Congregation{}, err
 		}
 
-		congregations = append(congregations, models.Congregation{
-			Name:         meeting.Properties.OrgName,
-			Area:         meeting.Properties.OrgType,
-			Address:      meeting.Properties.Address,
-			PhoneNumbers: phones,
-			Users:        []models.User{}, // Empty until a user is added
-		})
+		newCong := models.Congregation{
+			Name:    meeting.Properties.OrgName,
+			Area:    meeting.Properties.OrgType,
+			Address: meeting.Properties.Address,
+			Users:   []models.User{}, // Empty until a user is added
+		}
+		err = newCong.SetPhones(phones)
+		if err != nil {
+			return nil, err
+		}
 
+		congregations = append(congregations, newCong)
 	}
 
 	return congregations, nil
