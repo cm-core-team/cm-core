@@ -34,6 +34,7 @@ export default function TextAnim() {
         target="_blank"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
+        className="text-left"
       >
         1 Corinthians 14:33
       </motion.a>
