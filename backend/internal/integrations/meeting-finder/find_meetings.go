@@ -22,7 +22,7 @@ func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Con
 	baseEndpoint := "https://apps.jw.org/api/public/meeting-search/weekly-meetings"
 	urlObj, err := url.Parse(baseEndpoint)
 	if err != nil {
-		panic(err.Error())
+		return nil, err
 	}
 
 	// Add query parameters
@@ -37,30 +37,28 @@ func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Con
 
 	res, err := http.Get(urlObj.String())
 	if err != nil {
-		return []models.Congregation{}, err
+		return nil, err
 	}
 
 	defer res.Body.Close()
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		return []models.Congregation{}, err
+		return nil, err
 	}
 
 	jsonContent := string(body)
 	var meetings dtos.GeoLocationList
-	err = json.Unmarshal([]byte(jsonContent), &meetings)
-	if err != nil {
-		return []models.Congregation{}, err
+	if err := json.Unmarshal([]byte(jsonContent), &meetings); err != nil {
+		return nil, err
 	}
 
 	// Convert DTOs to Congregation
 	var congregations []models.Congregation
 	for _, meeting := range meetings.Locations {
 		var phones []models.CongregationPhone
-		err := mapstructure.Decode(meeting.Properties.Phones, &phones)
-		if err != nil {
-			return []models.Congregation{}, err
+		if err := mapstructure.Decode(meeting.Properties.Phones, &phones); err != nil {
+			return nil, err
 		}
 
 		newCong := models.Congregation{
@@ -69,8 +67,7 @@ func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Con
 			Address: meeting.Properties.Address,
 			Users:   []models.User{}, // Empty until a user is added
 		}
-		err = newCong.SetPhones(phones)
-		if err != nil {
+		if err := newCong.SetPhones(phones); err != nil {
 			return nil, err
 		}
 
