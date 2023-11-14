@@ -8,13 +8,11 @@ export const congregationPhoneSchema = z.object({
 
 export const congregationSchema = z.object({
   id: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
   name: z.string(),
   area: z.string(),
   address: z.string(),
   phoneNumbers: z.string(), // JSON string
-  users: z.array(userSchema), // Assuming UserSchema is defined
+  users: z.array(userSchema),
 });
 
 export type Congregation = z.infer<typeof congregationSchema>;
