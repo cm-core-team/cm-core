@@ -8,6 +8,6 @@ export async function fetchLocalMeetings(latitude: number, longitude: number) {
   const response = axios({
     method: "GET",
     url: backendRoutes.getLocalMeetings,
-    data: {},
+    data: { latitude, longitude },
   });
 }

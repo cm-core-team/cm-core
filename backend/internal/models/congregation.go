@@ -19,7 +19,7 @@ type Congregation struct {
 	Area    string
 	Address string
 
-	// Should not be modified/retrieved directly. Only through get/setters
+	// Should not be modified/retrieved directly. Only through getter/setters
 	PhoneNumbers datatypes.JSON
 
 	Users []User `gorm:"foreignKey:CongregationID"`
