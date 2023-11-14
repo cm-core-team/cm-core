@@ -2,18 +2,25 @@ package handlers
 
 import (
 	meetingfinder "backend/internal/integrations/meeting-finder"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func FindLocalMeetings(c *gin.Context) {
-	latitude := c.Query("latitude")
-	longitude := c.Query("longitude")
+func FindLocalMeetings(ctx *gin.Context) {
+	latitude := ctx.Query("latitude")
+	longitude := ctx.Query("longitude")
 
-	congregations := meetingfinder.FindLocalMeetings(meetingfinder.UserLocation{
+	congregations, err := meetingfinder.FindLocalMeetings(meetingfinder.UserLocation{
 		Latitude:  latitude,
 		Longitude: longitude,
 	}, "E")
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to find local meetings",
+		})
+		return
+	}
 
-	c.JSON(200, congregations)
+	ctx.JSON(200, congregations)
 }
