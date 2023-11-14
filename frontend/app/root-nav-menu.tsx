@@ -9,7 +9,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { ModeToggle } from "./components/theme-mode-toggle";
+import { ModeToggle } from "../components/theme-mode-toggle";
 import { Github } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -34,7 +34,7 @@ export function RootNavMenu(): JSX.Element {
     },
   ];
   return (
-    <div className="h-5vh w-screen flex flex-col justify-center py-4">
+    <div className="h-5vh flex flex-col justify-center py-4">
       <div className="flex flex-row justify-between items-center px-8 py-4">
         <div>
           <a href="/" className="font-bold hover:underline">
