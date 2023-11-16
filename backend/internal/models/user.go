@@ -14,16 +14,18 @@ const (
 type User struct {
 	gorm.Model
 
-	Name         string
-	Email        string
+	ID uint `json:"id" gorm:"primarykey"`
+
+	Name         string `json:"name"`
+	Email        string `json:"email"`
 	PasswordHash string
 
-	Type UserType
+	Type UserType `json:"type"`
 
-	CongregationID uint
-	Congregation   Congregation `gorm:"foreignKey:CongregationID"`
+	CongregationID uint         `json:"congregationId"`
+	Congregation   Congregation `json:"congregation" gorm:"foreignKey:CongregationID"`
 
-	JoinToken *Token `gorm:"foreignKey:UserID"`
+	JoinToken *Token `json:"joinToken" gorm:"foreignKey:UserID"`
 }
 
 func (user *User) Create(db *gorm.DB) {

@@ -5,9 +5,11 @@ import "gorm.io/gorm"
 type Token struct {
 	gorm.Model
 
-	TokenValue string
+	ID uint `json:"id" gorm:"primarykey"`
 
-	UserID          uint
-	CongregationID  uint
-	CreatedByUserId uint
+	TokenValue string `json:"tokenValue"`
+
+	UserID          uint `json:"userId"`
+	CongregationID  uint `json:"congregationId"`
+	CreatedByUserId uint `json:"createdByUserId"`
 }
