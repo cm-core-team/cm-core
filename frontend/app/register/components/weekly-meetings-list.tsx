@@ -36,7 +36,7 @@ export function WeeklyMeetingsList({
           )}
         </p>
       </DisabledButton>
-      <ScrollArea className="h-unit-9xl">
+      <ScrollArea className="sm:h-unit-9xl h-unit-7xl">
         <div className="space-y-8">
           {localCongregations ? (
             localCongregations.map((congregation, i) => (
