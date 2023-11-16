@@ -16,7 +16,7 @@ export function MeetingCard({
   onSelect,
 }: MeetingCardProps) {
   return (
-    <Card>
+    <Card className="p-2">
       <CardHeader>
         <p>{congregation.name}</p>
       </CardHeader>

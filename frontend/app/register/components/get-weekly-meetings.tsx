@@ -5,6 +5,7 @@ import { Congregation } from "@/lib/types/congregation";
 import React from "react";
 import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { Button } from "@nextui-org/button";
+import { MoveRight } from "lucide-react";
 
 export function GetWeeklyMeetings() {
   const [userCoords, setUserCoords] = React.useState<GeolocationCoordinates>();
@@ -33,13 +34,24 @@ export function GetWeeklyMeetings() {
   }, [userCoords]);
 
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center space-y-8 md:p-4 p-1">
       <h2 className="text-2xl">Register a Congregation</h2>
-      <WeeklyMeetingsList
-        localCongregations={localCongregations}
-        setSelectedCongregation={setSelectedCongregation}
-      />
-      <Button>Create</Button>
+
+      <div className="grid place-items-center md:grid-cols-2 w-full space-y-8">
+        <WeeklyMeetingsList
+          localCongregations={localCongregations}
+          setSelectedCongregation={setSelectedCongregation}
+        />
+
+        <Button
+          isDisabled={selectedCongregation === undefined}
+          className="space-y-8 sm:p-4"
+          color="success"
+          variant="ghost"
+        >
+          Create congregation <MoveRight />
+        </Button>
+      </div>
     </div>
   );
 }
