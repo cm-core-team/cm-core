@@ -5,7 +5,6 @@ import { MeetingCard } from "./meeting-card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import React from "react";
 import { Spinner } from "@nextui-org/spinner";
-import { Button } from "@/components/ui/button";
 import { DisabledButton } from "@/components/disabled-button";
 
 export interface WeeklyMeetingsListProps {
