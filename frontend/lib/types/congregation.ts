@@ -11,7 +11,7 @@ export const congregationSchema = z.object({
   name: z.string(),
   area: z.string(),
   address: z.string(),
-  phoneNumbers: z.string(), // JSON string
+  phoneNumbers: z.array(congregationPhoneSchema), // JSON string
   users: z.array(userSchema),
 });
 
