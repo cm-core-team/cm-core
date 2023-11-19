@@ -12,9 +12,9 @@ type CardProps = React.ComponentProps<typeof Card>;
 
 export default function Page({ className, ...props }: CardProps) {
   return (
-    <div className="flex flex-grow flex-shrink flex-basis-auto gap-x-2 h-full">
-      <div className="flex flex-col justify-between h-full w-full">
-        <Card className="h-1/4">
+    <div className="flex flex-grow flex-shrink  gap-x-2 h-full">
+      <div className="flex flex-col  w-full">
+        <Card>
           <CardHeader>
             <CardTitle>Your Info</CardTitle>
             <CardDescription>Everything about you</CardDescription>
@@ -26,7 +26,7 @@ export default function Page({ className, ...props }: CardProps) {
             <p>Card Footer</p>
           </CardFooter>
         </Card>
-        <Card className="h-1/4">
+        <Card>
           <CardHeader>
             <CardTitle>Your Info</CardTitle>
             <CardDescription>Everything about you</CardDescription>
@@ -38,7 +38,7 @@ export default function Page({ className, ...props }: CardProps) {
             <p>Card Footer</p>
           </CardFooter>
         </Card>
-        <Card className="h-1/4">
+        <Card>
           <CardHeader>
             <CardTitle>Your Info</CardTitle>
             <CardDescription>Everything about you</CardDescription>
@@ -52,7 +52,7 @@ export default function Page({ className, ...props }: CardProps) {
         </Card>
       </div>
       <div className="w-full">
-        <Card className="h-full">
+        <Card>
           <CardHeader>
             <CardTitle>Your Info</CardTitle>
             <CardDescription>Everything about you</CardDescription>
