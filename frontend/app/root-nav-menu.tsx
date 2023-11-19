@@ -45,6 +45,14 @@ export function RootNavMenu(): JSX.Element {
           <NavigationMenuList>
             <div className="flex gap-x-4 items-center">
               <NavigationMenuItem>
+                <Link href="/register" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Register
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
                 <NavigationMenuTrigger>Features</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="w-44 gap-2 p-2">

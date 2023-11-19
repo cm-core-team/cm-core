@@ -14,7 +14,7 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 	base.GET("/hello", handlers.Hello)
 
 	// Meetings / Congregations
-	base.GET("/meetings", handlers.FindLocalMeetings)
+	base.POST("/meetings", handlers.FindLocalMeetings)
 
 	// Users
 	base.POST("/user/create", handlers.CreateUser)

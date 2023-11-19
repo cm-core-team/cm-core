@@ -8,21 +8,23 @@ import (
 )
 
 type CongregationPhone struct {
-	Ext   string
-	Phone string
+	Ext   string `json:"ext"`
+	Phone string `json:"phone"`
 }
 
 type Congregation struct {
 	gorm.Model
 
-	Name    string
-	Area    string
-	Address string
+	ID uint `json:"id" gorm:"primarykey"`
+
+	Name    string `json:"name"`
+	Area    string `json:"area"`
+	Address string `json:"address"`
 
 	// Should not be modified/retrieved directly. Only through getter/setters
-	PhoneNumbers datatypes.JSON
+	PhoneNumbers datatypes.JSON `json:"phoneNumbers"`
 
-	Users []User `gorm:"foreignKey:CongregationID"`
+	Users []User `json:"users" gorm:"foreignKey:CongregationID"`
 }
 
 func (congregation *Congregation) SetPhones(phones []CongregationPhone) error {
