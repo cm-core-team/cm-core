@@ -21,7 +21,7 @@ export function WeeklyMeetingsList({
   // Selected congregation to create
   const [selectedId, setSelectedId] = React.useState<number>();
   return (
-    <div className="w-full sm:w-5/6 border-solid border-3 rounded-xl border-spacing-3 shadow-xl shadow-gray-900 sm:p-4 p-2">
+    <div className="w-full border-solid border-3 rounded-xl border-spacing-3 shadow-xl shadow-gray-900 sm:p-4 p-2">
       <big className="p-3">Your local Congregations</big>
       <p className="p-3 text-xs">
         Select your congregation from the list below
@@ -36,7 +36,7 @@ export function WeeklyMeetingsList({
           )}
         </p>
       </DisabledButton>
-      <ScrollArea className="sm:h-unit-9xl h-unit-7xl">
+      <ScrollArea className="md:h-unit-9xl h-unit-7xl">
         <div className="space-y-8">
           {localCongregations ? (
             localCongregations.map((congregation, i) => (
