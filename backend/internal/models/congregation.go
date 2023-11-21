@@ -18,10 +18,9 @@ type Congregation struct {
 	ID uint `json:"id" gorm:"primarykey"`
 
 	Name    string `json:"name"`
-	Area    string `json:"area"`
 	Address string `json:"address"`
 
-	// Should not be modified/retrieved directly. Only through getter/setters
+	// Should not be modified/retrieved directly. Only through GetPhones/SetPhones
 	PhoneNumbers datatypes.JSON `json:"phoneNumbers"`
 
 	Users []User `json:"users" gorm:"foreignKey:CongregationID"`
