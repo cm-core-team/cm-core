@@ -1,7 +1,5 @@
-import { describe, expect, it } from "bun:test";
+import { test, expect } from "bun:test";
 
-describe("test test", () => {
-  it("should return true", () => {
-    expect(1).toBe(1);
-  });
+test("should return true", () => {
+  expect(1).toBe(1);
 });
