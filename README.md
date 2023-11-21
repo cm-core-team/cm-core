@@ -23,6 +23,7 @@ This will run in watch mode, so any changes to the code will be reflected in the
 - In the project root also run:
 
 ```bash
+bun i
 bun frontend
 ```
 
