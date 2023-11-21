@@ -2,7 +2,6 @@ package meetingfinder_test
 
 import (
 	meetingfinder "backend/internal/integrations/meeting-finder"
-	"fmt"
 	"testing"
 )
 
@@ -35,8 +34,4 @@ func TestFindLocalMeetings(t *testing.T) {
 	if len(meetings[0].Users) != 0 {
 		t.Error("Expected to find no users")
 	}
-
-	t.Error("!!!")
-
-	fmt.Println(meetings)
 }
