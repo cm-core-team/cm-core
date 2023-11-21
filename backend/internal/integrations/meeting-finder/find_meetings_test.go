@@ -36,5 +36,7 @@ func TestFindLocalMeetings(t *testing.T) {
 		t.Error("Expected to find no users")
 	}
 
+	t.Error("!!!")
+
 	fmt.Println(meetings)
 }
