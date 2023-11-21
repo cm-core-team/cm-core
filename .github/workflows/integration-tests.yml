@@ -1,4 +1,4 @@
-name: Run Integration Tests
+name: Integration Tests
 
 on:
   push:
@@ -20,4 +20,4 @@ jobs:
         run: bun install
 
       - name: Run tests
-        run: bun test
+        run: bun test packages/integration-tests
