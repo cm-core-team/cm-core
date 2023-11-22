@@ -1,5 +1,19 @@
-import { test, expect } from "bun:test";
+import { expect, it, describe } from "bun:test";
 
-test("should return true", () => {
-  expect(1).toBe(1);
+describe("User CRUD", () => {
+  it("should be true", () => {
+    expect(1).toBe(1);
+  });
+
+  it("should be false", () => {
+    expect(0).toBe(0);
+  });
+
+  it("should be false", () => {
+    expect(0).toBe(0);
+  });
+
+  it("should be false", () => {
+    expect(0).toBe(0);
+  });
 });

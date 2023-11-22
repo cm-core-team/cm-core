@@ -26,4 +26,6 @@ jobs:
         run: bun test packages/integration-tests
 
       - name: Services teardown
+        # even if the checks fail, we still want to teardown the container.
+        if: always()
         run: docker compose down
