@@ -4,6 +4,7 @@ import (
 	"backend/internal/common"
 	"backend/internal/models"
 	"backend/internal/services"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,8 +17,10 @@ func CreateCongregation(ctx *gin.Context) {
 	 */
 
 	var dto models.Congregation
+	fmt.Println(ctx.Request.Body)
 	err := ctx.BindJSON(&dto)
 	if err != nil {
+		fmt.Println("[CreateCongregation] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -27,6 +30,7 @@ func CreateCongregation(ctx *gin.Context) {
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 	err = services.CreateCongregationInDB(dto, db)
 	if err != nil {
+		fmt.Println("[CreateCongregation] Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.FailedToCreateCongregation,
 		})

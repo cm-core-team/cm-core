@@ -9,7 +9,6 @@ export const congregationPhoneSchema = z.object({
 export const congregationSchema = z.object({
   id: z.number(),
   name: z.string(),
-  area: z.string(),
   address: z.string(),
   phoneNumbers: z.array(congregationPhoneSchema), // JSON string
   users: z.array(userSchema),

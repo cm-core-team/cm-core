@@ -6,6 +6,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BACKEND_URL: "http://localhost:8080"
 
     steps:
       - name: Checkout code
@@ -23,7 +25,7 @@ jobs:
         run: docker compose up --build -d
 
       - name: Run tests
-        run: bun test packages/integration-tests
+        run: bun test --verbose --preload ./packages/integration-tests/setupTests.ts
 
       - name: Services teardown
         # even if the checks fail, we still want to teardown the container.

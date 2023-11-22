@@ -15,6 +15,7 @@
     "frontend": "cd packages/frontend && bun dev"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "jest": "^29.7.0"
   }
 }
