@@ -12,9 +12,6 @@ import (
 func FindLocalMeetings(ctx *gin.Context) {
 	var dto dtos.FindLocalMeetingsRequestDTO
 
-	fmt.Println("ALKDSJFALKSDFJ")
-	fmt.Println(ctx.Request.Body)
-
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		fmt.Println(err)

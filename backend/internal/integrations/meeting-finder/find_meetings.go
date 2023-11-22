@@ -63,7 +63,6 @@ func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Con
 
 		newCong := models.Congregation{
 			Name:    meeting.Properties.OrgName,
-			Area:    meeting.Properties.OrgType,
 			Address: meeting.Properties.Address,
 			Users:   []models.User{}, // Empty until a user is added
 		}

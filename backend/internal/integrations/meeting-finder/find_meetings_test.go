@@ -23,10 +23,6 @@ func TestFindLocalMeetings(t *testing.T) {
 		t.Error("Expected to find congregation name")
 	}
 
-	if meetings[0].Area == "" {
-		t.Error("Expected to find congregation area")
-	}
-
 	if meetings[0].Address == "" {
 		t.Error("Expected to find congregation address")
 	}
