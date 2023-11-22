@@ -17,7 +17,7 @@ jobs:
           go-version: "1.21.3"
 
       - name: Run Backend Unit Tests
+        working-directory: ./backend/
         run: |
-          cd backend/
           go mod download
           go test ./...
