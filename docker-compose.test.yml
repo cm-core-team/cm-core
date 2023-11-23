@@ -1,0 +1,12 @@
+version: 3.2.0
+
+services:
+  integration-test:
+    build:
+      context: .
+      dockerfile: docker/integration-tests/Dockerfile
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8080

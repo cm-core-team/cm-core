@@ -1,0 +1,13 @@
+{
+  "name": "integration-tests",
+  "type": "module",
+  "dependencies": {
+    "frontend": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

@@ -11,31 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install bun
-        run: |
-          curl -fsSL https://bun.sh/install | bash
-          echo "$HOME/.bun/bin" >> $GITHUB_PATH
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Build and start services
-        run: docker compose up --build -d
-
-      - name: Get Docker Container IP Address
-        id: get-ip
-        run: echo "::set-output name=ip::$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cong-manager-backend-1)"
-
-      - name: Wait for Backend to be Ready
-        run: |
-          ip=${{ steps.get-ip.outputs.ip }}
-          until curl -v --max-time 10 http://$ip:8080/api/v1/hello; do printf '.'; sleep 5; done
-
-      - name: Run tests
-        env:
-          NEXT_PUBLIC_BACKEND_URL: ${{ steps.get-ip.outputs.ip }}
-        run: |
-          bun test --verbose --preload ./packages/integration-tests/setupTests.ts
+      - name: Build and run tests
+        run: docker compose -f docker-compose.test.yml -f docker-compose.yml up --build
 
       - name: Services teardown
         # even if the checks fail, we still want to teardown the container.
