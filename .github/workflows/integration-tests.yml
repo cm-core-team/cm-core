@@ -26,7 +26,7 @@ jobs:
 
       - name: Wait for Backend to be Ready
         run: |
-          until nc -zv localhost 8080; do printf '.'; sleep 5; done
+          until curl -v --max-time 10 http://localhost:8080/api/v1/hello; do printf '.'; sleep 5; done
 
       - name: Run tests
         run: bun test --verbose --preload ./packages/integration-tests/setupTests.ts
