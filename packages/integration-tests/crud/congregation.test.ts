@@ -1,9 +1,9 @@
-import { beforeAll, describe, expect, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import {
   congregationSchema,
   Congregation,
 } from "../../frontend/lib/types/congregation";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import dotenv from "dotenv";
 
@@ -13,6 +13,9 @@ describe("Congregation CRUD Actions", () => {
   it("should correctly create a congregation", async () => {
     const createUrl =
       process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/congregation/create";
+
+    console.log("LOOK HERE");
+    console.log(createUrl);
     const selectedCongregation: Congregation = {
       address: "1 address lane",
       id: 0,
