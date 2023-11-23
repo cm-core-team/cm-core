@@ -7,7 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BACKEND_URL: "http://localhost:8080"
+      NEXT_PUBLIC_BACKEND_URL: "http://backend:8080"
 
     steps:
       - name: Checkout code
