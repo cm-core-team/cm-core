@@ -24,6 +24,13 @@ jobs:
       - name: Build and start services
         run: docker compose up --build -d
 
+      - name: Wait for Backend to be Ready
+        run: |
+          until curl --output /dev/null --silent --head --fail http://localhost:8080; do
+            printf '.'
+            sleep 5
+          done
+
       - name: Run tests
         run: bun test --verbose --preload ./packages/integration-tests/setupTests.ts
 
