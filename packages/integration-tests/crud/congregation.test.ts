@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import {
   congregationSchema,
   Congregation,
-} from "../../frontend/lib/types/congregation";
+} from "frontend/lib/types/congregation.ts";
 import axios from "axios";
 
 import dotenv from "dotenv";
