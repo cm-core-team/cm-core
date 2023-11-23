@@ -24,7 +24,7 @@ jobs:
 
       - name: Get Docker Container IP Address
         id: get-ip
-        run: echo "::set-output name=ip::$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' backend)"
+        run: echo "::set-output name=ip::$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cong-manager-backend-1)"
 
       - name: Wait for Backend to be Ready
         run: |
