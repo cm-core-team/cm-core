@@ -26,7 +26,7 @@ jobs:
 
       - name: Wait for Backend to be Ready
         run: |
-          until curl --output /dev/null --silent --head --fail http://localhost:8080; do
+          until curl --output /dev/null --silent --head --fail http://backend:8080; do
             printf '.'
             sleep 5
           done
