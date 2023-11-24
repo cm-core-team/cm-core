@@ -57,9 +57,7 @@ export function GetWeeklyMeetings() {
               return;
             }
 
-            createCongregation(selectedCongregation);
-            // Prevent user from clicking again
-            e.currentTarget.disabled = true;
+            createCongregation(selectedCongregation, router);
           }}
         >
           Create congregation <MoveRight />

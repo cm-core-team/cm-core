@@ -17,7 +17,6 @@ func CreateCongregation(ctx *gin.Context) {
 	 */
 
 	var dto models.Congregation
-	fmt.Println(ctx.Request.Body)
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		fmt.Println("[CreateCongregation] incorrect payload.")
@@ -28,6 +27,26 @@ func CreateCongregation(ctx *gin.Context) {
 	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
+
+	// Generate a signature and check if it exists
+	dto.GenerateSignature()
+	isUnique, err := services.HasUniqueSignature(dto, db)
+	if err != nil {
+		fmt.Println("[CreateCongregation] (signature check) Error creating congregation in database.")
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.FailedToCreateCongregation,
+		})
+		return
+	}
+
+	if !isUnique {
+		fmt.Println("[CreateCongregation] Congregation is not unique.")
+		ctx.JSON(http.StatusConflict, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationAlreadyExists,
+		})
+		return
+	}
+
 	err = services.CreateCongregationInDB(dto, db)
 	if err != nil {
 		fmt.Println("[CreateCongregation] Error creating congregation in database.")

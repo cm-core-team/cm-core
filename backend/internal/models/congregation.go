@@ -53,8 +53,8 @@ func (congregation *Congregation) GetPhones() ([]CongregationPhone, error) {
 	return phones, err
 }
 
-func (congregation *Congregation) GenerateSignature() string {
-	/* Generate a new signature for a UNIQUE congregation */
+func (congregation *Congregation) GenerateSignature() {
+	/* Generate a new signature for a UNIQUE congregation in-place */
 
 	hasher := sha256.New()
 	var buffer bytes.Buffer
@@ -63,7 +63,5 @@ func (congregation *Congregation) GenerateSignature() string {
 	buffer.WriteString(congregation.Address)
 
 	hasher.Write(buffer.Bytes())
-	signature := hex.EncodeToString(hasher.Sum(nil))
-
-	return signature
+	congregation.Signature = hex.EncodeToString(hasher.Sum(nil))
 }

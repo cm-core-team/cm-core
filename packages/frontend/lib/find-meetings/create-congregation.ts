@@ -4,12 +4,18 @@ import { backendRoutes, userErrors } from "../config";
 import { backendErrorHandle } from "../backend-error-handle";
 import { object, z } from "zod";
 import { toast } from "@/components/ui/use-toast";
+import { NextRouter } from "next/router";
+import { BaseRouter } from "next/dist/shared/lib/router/router";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const createCongregationResponseSchema = z.object({
   congregation: congregationSchema,
 });
 
-export async function createCongregation(congregation: Congregation) {
+export async function createCongregation(
+  congregation: Congregation,
+  router: AppRouterInstance
+) {
   // TODO:
   // - Verify congregation phone number (dummy for DEV environment)
   console.log("Create congregation");
@@ -40,6 +46,8 @@ export async function createCongregation(congregation: Congregation) {
       title: "Created congregation",
       description: "The congregation has been successfully created.",
     });
+
+    router.push("/home");
   } catch (error) {
     toast({
       title: "Error",
