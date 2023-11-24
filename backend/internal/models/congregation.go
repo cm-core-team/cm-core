@@ -1,6 +1,9 @@
 package models
 
 import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 
 	"gorm.io/datatypes"
@@ -15,10 +18,17 @@ type CongregationPhone struct {
 type Congregation struct {
 	gorm.Model
 
+	// Database ID
 	ID uint `json:"id" gorm:"primarykey"`
 
+	// Unique signature for matching meeting-finder
+	// i.e. someone creates a duplicate congregation
+	// but some may have the same address or name
+	// A matching signature tells us it exists already
+	Signature string `json:"signature" gorm:"unique"`
+
 	Name    string `json:"name"`
-	Address string `json:"address" gorm:"unique"`
+	Address string `json:"address"`
 
 	// Should not be modified/retrieved directly. Only through GetPhones/SetPhones
 	PhoneNumbers datatypes.JSON `json:"phoneNumbers"`
@@ -41,4 +51,19 @@ func (congregation *Congregation) GetPhones() ([]CongregationPhone, error) {
 	err := json.Unmarshal(congregation.PhoneNumbers, &phones)
 
 	return phones, err
+}
+
+func (congregation *Congregation) GenerateSignature() string {
+	/* Generate a new signature for a UNIQUE congregation */
+
+	hasher := sha256.New()
+	var buffer bytes.Buffer
+
+	buffer.WriteString(congregation.Name)
+	buffer.WriteString(congregation.Address)
+
+	hasher.Write(buffer.Bytes())
+	signature := hex.EncodeToString(hasher.Sum(nil))
+
+	return signature
 }
