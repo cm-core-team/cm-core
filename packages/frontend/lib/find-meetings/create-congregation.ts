@@ -45,9 +45,10 @@ export async function createCongregation(
     toast({
       title: "Created congregation",
       description: "The congregation has been successfully created.",
+      variant: "success",
     });
 
-    router.push("/home");
+    router.push("/");
   } catch (error) {
     toast({
       title: "Error",
