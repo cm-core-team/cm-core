@@ -4,6 +4,7 @@ import {
   Congregation,
 } from "frontend/lib/types/congregation.ts";
 import { backendRoutes } from "frontend/lib/config";
+import { generateCongregation } from "frontend/lib/fixtures/generate-congregation";
 import axios from "axios";
 
 describe("Congregation CRUD Actions", () => {
@@ -11,23 +12,12 @@ describe("Congregation CRUD Actions", () => {
     console.log("LOOK HERE");
     console.log(backendRoutes.congregation.create);
 
-    const selectedCongregation: Congregation = {
-      address: "1 address lane",
-      id: 0,
-      name: "The absolute Cong",
-      phoneNumbers: [
-        {
-          ext: "+44",
-          phone: "7556345",
-        },
-      ],
-      users: [], // No users for now
-    };
-
+    const selectedCongregation = generateCongregation();
     const response = await axios.post(
       backendRoutes.congregation.create,
       selectedCongregation
     );
+
     // First check backend response matches
     const responseMatch = congregationSchema.safeParse(
       response.data.congregation
@@ -45,5 +35,25 @@ describe("Congregation CRUD Actions", () => {
     );
   });
 
-  it("should correctly identify valid/invalid congregations based on signature", async () => {});
+  it("should correctly identify invalid signatures", async () => {
+    const selectedCongregation = generateCongregation();
+    const response = await axios.post(
+      backendRoutes.congregation.create,
+      selectedCongregation
+    );
+
+    // First check backend response matches
+    const responseMatch = congregationSchema.safeParse(
+      response.data.congregation
+    );
+    expect(responseMatch.success).toBe(true);
+
+    const createdCongregation: Congregation = response.data.congregation;
+    expect(createdCongregation.signature).toBeTruthy();
+
+    expect(async () => {
+      // This should throw because the congregation should already exist
+      await axios.post(backendRoutes.congregation.create, selectedCongregation);
+    }).toThrow();
+  });
 });

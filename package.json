@@ -16,6 +16,7 @@
     "frontend": "cd packages/frontend && bun dev"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.3.1",
     "dotenv": "^16.3.1",
     "jest": "^29.7.0"
   }
