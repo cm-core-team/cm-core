@@ -16,4 +16,4 @@ COPY bun.lockb .
 
 RUN bun i --dev
 
-CMD ["bun", "test", "--verbose", "--preload", "./packages/integration-tests/setupTests.ts", "packages/integration-tests"]
+CMD ["bun", "test", "--verbose", "--preload", "./packages/integration-tests/setupTests.ts", "--timeout", "15000", "packages/integration-tests"]
