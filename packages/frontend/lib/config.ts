@@ -5,3 +5,9 @@ export const backendRoutes = {
   },
   getLocalMeetings: baseBackendUrl + "/meetings",
 };
+
+export const userErrors = {
+  unknown: "Unknown error. Please try again and report if the error persists.",
+  invalidBackendResponse:
+    "The server sent an invalid response. Please report this if it persists.",
+};

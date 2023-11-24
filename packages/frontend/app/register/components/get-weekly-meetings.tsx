@@ -6,6 +6,8 @@ import React from "react";
 import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { Button } from "@nextui-org/button";
 import { MoveRight } from "lucide-react";
+import { createCongregation } from "@/lib/find-meetings/create-congregation";
+import { useRouter } from "next/navigation";
 
 export function GetWeeklyMeetings() {
   const [userCoords, setUserCoords] = React.useState<GeolocationCoordinates>();
@@ -13,6 +15,8 @@ export function GetWeeklyMeetings() {
     React.useState<Congregation[]>();
   const [selectedCongregation, setSelectedCongregation] =
     React.useState<Congregation>();
+
+  const router = useRouter();
 
   React.useEffect(() => {
     // Get LatLon on page load
@@ -48,6 +52,15 @@ export function GetWeeklyMeetings() {
           className="space-y-8 sm:p-4"
           color="success"
           variant="ghost"
+          onClick={(e) => {
+            if (!selectedCongregation) {
+              return;
+            }
+
+            createCongregation(selectedCongregation);
+            // Prevent user from clicking again
+            e.currentTarget.disabled = true;
+          }}
         >
           Create congregation <MoveRight />
         </Button>

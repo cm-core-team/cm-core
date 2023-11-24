@@ -18,7 +18,7 @@ type Congregation struct {
 	ID uint `json:"id" gorm:"primarykey"`
 
 	Name    string `json:"name"`
-	Address string `json:"address"`
+	Address string `json:"address" gorm:"unique"`
 
 	// Should not be modified/retrieved directly. Only through GetPhones/SetPhones
 	PhoneNumbers datatypes.JSON `json:"phoneNumbers"`

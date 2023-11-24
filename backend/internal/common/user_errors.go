@@ -10,7 +10,7 @@ type UserErrors struct {
 }
 
 var UserErrorInstance = UserErrors{
-	UserErrKey: "error",
+	UserErrKey: "userMsg",
 
 	BadRequestOrData: "Error on our side. Please report if this persists.",
 	AuthInvalid:      "You are not authorized. Please check your credentials.",

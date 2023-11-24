@@ -10,7 +10,7 @@ describe("Congregation CRUD Actions", () => {
     "should correctly create a congregation",
     async () => {
       const createUrl =
-        process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/congregation/create";
+        process.env.NEXT_PUBLIC_BACKEND_URL + "/congregation/create";
 
       console.log("LOOK HERE");
       console.log(createUrl);
