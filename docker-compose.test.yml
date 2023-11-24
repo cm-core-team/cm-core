@@ -9,4 +9,4 @@ services:
       backend:
         condition: service_healthy
     environment:
-      - NEXT_PUBLIC_BACKEND_URL=http://backend:8080
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8080/api/v1
