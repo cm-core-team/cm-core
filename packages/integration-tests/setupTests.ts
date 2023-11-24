@@ -1,6 +1,10 @@
 import { beforeAll } from "bun:test";
-import dotenv from "dotenv";
+import { config } from "dotenv";
+import fs from "fs";
 
 beforeAll(() => {
-  dotenv.config({ path: ".env.local" });
+  const dotenvPath = ".env.local";
+  if (fs.existsSync(dotenvPath)) {
+    config({ path: dotenvPath });
+  }
 });
