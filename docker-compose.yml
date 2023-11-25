@@ -11,6 +11,15 @@ services:
       - ./backend:/root/app
     depends_on:
       - db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v1/hello"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    environment:
+      DB_URL: host=db port=5432 user=postgres dbname=cms-db sslmode=disable password=postgres
+      CORS_ALLOW_ORIGIN: http://localhost:3000
 
   db:
     image: postgres:latest

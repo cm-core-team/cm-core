@@ -11,21 +11,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install bun
+      - name: Build and Run Services
         run: |
-          curl -fsSL https://bun.sh/install | bash
-          echo "$HOME/.bun/bin" >> $GITHUB_PATH
+          docker compose -f docker-compose.yml -f docker-compose.test.yml build
+          docker compose -f docker-compose.yml up -d
 
-      - name: Install dependencies
-        run: bun install
+      - name: Run Integration Tests
+        run: docker compose -f docker-compose.yml -f docker-compose.test.yml run --rm integration-test
 
-      - name: Build and start services
-        run: docker compose up --build -d
-
-      - name: Run tests
-        run: bun test packages/integration-tests
-
-      - name: Services teardown
+      - name: Services Teardown
         # even if the checks fail, we still want to teardown the container.
         if: always()
-        run: docker compose down
+        run: docker compose -f docker-compose.yml -f docker-compose.test.yml down
