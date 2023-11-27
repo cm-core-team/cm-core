@@ -40,15 +40,13 @@ export async function createCongregation(
       return;
     }
 
-    console.log(objectMatch.data);
-
     toast({
       title: "Created congregation",
       description: "The congregation has been successfully created.",
       variant: "success",
     });
 
-    router.push("/");
+    router.replace("/register/");
   } catch (error) {
     toast({
       title: "Error",
