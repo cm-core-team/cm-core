@@ -6,8 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import ItemCards from "./item-cards";
+import { Separator } from "./ui/separator";
 
-const CongEventsCard = () => {
+const CongEventsCard = ({ congEventsData }: { congEventsData: any }) => {
   return (
     <Card>
       <CardHeader>
@@ -15,7 +17,9 @@ const CongEventsCard = () => {
         <CardDescription>Upcoming congregation events.</CardDescription>
       </CardHeader>
       {/* CO visits, assemblies, conventions etc */}
-      <CardContent>Info goes here</CardContent>
+      <CardContent>
+        <ItemCards data={congEventsData} />
+      </CardContent>
       <CardFooter></CardFooter>
     </Card>
   );

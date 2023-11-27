@@ -6,8 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import ItemCards from "./item-cards";
 
-const MeetingDutiesCard = () => {
+const MeetingDutiesCard = ({ dutiesData }: { dutiesData: any }) => {
   return (
     <Card>
       <CardHeader>
@@ -16,7 +17,9 @@ const MeetingDutiesCard = () => {
           These are your upcoming duties/assignments.
         </CardDescription>
       </CardHeader>
-      <CardContent>Info goes here</CardContent>
+      <CardContent>
+        <ItemCards data={dutiesData} />
+      </CardContent>
       <CardFooter></CardFooter>
     </Card>
   );

@@ -6,8 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import ItemCards from "./item-cards";
 
-const InformationCard = () => {
+const InformationCard = ({
+  informationBoardData,
+}: {
+  informationBoardData: any;
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -17,7 +22,9 @@ const InformationCard = () => {
         </CardDescription>
       </CardHeader>
       {/* Probably put some links to docs here...? */}
-      <CardContent>Info goes here</CardContent>
+      <CardContent>
+        <ItemCards data={informationBoardData} />
+      </CardContent>
       <CardFooter></CardFooter>
     </Card>
   );
