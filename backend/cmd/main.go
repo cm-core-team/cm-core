@@ -36,7 +36,6 @@ func main() {
 	config.AllowCredentials = true
 
 	r.Use(cors.New(config))
-
 	r.Use(middleware.DatabaseSession(db))
 
 	models.SetupModels(db)

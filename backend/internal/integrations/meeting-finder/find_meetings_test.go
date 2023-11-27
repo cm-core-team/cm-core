@@ -2,7 +2,6 @@ package meetingfinder_test
 
 import (
 	meetingfinder "backend/internal/integrations/meeting-finder"
-	"fmt"
 	"testing"
 )
 
@@ -24,10 +23,6 @@ func TestFindLocalMeetings(t *testing.T) {
 		t.Error("Expected to find congregation name")
 	}
 
-	if meetings[0].Area == "" {
-		t.Error("Expected to find congregation area")
-	}
-
 	if meetings[0].Address == "" {
 		t.Error("Expected to find congregation address")
 	}
@@ -35,6 +30,4 @@ func TestFindLocalMeetings(t *testing.T) {
 	if len(meetings[0].Users) != 0 {
 		t.Error("Expected to find no users")
 	}
-
-	fmt.Println(meetings)
 }

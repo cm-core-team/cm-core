@@ -1,0 +1,23 @@
+{
+  "name": "cong-manager",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "frontend": "cd packages/frontend && bun dev"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "dotenv": "^16.3.1",
+    "jest": "^29.7.0"
+  }
+}

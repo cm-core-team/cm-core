@@ -6,6 +6,8 @@ Manage a congregation with ease.
 
 ### To start
 
+#### Backend:
+
 - In the project root (where the `docker-compose.yml` file is located), run:
 
 ```bash
@@ -15,6 +17,15 @@ docker compose up --build
 This will run in watch mode, so any changes to the code will be reflected in the running container.
 
 - Ensure you have a .env.secret. You can use the .env.example as a template.
+
+#### Frontend:
+
+- In the project root also run:
+
+```bash
+bun i
+bun frontend
+```
 
 ### Seeder
 

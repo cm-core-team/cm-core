@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"backend/internal/common"
 	"backend/internal/services"
 	"net/http"
 
@@ -14,21 +15,24 @@ func CreateUser(ctx *gin.Context) {
 	 */
 
 	var dto services.CreateUserDTO
-
 	err := ctx.BindJSON(&dto)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
 		return
 	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 	user, err := services.CreateUserInDB(dto, db)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, user)
+	ctx.JSON(http.StatusCreated, gin.H{"user": user})
 }
 
 func VerifyToken(ctx *gin.Context) {
@@ -39,22 +43,28 @@ func VerifyToken(ctx *gin.Context) {
 	var dto services.JoinTokenMatchDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
 		return
 	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 	err = services.VerifyToken(dto, db)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
 		return
 	}
 
 	err = services.BindUserToCongregation(dto, db)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"message": "Token matches"})
+	ctx.JSON(http.StatusAccepted, gin.H{"message": "Token matches"})
 }
