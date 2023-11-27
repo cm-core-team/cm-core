@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import AnimateCard from "@/components/animate-card";
 import UserInfoCard from "@/components/user-info-card";
 import MeetingDutiesCard from "@/components/meeting-duties-card";
@@ -6,13 +5,11 @@ import InformationCard from "@/components/information-card";
 import CongEventsCard from "@/components/cong-events-card";
 import PublicWitnessingCard from "@/components/public-witnessing-schedule-card";
 
-type CardProps = React.ComponentProps<typeof Card>;
-
-export default function Page({ className, ...props }: CardProps) {
+export default function Page() {
   return (
     <div className="flex flex-grow flex-shrink h-screen">
       <div className="flex gap-4 w-fit">
-        <AnimateCard>
+        <AnimateCard delay={0}>
           <UserInfoCard
             userInfo={{
               name: "John Doe",
@@ -21,16 +18,16 @@ export default function Page({ className, ...props }: CardProps) {
             }}
           />
         </AnimateCard>
-        <AnimateCard>
+        <AnimateCard delay={0.1}>
           <MeetingDutiesCard />
         </AnimateCard>
-        <AnimateCard>
+        <AnimateCard delay={0.2}>
           <InformationCard />
         </AnimateCard>
-        <AnimateCard>
+        <AnimateCard delay={0.3}>
           <CongEventsCard />
         </AnimateCard>
-        <AnimateCard>
+        <AnimateCard delay={0.4}>
           <PublicWitnessingCard />
         </AnimateCard>
       </div>
