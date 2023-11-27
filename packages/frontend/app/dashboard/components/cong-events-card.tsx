@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ItemCards from "./item-cards";
-import { Separator } from "./ui/separator";
+import { Separator } from "../../../components/ui/separator";
 
 const CongEventsCard = ({ congEventsData }: { congEventsData: any }) => {
   return (
