@@ -74,3 +74,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* This is so that the height of the content doesn't overflow the height of the screen */
+html,
+body {
+  height: 100vh;
+  margin: 0;
+}
