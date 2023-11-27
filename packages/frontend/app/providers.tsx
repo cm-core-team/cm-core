@@ -2,7 +2,7 @@
 
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "next-themes";
-import { StoreProvider } from "./store-provider";
+import StoreProvider from "./store-provider";
 
 export function Providers({ children }: React.PropsWithChildren<{}>) {
   return (

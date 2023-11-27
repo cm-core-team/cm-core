@@ -46,7 +46,7 @@ export async function createCongregation(
       variant: "success",
     });
 
-    router.replace("/register/");
+    router.replace("/register/phone-number");
   } catch (error) {
     toast({
       title: "Error",
