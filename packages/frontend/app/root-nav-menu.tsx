@@ -34,7 +34,7 @@ export function RootNavMenu(): JSX.Element {
     },
   ];
   return (
-    <div className="h-5vh flex flex-col justify-center py-4">
+    <div className="flex flex-col justify-center flex-grow-0 flex-shrink flex-basis-auto py-4">
       <div className="flex flex-row justify-between items-center px-8 py-4">
         <div>
           <a href="/" className="font-bold hover:underline">
