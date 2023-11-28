@@ -59,7 +59,7 @@ export function GetWeeklyMeetings() {
             createCongregation(state.selectedCongregation, router);
           }}
         >
-          Create congregation <MoveRight />
+          Create Congregation <MoveRight />
         </Button>
       </div>
     </div>
