@@ -93,7 +93,6 @@ export function PhoneNumberCheck() {
                     color="default"
                     className="text-xs"
                     onClick={() => {
-                      console.log("poop");
                       sendVerificationCode(selectedCongregation).then(() =>
                         setDidSendCode(true)
                       );
