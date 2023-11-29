@@ -72,6 +72,7 @@ func CheckVerificationCode(dto dtos.VerifyCongregationPhoneDTO, db *gorm.DB, ctx
 func CreateVerificationCode(dto dtos.SendCongregationVerificationCodeDTO, db *gorm.DB) (models.CongregationVerificationCode, error) {
 	verificationCode := models.CongregationVerificationCode{
 		CongregationSignature: dto.Congregation.Signature,
+		PhoneNumber:           dto.PhoneNumber,
 	}
 	// Clear any entries that have the same congregation signature
 	db.

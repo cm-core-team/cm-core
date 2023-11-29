@@ -3,14 +3,18 @@ import { backendRoutes } from "../config";
 import { Congregation } from "../types/congregation";
 import { backendErrorHandle } from "../backend-error-handle";
 
-export async function sendVerificationCode(congregation: Congregation) {
+export async function sendVerificationCode(
+  congregation: Congregation,
+  phoneNumber: string
+) {
   try {
     const response = await axios.post(
       backendRoutes.congregation.sendVerificationCode,
-      { congregation }
+      { congregation, phoneNumber }
     );
+    console.log(response);
   } catch (error) {
-    backendErrorHandle(error);
+    console.log(backendErrorHandle(error));
   }
 }
 

@@ -74,7 +74,8 @@ type CongregationVerificationCode struct {
 	// Database ID
 	ID uint `json:"id" gorm:"primarykey"`
 
-	Code string
+	Code        string `json:"-"`
+	PhoneNumber string `json:"phoneNumber"`
 
 	// Corresponding signature
 	CongregationSignature string `json:"signature"`

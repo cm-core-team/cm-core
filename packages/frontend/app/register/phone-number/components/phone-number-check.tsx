@@ -107,9 +107,10 @@ export function PhoneNumberCheck() {
                     className="text-xs"
                     onClick={() => {
                       if (countdown === 0) {
-                        sendVerificationCode(selectedCongregation).then(() =>
-                          setDidSendCode(true)
-                        );
+                        sendVerificationCode(
+                          selectedCongregation,
+                          form.getValues().phoneNumber
+                        ).then(() => setDidSendCode(true));
                         startCountdown(30); // Start a 30 seconds countdown
                       }
                     }}

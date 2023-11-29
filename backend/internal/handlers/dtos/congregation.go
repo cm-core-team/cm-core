@@ -8,6 +8,7 @@ type VerifyCongregationPhoneDTO struct {
 }
 
 type SendCongregationVerificationCodeDTO struct {
+	PhoneNumber  string              `json:"phoneNumber"`
 	Congregation models.Congregation `json:"congregation"`
 }
 
