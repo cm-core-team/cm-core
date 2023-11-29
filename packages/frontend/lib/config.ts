@@ -2,6 +2,10 @@ export const baseBackendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 export const backendRoutes = {
   congregation: {
     create: baseBackendUrl + "/congregation/create",
+    delete: baseBackendUrl + "/congregation/delete",
+    sendVerificationCode:
+      baseBackendUrl + "/congregation/send-verification-code",
+    verifyPhone: "/congregation/verify-phone",
   },
   getLocalMeetings: baseBackendUrl + "/meetings",
 };
