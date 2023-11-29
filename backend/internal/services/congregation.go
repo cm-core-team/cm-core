@@ -1,9 +1,13 @@
 package services
 
 import (
+	"backend/internal/common"
+	"backend/internal/handlers/dtos"
 	"backend/internal/models"
+	"errors"
 	"fmt"
 
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
@@ -37,6 +41,30 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 	// Right now we are just scheduling a soft delete
 
 	// Will be 'removed' 10 mins after creation
+
+	return nil
+}
+
+func CheckVerificationCode(dto dtos.VerifyCongregationPhoneDTO, db *gorm.DB, ctx *gin.Context) error {
+	// Find a verificationCode with a matching signature
+	var verificationCode models.CongregationVerificationCode
+	dbInst := db.Where(&models.CongregationVerificationCode{
+		CongregationSignature: dto.Congregation.Signature,
+	}).First(&verificationCode)
+
+	if dbInst.Error != nil {
+		fmt.Println("[VerifyCongregationPhone] congregation not found.")
+		if errors.Is(dbInst.Error, gorm.ErrRecordNotFound) {
+			fmt.Println("[VerifyCongregationPhone] Verification code was not found")
+		}
+
+		return errors.New(common.UserErrorInstance.CongregationNotFound)
+	}
+
+	// Verification code check
+	if dto.UserCode != verificationCode.Code {
+		return errors.New(common.UserErrorInstance.IncorrectCongregationVerificationCode)
+	}
 
 	return nil
 }

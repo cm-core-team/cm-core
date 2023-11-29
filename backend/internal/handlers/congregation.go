@@ -5,7 +5,6 @@ import (
 	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"backend/internal/services"
-	"errors"
 	"fmt"
 	"net/http"
 
@@ -154,26 +153,11 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 
-	// Find a verificationCode with a matching signature
-	var verificationCode models.CongregationVerificationCode
-	dbInst := db.Where(&models.CongregationVerificationCode{
-		CongregationSignature: dto.Congregation.Signature,
-	}).First(&verificationCode)
-	if dbInst.Error != nil {
-		fmt.Println("[VerifyCongregationPhone] congregation not found.")
-		if errors.Is(dbInst.Error, gorm.ErrRecordNotFound) {
-			fmt.Println("[VerifyCongregationPhone] Verification code was not found")
-		}
+	userErr := services.CheckVerificationCode(dto, db, ctx)
+	if userErr != nil {
+		// CheckVerificationCode will handle the ctx response
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationNotFound,
-		})
-		return
-	}
-
-	// Verification code check
-	if dto.UserCode != verificationCode.Code {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.IncorrectCongregationVerificationCode,
+			common.UserErrorInstance.UserErrKey: userErr.Error(),
 		})
 		return
 	}
