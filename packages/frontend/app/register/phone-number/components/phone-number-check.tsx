@@ -30,6 +30,9 @@ import {
 } from "@/lib/phone-number/verify-phone";
 
 export function PhoneNumberCheck() {
+  const [didSendCode, setDidSendCode] = React.useState(false);
+  const [countdown, setCountdown] = React.useState(0);
+
   const formSchema = z.object({
     phoneNumber: z.string(),
     verificationCode: z.string().length(4),
@@ -41,13 +44,23 @@ export function PhoneNumberCheck() {
   const selectedCongregation = useSelector(
     (state: RootState) => state.localMeetings.selectedCongregation
   );
-
-  const [didSendCode, setDidSendCode] = React.useState(false);
-
   if (selectedCongregation === undefined) {
     router.replace("/register");
     return;
   }
+
+  const startCountdown = (duration: number) => {
+    setCountdown(duration);
+    const interval = setInterval(() => {
+      setCountdown((currentCountdown) => {
+        if (currentCountdown <= 1) {
+          clearInterval(interval); // Stop the interval
+          return 0;
+        }
+        return currentCountdown - 1;
+      });
+    }, 1000); // Decrease countdown every second
+  };
 
   const onSubmit = () => {
     verifyPhone(selectedCongregation, form.getValues().verificationCode);
@@ -88,17 +101,20 @@ export function PhoneNumberCheck() {
                     </SelectContent>
                   </Select>
                   <NextUIButton
-                    isDisabled={!form.getValues().phoneNumber}
+                    isDisabled={!form.getValues().phoneNumber || countdown > 0}
                     variant="ghost"
                     color="default"
                     className="text-xs"
                     onClick={() => {
-                      sendVerificationCode(selectedCongregation).then(() =>
-                        setDidSendCode(true)
-                      );
+                      if (countdown === 0) {
+                        sendVerificationCode(selectedCongregation).then(() =>
+                          setDidSendCode(true)
+                        );
+                        startCountdown(30); // Start a 30 seconds countdown
+                      }
                     }}
                   >
-                    Send code
+                    {countdown > 0 ? `Resend in ${countdown}s` : "Send Code"}
                   </NextUIButton>
                 </div>
               </FormItem>

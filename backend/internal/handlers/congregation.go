@@ -101,9 +101,19 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 
 	// Needs a signature
 	dto.Congregation.GenerateSignature()
+
 	verificationCode := models.CongregationVerificationCode{
 		CongregationSignature: dto.Congregation.Signature,
 	}
+	// Clear any entries that have the same congregation signature
+	db.
+		Unscoped().
+		Where(&models.CongregationVerificationCode{
+			CongregationSignature: dto.Congregation.Signature,
+		}).
+		Delete(&models.CongregationVerificationCode{})
+
+	// Generate a new code
 	verificationCode.RandomVerificationCode()
 
 	dbInst := db.Create(&verificationCode)
@@ -166,7 +176,6 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.IncorrectCongregationVerificationCode,
 		})
 		return
-
 	}
 
 	ctx.JSON(http.StatusAccepted, gin.H{})
