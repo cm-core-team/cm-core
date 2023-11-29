@@ -68,3 +68,27 @@ func CheckVerificationCode(dto dtos.VerifyCongregationPhoneDTO, db *gorm.DB, ctx
 
 	return nil
 }
+
+func CreateVerificationCode(dto dtos.SendCongregationVerificationCodeDTO, db *gorm.DB) (models.CongregationVerificationCode, error) {
+	verificationCode := models.CongregationVerificationCode{
+		CongregationSignature: dto.Congregation.Signature,
+	}
+	// Clear any entries that have the same congregation signature
+	db.
+		Unscoped().
+		Where(&models.CongregationVerificationCode{
+			CongregationSignature: dto.Congregation.Signature,
+		}).
+		Delete(&models.CongregationVerificationCode{})
+
+	// Generate a new code
+	verificationCode.RandomVerificationCode()
+
+	dbInst := db.Create(&verificationCode)
+	if dbInst.Error != nil {
+		fmt.Println("[SendCongregationVerificationCode] couldn't create verification code")
+		return models.CongregationVerificationCode{}, errors.New(common.UserErrorInstance.Unknown)
+	}
+
+	return verificationCode, nil
+}

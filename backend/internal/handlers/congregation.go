@@ -101,25 +101,10 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 	// Needs a signature
 	dto.Congregation.GenerateSignature()
 
-	verificationCode := models.CongregationVerificationCode{
-		CongregationSignature: dto.Congregation.Signature,
-	}
-	// Clear any entries that have the same congregation signature
-	db.
-		Unscoped().
-		Where(&models.CongregationVerificationCode{
-			CongregationSignature: dto.Congregation.Signature,
-		}).
-		Delete(&models.CongregationVerificationCode{})
-
-	// Generate a new code
-	verificationCode.RandomVerificationCode()
-
-	dbInst := db.Create(&verificationCode)
-	if dbInst.Error != nil {
-		fmt.Println("[SendCongregationVerificationCode] couldn't create verification code")
+	verificationCode, userErr := services.CreateVerificationCode(dto, db)
+	if userErr != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
+			common.UserErrorInstance.UserErrKey: userErr.Error(),
 		})
 		return
 	}
