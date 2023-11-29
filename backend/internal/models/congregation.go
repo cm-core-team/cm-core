@@ -5,6 +5,8 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
+	"math/rand"
 
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
@@ -54,7 +56,7 @@ func (congregation *Congregation) GetPhones() ([]CongregationPhone, error) {
 }
 
 func (congregation *Congregation) GenerateSignature() {
-	/* Generate a new signature for a UNIQUE congregation in-place */
+	/* Generate a new deterministic signature for a UNIQUE congregation in-place */
 
 	hasher := sha256.New()
 	var buffer bytes.Buffer
@@ -64,4 +66,22 @@ func (congregation *Congregation) GenerateSignature() {
 
 	hasher.Write(buffer.Bytes())
 	congregation.Signature = hex.EncodeToString(hasher.Sum(nil))
+}
+
+type CongregationVerificationCode struct {
+	gorm.Model
+
+	// Database ID
+	ID uint `json:"id" gorm:"primarykey"`
+
+	Code        string `json:"-"`
+	PhoneNumber string `json:"phoneNumber"`
+
+	// Corresponding signature
+	CongregationSignature string `json:"signature"`
+}
+
+func (verificationCode *CongregationVerificationCode) RandomVerificationCode() {
+	code := fmt.Sprintf("%04d", rand.Intn(10000))
+	verificationCode.Code = code
 }
