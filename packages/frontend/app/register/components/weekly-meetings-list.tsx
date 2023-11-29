@@ -6,6 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import React from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { DisabledButton } from "@/components/disabled-button";
+import { motion } from "framer-motion";
 
 export interface WeeklyMeetingsListProps {
   localCongregations?: Congregation[];
@@ -42,6 +43,7 @@ export function WeeklyMeetingsList({
             localCongregations.map((congregation, i) => (
               <MeetingCard
                 key={i}
+                animationDelay={i}
                 isSelected={selectedId === i}
                 onSelect={() => {
                   // If the congregation is already selected, unselect
