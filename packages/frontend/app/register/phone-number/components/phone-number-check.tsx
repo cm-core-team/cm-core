@@ -130,7 +130,7 @@ export function PhoneNumberCheck() {
               <FormItem>
                 <FormLabel>Verification Code</FormLabel>
                 <FormDescription>
-                  Sent to your phone number via SMS
+                  4-digit code sent to your phone via SMS
                 </FormDescription>
                 <Input placeholder="Enter verification code" {...field} />
                 <FormMessage />

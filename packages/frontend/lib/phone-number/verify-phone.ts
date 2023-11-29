@@ -2,19 +2,23 @@ import axios from "axios";
 import { backendRoutes } from "../config";
 import { Congregation } from "../types/congregation";
 import { backendErrorHandle } from "../backend-error-handle";
+import { toast } from "@/components/ui/use-toast";
 
 export async function sendVerificationCode(
   congregation: Congregation,
   phoneNumber: string
 ) {
   try {
-    const response = await axios.post(
-      backendRoutes.congregation.sendVerificationCode,
-      { congregation, phoneNumber }
-    );
-    console.log(response);
+    await axios.post(backendRoutes.congregation.sendVerificationCode, {
+      congregation,
+      phoneNumber,
+    });
   } catch (error) {
-    console.log(backendErrorHandle(error));
+    toast({
+      title: "Error",
+      description: backendErrorHandle(error),
+      variant: "destructive",
+    });
   }
 }
 
@@ -23,12 +27,21 @@ export async function verifyPhone(
   userCode: string
 ) {
   try {
-    const response = await axios.post(backendRoutes.congregation.verifyPhone, {
+    await axios.post(backendRoutes.congregation.verifyPhone, {
       congregation,
       userCode,
     });
-    console.log(response.data);
+
+    toast({
+      title: "Success!",
+      description: "The verification code was correct.",
+      variant: "success",
+    });
   } catch (error) {
-    console.log(backendErrorHandle(error));
+    toast({
+      title: "Error",
+      description: backendErrorHandle(error),
+      variant: "destructive",
+    });
   }
 }
