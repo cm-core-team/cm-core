@@ -7,8 +7,12 @@ type UserErrors struct {
 	AuthInvalid      string
 
 	// Congregation
-	FailedToCreateCongregation string
-	CongregationAlreadyExists  string
+	FailedToCreateCongregation            string
+	CongregationAlreadyExists             string
+	CongregationNotFound                  string
+	IncorrectCongregationVerificationCode string
+
+	Unknown string
 }
 
 var UserErrorInstance = UserErrors{
@@ -17,6 +21,10 @@ var UserErrorInstance = UserErrors{
 	BadRequestOrData: "Error on our side. Please report if this persists.",
 	AuthInvalid:      "You are not authorized. Please check your credentials.",
 
-	FailedToCreateCongregation: "Could not create congregation, please try again later and report this error if it exists.",
-	CongregationAlreadyExists:  "Congregation already exists!",
+	FailedToCreateCongregation:            "Could not create congregation, please try again later and report this error if it exists.",
+	CongregationAlreadyExists:             "Congregation already exists!",
+	CongregationNotFound:                  "Could not find provided congregation ID.",
+	IncorrectCongregationVerificationCode: "The congregation verification code is incorrect. Please check again.",
+
+	Unknown: "Unknown error. Please report this if the error persists.",
 }

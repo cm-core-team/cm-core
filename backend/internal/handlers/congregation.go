@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"backend/internal/common"
+	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"backend/internal/services"
 	"fmt"
@@ -58,4 +59,108 @@ func CreateCongregation(ctx *gin.Context) {
 
 	// The DTO will be updated in-place, so the ID property will also be updated
 	ctx.JSON(http.StatusCreated, gin.H{"congregation": dto})
+}
+
+func DeleteCongregation(ctx *gin.Context) {
+	var dto dtos.DeleteCongregationDTO
+	err := ctx.BindJSON(&dto)
+	if err != nil {
+		fmt.Println("[DeleteCongregation] incorrect payload.")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+	dbInst := db.Delete(&models.Congregation{}, dto.CongregationId)
+	if dbInst.Error != nil {
+		fmt.Println("[DeleteCongregation] couldn't delete congregation.")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationNotFound,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusAccepted, gin.H{})
+}
+
+func SendCongregationVerificationCode(ctx *gin.Context) {
+	var dto dtos.SendCongregationVerificationCodeDTO
+	err := ctx.BindJSON(&dto)
+	if err != nil {
+		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+
+	var congregation models.Congregation
+	dbInst := db.
+		Model(&models.Congregation{}).
+		Where(&models.Congregation{ID: dto.CongregationId}).
+		First(&congregation)
+
+	if dbInst.Error != nil {
+		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	congregation.RandomVerificationCode()
+	dbInst = db.Model(&congregation).Updates(&models.Congregation{
+		PhoneVerificationCode: congregation.PhoneVerificationCode,
+	})
+	if dbInst.Error != nil {
+		fmt.Println("[SendCongregationVerificationCode] Failed to update Congregation.")
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{})
+}
+
+func VerifyCongregationPhone(ctx *gin.Context) {
+	var dto dtos.VerifyCongregationPhoneDTO
+	err := ctx.BindJSON(&dto)
+	if err != nil {
+		fmt.Println("[VerifyCongregationPhone] incorrect payload.")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+
+	var congregation models.Congregation
+	dbInst := db.
+		Model(&models.Congregation{}).
+		Where(&models.Congregation{ID: dto.CongregationId}).
+		First(&congregation)
+
+	if dbInst.Error != nil {
+		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	// Verification code check
+	if dto.UserCode != congregation.PhoneVerificationCode {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.IncorrectCongregationVerificationCode,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusAccepted, gin.H{})
 }

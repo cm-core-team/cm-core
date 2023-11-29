@@ -5,6 +5,8 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
+	"math/rand"
 
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
@@ -32,6 +34,9 @@ type Congregation struct {
 
 	// Should not be modified/retrieved directly. Only through GetPhones/SetPhones
 	PhoneNumbers datatypes.JSON `json:"phoneNumbers"`
+
+	// Omitted from JSON serialization
+	PhoneVerificationCode string `json:"-"`
 
 	Users []User `json:"users" gorm:"foreignKey:CongregationID"`
 }
@@ -64,4 +69,9 @@ func (congregation *Congregation) GenerateSignature() {
 
 	hasher.Write(buffer.Bytes())
 	congregation.Signature = hex.EncodeToString(hasher.Sum(nil))
+}
+
+func (congregation *Congregation) RandomVerificationCode() {
+	code := fmt.Sprintf("%04d", rand.Intn(10000))
+	congregation.PhoneVerificationCode = code
 }
