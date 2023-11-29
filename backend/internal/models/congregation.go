@@ -77,7 +77,7 @@ type CongregationVerificationCode struct {
 	Code string
 
 	// Corresponding signature
-	CongregationSignature string `json:"signature" gorm:"unique"`
+	CongregationSignature string `json:"signature"`
 }
 
 func (verificationCode *CongregationVerificationCode) RandomVerificationCode() {

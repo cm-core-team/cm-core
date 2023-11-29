@@ -5,6 +5,7 @@ import (
 	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"backend/internal/services"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -150,6 +151,9 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 	}).First(&verificationCode)
 	if dbInst.Error != nil {
 		fmt.Println("[VerifyCongregationPhone] congregation not found.")
+		if errors.Is(dbInst.Error, gorm.ErrRecordNotFound) {
+			fmt.Println("[VerifyCongregationPhone] Verification code was not found")
+		}
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationNotFound,
 		})
@@ -162,6 +166,7 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.IncorrectCongregationVerificationCode,
 		})
 		return
+
 	}
 
 	ctx.JSON(http.StatusAccepted, gin.H{})

@@ -5,7 +5,7 @@ export const backendRoutes = {
     delete: baseBackendUrl + "/congregation/delete",
     sendVerificationCode:
       baseBackendUrl + "/congregation/send-verification-code",
-    verifyPhone: "/congregation/verify-phone",
+    verifyPhone: baseBackendUrl + "/congregation/verify-phone",
   },
   getLocalMeetings: baseBackendUrl + "/meetings",
 };

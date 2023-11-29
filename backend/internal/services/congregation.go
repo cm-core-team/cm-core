@@ -3,7 +3,6 @@ package services
 import (
 	"backend/internal/models"
 	"fmt"
-	"time"
 
 	"gorm.io/gorm"
 )
@@ -38,11 +37,6 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 	// Right now we are just scheduling a soft delete
 
 	// Will be 'removed' 10 mins after creation
-	futureTime := time.Now().Add(10 * time.Minute)
-	dbInst := db.
-		Model(&verificationCode).
-		Where("id = ?", verificationCode.ID).
-		Update("deleted_at", futureTime)
 
-	return dbInst.Error
+	return nil
 }
