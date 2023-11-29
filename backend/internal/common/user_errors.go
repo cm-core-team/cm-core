@@ -23,7 +23,7 @@ var UserErrorInstance = UserErrors{
 
 	FailedToCreateCongregation:            "Could not create congregation, please try again later and report this error if it exists.",
 	CongregationAlreadyExists:             "Congregation already exists!",
-	CongregationNotFound:                  "Could not find provided congregation ID.",
+	CongregationNotFound:                  "Could not find provided congregation or ID.",
 	IncorrectCongregationVerificationCode: "The congregation verification code is incorrect. Please check again.",
 
 	Unknown: "Unknown error. Please report this if the error persists.",

@@ -2,6 +2,8 @@ package services
 
 import (
 	"backend/internal/models"
+	"fmt"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -23,4 +25,24 @@ func HasUniqueSignature(congregation models.Congregation, db *gorm.DB) (bool, er
 		Count(&count).Error
 
 	return count == 0, err
+}
+
+func SendVerificationCode(verificationCode models.CongregationVerificationCode) {
+	fmt.Println("[SendVerificationCode] sending!")
+
+	// TODO
+}
+
+func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerificationCode, db *gorm.DB) error {
+	// TODO (Jude): Create a CRON function to schedule a delete
+	// Right now we are just scheduling a soft delete
+
+	// Will be 'removed' 10 mins after creation
+	futureTime := time.Now().Add(10 * time.Minute)
+	dbInst := db.
+		Model(&verificationCode).
+		Where("id = ?", verificationCode.ID).
+		Update("deleted_at", futureTime)
+
+	return dbInst.Error
 }

@@ -35,9 +35,6 @@ type Congregation struct {
 	// Should not be modified/retrieved directly. Only through GetPhones/SetPhones
 	PhoneNumbers datatypes.JSON `json:"phoneNumbers"`
 
-	// Omitted from JSON serialization
-	PhoneVerificationCode string `json:"-"`
-
 	Users []User `json:"users" gorm:"foreignKey:CongregationID"`
 }
 
@@ -59,7 +56,7 @@ func (congregation *Congregation) GetPhones() ([]CongregationPhone, error) {
 }
 
 func (congregation *Congregation) GenerateSignature() {
-	/* Generate a new signature for a UNIQUE congregation in-place */
+	/* Generate a new deterministic signature for a UNIQUE congregation in-place */
 
 	hasher := sha256.New()
 	var buffer bytes.Buffer
@@ -71,7 +68,19 @@ func (congregation *Congregation) GenerateSignature() {
 	congregation.Signature = hex.EncodeToString(hasher.Sum(nil))
 }
 
-func (congregation *Congregation) RandomVerificationCode() {
+type CongregationVerificationCode struct {
+	gorm.Model
+
+	// Database ID
+	ID uint `json:"id" gorm:"primarykey"`
+
+	Code string
+
+	// Corresponding signature
+	CongregationSignature string `json:"signature" gorm:"unique"`
+}
+
+func (verificationCode *CongregationVerificationCode) RandomVerificationCode() {
 	code := fmt.Sprintf("%04d", rand.Intn(10000))
-	congregation.PhoneVerificationCode = code
+	verificationCode.Code = code
 }

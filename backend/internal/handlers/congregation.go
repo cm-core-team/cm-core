@@ -98,26 +98,28 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 
-	var congregation models.Congregation
-	dbInst := db.
-		Model(&models.Congregation{}).
-		Where(&models.Congregation{ID: dto.CongregationId}).
-		First(&congregation)
+	// Needs a signature
+	dto.Congregation.GenerateSignature()
+	verificationCode := models.CongregationVerificationCode{
+		CongregationSignature: dto.Congregation.Signature,
+	}
+	verificationCode.RandomVerificationCode()
 
+	dbInst := db.Create(&verificationCode)
 	if dbInst.Error != nil {
-		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		fmt.Println("[SendCongregationVerificationCode] couldn't create verification code")
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})
 		return
 	}
 
-	congregation.RandomVerificationCode()
-	dbInst = db.Model(&congregation).Updates(&models.Congregation{
-		PhoneVerificationCode: congregation.PhoneVerificationCode,
-	})
-	if dbInst.Error != nil {
-		fmt.Println("[SendCongregationVerificationCode] Failed to update Congregation.")
+	// TODO (Jude): need to connect to 3rd party OTP services
+	services.SendVerificationCode(verificationCode)
+
+	// Expire verification code
+	err = services.ScheduleVerificationCodeRemoval(verificationCode, db)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})
@@ -137,25 +139,25 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 		})
 		return
 	}
+	dto.Congregation.GenerateSignature()
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 
-	var congregation models.Congregation
-	dbInst := db.
-		Model(&models.Congregation{}).
-		Where(&models.Congregation{ID: dto.CongregationId}).
-		First(&congregation)
-
+	// Find a verificationCode with a matching signature
+	var verificationCode models.CongregationVerificationCode
+	dbInst := db.Where(&models.CongregationVerificationCode{
+		CongregationSignature: dto.Congregation.Signature,
+	}).First(&verificationCode)
 	if dbInst.Error != nil {
-		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
+		fmt.Println("[VerifyCongregationPhone] congregation not found.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationNotFound,
 		})
 		return
 	}
 
 	// Verification code check
-	if dto.UserCode != congregation.PhoneVerificationCode {
+	if dto.UserCode != verificationCode.Code {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.IncorrectCongregationVerificationCode,
 		})
