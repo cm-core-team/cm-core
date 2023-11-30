@@ -6,11 +6,16 @@ import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { Button } from "@nextui-org/button";
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { fetchLocalMeetingsThunk } from "@/lib/stores/local-meetings";
+import {
+  fetchLocalMeetingsThunk,
+  localMeetingsSlice,
+} from "@/lib/stores/local-meetings";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { MapView } from "./map-view";
 import { Spinner } from "@nextui-org/react";
+
+const { regroupCongregations } = localMeetingsSlice.actions;
 
 export function GetWeeklyMeetings() {
   const [userCoords, setUserCoords] = React.useState<GeolocationCoordinates>();
@@ -28,11 +33,20 @@ export function GetWeeklyMeetings() {
   }, []);
 
   React.useEffect(() => {
-    // Get all the local congregations around latitude and longitude
+    if (!state.localCongregations) {
+      return;
+    }
+
+    // Whenever localCongregations is modified, we want to compute the groupings
+    dispatch(regroupCongregations(state.localCongregations));
+  }, [state.localCongregations, dispatch]);
+
+  React.useEffect(() => {
     if (!(userCoords?.latitude && userCoords.longitude)) {
       return;
     }
 
+    // Fetch all local meetings at this location
     dispatch(
       fetchLocalMeetingsThunk({
         latitude: String(userCoords.latitude),
@@ -45,10 +59,10 @@ export function GetWeeklyMeetings() {
     <div className="grid place-items-center space-y-8 md:p-4 p-1">
       <h2 className="text-2xl">Register a Congregation</h2>
 
-      <div className="grid place-items-center md:grid-cols-2 w-full space-y-8">
+      <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
         <WeeklyMeetingsList />
 
-        <div className="md:grid-rows-2 space-y-16">
+        <div className="md:grid-rows-2 space-y-16 w-full">
           {userCoords ? (
             <MapView userCoords={userCoords} />
           ) : (

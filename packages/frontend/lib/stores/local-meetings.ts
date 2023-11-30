@@ -2,12 +2,22 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Congregation } from "../types/congregation";
 import { fetchLocalMeetings } from "../find-meetings/fetch-meetings";
 import { backendErrorHandle } from "../backend-error-handle";
+import {
+  CongregationGroups,
+  generateKey,
+  groupByCoords,
+} from "../congregation/group-by-coords";
 
 export interface LocalMeetingsState {
   localCongregations?: Congregation[];
   isLoading: boolean;
   selectedCongregation?: Congregation;
   errorMsg: string;
+
+  // Some congregations have the same location. This is a way to track which area specifically.
+  locationKey?: string;
+  groupedCongregationsByLocation?: CongregationGroups;
+  displayCongregations: Congregation[];
 }
 
 export interface FetchLocalMeetingsThunkArg {
@@ -19,6 +29,7 @@ const initialState: LocalMeetingsState = {
   localCongregations: [],
   isLoading: false,
   errorMsg: "",
+  displayCongregations: [],
 };
 
 // Thunk for asynchronously fetching local meetings.
@@ -36,7 +47,7 @@ export const fetchLocalMeetingsThunk = createAsyncThunk<
 });
 
 // A slice (or part) of our state (this is to do with our Local Meetings)
-export const localMeetingsReducer = createSlice({
+export const localMeetingsSlice = createSlice({
   name: "localMeetings",
   initialState,
   reducers: {
@@ -45,6 +56,21 @@ export const localMeetingsReducer = createSlice({
       action: PayloadAction<Congregation | undefined>
     ) => {
       state.selectedCongregation = action.payload;
+    },
+    regroupCongregations: (state, action: PayloadAction<Congregation[]>) => {
+      state.groupedCongregationsByLocation = groupByCoords(action.payload);
+    },
+    setLocationKeyFromMeeting: (
+      state,
+      actions: PayloadAction<Congregation>
+    ) => {
+      state.locationKey = generateKey(actions.payload);
+    },
+    setDisplayCongregations: (
+      state,
+      actions: PayloadAction<Congregation[]>
+    ) => {
+      state.displayCongregations = actions.payload;
     },
   },
   extraReducers: (builder) => {

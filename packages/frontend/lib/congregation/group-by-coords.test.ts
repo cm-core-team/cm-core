@@ -1,4 +1,3 @@
-import { test, expect } from "bun:test";
 import { generateKey, groupByCoords } from "./group-by-coords";
 import { CongregationGenerator } from "../fixtures/generate-congregation";
 

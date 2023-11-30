@@ -2,13 +2,12 @@
 
 import "leaflet/dist/leaflet.css";
 
-import { Congregation } from "@/lib/types/congregation";
-
 import { Marker, Popup } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { RootState } from "@/lib/stores/app-store";
 import { useSelector } from "react-redux";
+import { localMeetingsSlice } from "@/lib/stores/local-meetings";
 
 export interface MapViewProps {
   userCoords: {
@@ -16,6 +15,8 @@ export interface MapViewProps {
     longitude: number;
   };
 }
+
+const { setLocationKeyFromMeeting } = localMeetingsSlice.actions;
 
 export function MapView({ userCoords }: MapViewProps) {
   const state = useSelector((state: RootState) => state.localMeetings);
@@ -25,7 +26,7 @@ export function MapView({ userCoords }: MapViewProps) {
       center={[userCoords.latitude, userCoords.longitude]}
       zoom={13}
       scrollWheelZoom={false}
-      className="lg:w-96 lg:h-96 p-4 w-56 h-48 flex mx-auto rounded"
+      className="h-96 p-4 flex mx-auto rounded"
       attributionControl={false}
     >
       <TileLayer
@@ -34,8 +35,11 @@ export function MapView({ userCoords }: MapViewProps) {
       />
       {(state.localCongregations ?? []).map((meeting, i) => (
         <Marker
-          position={[parseFloat(meeting.lat), parseFloat(meeting.lon)]}
           key={i}
+          position={[parseFloat(meeting.lat), parseFloat(meeting.lon)]}
+          eventHandlers={{
+            click: () => setLocationKeyFromMeeting(meeting),
+          }}
         >
           <Popup className="space-y-8">
             <p className="text-lg">{meeting.name}</p>

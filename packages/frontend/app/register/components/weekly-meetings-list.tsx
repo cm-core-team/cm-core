@@ -8,11 +8,13 @@ import { Spinner } from "@nextui-org/spinner";
 import { DisabledButton } from "@/components/disabled-button";
 import { RootState } from "@/lib/stores/app-store";
 import { useDispatch, useSelector } from "react-redux";
-import { localMeetingsReducer } from "@/lib/stores/local-meetings";
+import { localMeetingsSlice } from "@/lib/stores/local-meetings";
 
 export interface WeeklyMeetingsListProps {
   localCongregations?: Congregation[];
 }
+
+const { setSelectedCongregation } = localMeetingsSlice.actions;
 
 export function WeeklyMeetingsList() {
   // Selected congregation to create
@@ -49,17 +51,13 @@ export function WeeklyMeetingsList() {
                   // If the congregation is already selected, unselect
                   if (selectedId == i) {
                     setSelectedId(undefined);
-                    dispatch(
-                      localMeetingsReducer.actions.setSelectedCongregation(
-                        undefined
-                      )
-                    );
+                    dispatch(setSelectedCongregation(undefined));
                     return;
                   }
 
                   setSelectedId(i);
                   dispatch(
-                    localMeetingsReducer.actions.setSelectedCongregation(
+                    setSelectedCongregation(
                       state.localCongregations
                         ? state.localCongregations[i]
                         : undefined
