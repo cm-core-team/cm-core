@@ -15,7 +15,8 @@ import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { MapView } from "./map-view";
 import { Spinner } from "@nextui-org/react";
 
-const { regroupCongregations } = localMeetingsSlice.actions;
+const { regroupCongregations, setDisplayCongregations } =
+  localMeetingsSlice.actions;
 
 export function GetWeeklyMeetings() {
   const [userCoords, setUserCoords] = React.useState<GeolocationCoordinates>();
@@ -54,6 +55,14 @@ export function GetWeeklyMeetings() {
       })
     );
   }, [userCoords, dispatch]);
+
+  React.useEffect(() => {
+    if (!state.localCongregations) {
+      return;
+    }
+
+    dispatch(setDisplayCongregations(state.localCongregations));
+  }, [state.localCongregations, dispatch]);
 
   return (
     <div className="grid place-items-center space-y-8 md:p-4 p-1">

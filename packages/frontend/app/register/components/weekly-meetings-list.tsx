@@ -6,7 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import React from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { DisabledButton } from "@/components/disabled-button";
-import { RootState } from "@/lib/stores/app-store";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { useDispatch, useSelector } from "react-redux";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
 
@@ -20,7 +20,7 @@ export function WeeklyMeetingsList() {
   // Selected congregation to create
   const [selectedId, setSelectedId] = React.useState<number>();
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const state = useSelector((state: RootState) => state.localMeetings);
 
   return (
@@ -32,8 +32,8 @@ export function WeeklyMeetingsList() {
       <DisabledButton className="flex ml-auto">
         <p>
           Selected:{" "}
-          {selectedId !== undefined && state.localCongregations?.length ? (
-            state.localCongregations[selectedId].name
+          {selectedId !== undefined && state.displayCongregations?.length ? (
+            state.displayCongregations[selectedId].name
           ) : (
             <span className="text-red-600">No selection</span>
           )}
@@ -41,8 +41,8 @@ export function WeeklyMeetingsList() {
       </DisabledButton>
       <ScrollArea className="md:h-unit-9xl h-unit-7xl rounded">
         <div className="space-y-8">
-          {state.localCongregations?.length ? (
-            state.localCongregations.map((congregation, i) => (
+          {state.displayCongregations?.length ? (
+            state.displayCongregations.map((congregation, i) => (
               <MeetingCard
                 key={i}
                 animationDelay={i}
@@ -58,8 +58,8 @@ export function WeeklyMeetingsList() {
                   setSelectedId(i);
                   dispatch(
                     setSelectedCongregation(
-                      state.localCongregations
-                        ? state.localCongregations[i]
+                      state.displayCongregations
+                        ? state.displayCongregations[i]
                         : undefined
                     )
                   );

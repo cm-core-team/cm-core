@@ -4,19 +4,17 @@ import { fetchLocalMeetings } from "../find-meetings/fetch-meetings";
 import { backendErrorHandle } from "../backend-error-handle";
 import {
   CongregationGroups,
-  generateKey,
   groupByCoords,
 } from "../congregation/group-by-coords";
 
 export interface LocalMeetingsState {
-  localCongregations?: Congregation[];
+  localCongregations: Congregation[];
   isLoading: boolean;
   selectedCongregation?: Congregation;
   errorMsg: string;
 
   // Some congregations have the same location. This is a way to track which area specifically.
-  locationKey?: string;
-  groupedCongregationsByLocation?: CongregationGroups;
+  groupedCongregationsByLocation: CongregationGroups;
   displayCongregations: Congregation[];
 }
 
@@ -30,6 +28,7 @@ const initialState: LocalMeetingsState = {
   isLoading: false,
   errorMsg: "",
   displayCongregations: [],
+  groupedCongregationsByLocation: {},
 };
 
 // Thunk for asynchronously fetching local meetings.
@@ -59,12 +58,6 @@ export const localMeetingsSlice = createSlice({
     },
     regroupCongregations: (state, action: PayloadAction<Congregation[]>) => {
       state.groupedCongregationsByLocation = groupByCoords(action.payload);
-    },
-    setLocationKeyFromMeeting: (
-      state,
-      actions: PayloadAction<Congregation>
-    ) => {
-      state.locationKey = generateKey(actions.payload);
     },
     setDisplayCongregations: (
       state,

@@ -5,9 +5,10 @@ import "leaflet/dist/leaflet.css";
 import { Marker, Popup } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
-import { RootState } from "@/lib/stores/app-store";
-import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import { useDispatch, useSelector } from "react-redux";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
+import { generateKey, groupByCoords } from "@/lib/congregation/group-by-coords";
 
 export interface MapViewProps {
   userCoords: {
@@ -16,9 +17,10 @@ export interface MapViewProps {
   };
 }
 
-const { setLocationKeyFromMeeting } = localMeetingsSlice.actions;
+const { setDisplayCongregations } = localMeetingsSlice.actions;
 
 export function MapView({ userCoords }: MapViewProps) {
+  const dispatch: AppDispatch = useDispatch();
   const state = useSelector((state: RootState) => state.localMeetings);
 
   return (
@@ -33,12 +35,20 @@ export function MapView({ userCoords }: MapViewProps) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution=""
       />
-      {(state.localCongregations ?? []).map((meeting, i) => (
+      {state.localCongregations.map((meeting, i) => (
         <Marker
           key={i}
           position={[parseFloat(meeting.lat), parseFloat(meeting.lon)]}
           eventHandlers={{
-            click: () => setLocationKeyFromMeeting(meeting),
+            click: () => {
+              const key = generateKey(meeting);
+              const groupedCongregations = state.groupedCongregationsByLocation;
+
+              dispatch(setDisplayCongregations(groupedCongregations[key]));
+            },
+            popupclose: () => {
+              dispatch(setDisplayCongregations(state.localCongregations));
+            },
           }}
         >
           <Popup className="space-y-8">
