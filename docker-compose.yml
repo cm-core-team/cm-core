@@ -16,7 +16,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    
+
     environment:
       DB_URL: host=db port=5432 user=postgres dbname=cms-db sslmode=disable password=postgres
       CORS_ALLOW_ORIGIN: http://localhost:3000
@@ -29,7 +29,7 @@ services:
       POSTGRES_PASSWORD: postgres
       PGDATA: /data/postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 5s

@@ -10,3 +10,4 @@ services:
         condition: service_healthy
     environment:
       - NEXT_PUBLIC_BACKEND_URL=http://backend:8080/api/v1
+      - DB_URL=postgresql://postgres:postgres@db:5432/cms-db

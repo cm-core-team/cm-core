@@ -2,10 +2,8 @@ import axios from "axios";
 import { Congregation, congregationSchema } from "../types/congregation";
 import { backendRoutes, userErrors } from "../config";
 import { backendErrorHandle } from "../backend-error-handle";
-import { object, z } from "zod";
+import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
-import { NextRouter } from "next/router";
-import { BaseRouter } from "next/dist/shared/lib/router/router";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const createCongregationResponseSchema = z.object({
@@ -40,15 +38,11 @@ export async function createCongregation(
       return;
     }
 
-    console.log(objectMatch.data);
-
     toast({
       title: "Created congregation",
       description: "The congregation has been successfully created.",
       variant: "success",
     });
-
-    router.push("/");
   } catch (error) {
     toast({
       title: "Error",

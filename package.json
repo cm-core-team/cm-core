@@ -17,7 +17,13 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
+    "@reduxjs/toolkit": "^1.9.7",
+    "@types/axios": "^0.14.0",
+    "@types/pg": "^8.10.9",
+    "axios": "^1.6.2",
     "dotenv": "^16.3.1",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "pg": "^8.11.3",
+    "react-redux": "^8.1.3"
   }
 }
