@@ -23,7 +23,7 @@ export function MeetingCard({
       initial={{ opacity: 0 }}
       animate={{
         opacity: 1,
-        transition: { duration: 0.5, delay: animationDelay / 4 },
+        transition: { duration: 0.5, delay: animationDelay / 8 },
       }}
     >
       <Card className="p-2">
