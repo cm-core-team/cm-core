@@ -4,7 +4,7 @@ import {
   Congregation,
 } from "frontend/lib/types/congregation.ts";
 import { backendRoutes } from "frontend/lib/config";
-import { generateCongregation } from "frontend/lib/fixtures/generate-congregation";
+import { CongregationGenerator } from "frontend/lib/fixtures/generate-congregation";
 import axios from "axios";
 
 describe("Congregation CRUD Actions", () => {
@@ -12,7 +12,7 @@ describe("Congregation CRUD Actions", () => {
     console.log("LOOK HERE");
     console.log(backendRoutes.congregation.create);
 
-    const selectedCongregation = generateCongregation();
+    const selectedCongregation = CongregationGenerator.instance.random();
     const response = await axios.post(
       backendRoutes.congregation.create,
       selectedCongregation
@@ -40,7 +40,7 @@ describe("Congregation CRUD Actions", () => {
   });
 
   it("should correctly identify invalid signatures", async () => {
-    const selectedCongregation = generateCongregation();
+    const selectedCongregation = CongregationGenerator.instance.random();
     const response = await axios.post(
       backendRoutes.congregation.create,
       selectedCongregation

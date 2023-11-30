@@ -50,10 +50,7 @@ export function GetWeeklyMeetings() {
 
         <div className="md:grid-rows-2 space-y-16">
           {userCoords ? (
-            <MapView
-              latitude={userCoords.latitude}
-              longitude={userCoords.longitude}
-            />
+            <MapView userCoords={userCoords} />
           ) : (
             <Spinner className="flex mx-auto" label="Loading map" />
           )}
