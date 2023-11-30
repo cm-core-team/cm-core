@@ -43,6 +43,7 @@ export function WeeklyMeetingsList() {
             state.localCongregations.map((congregation, i) => (
               <MeetingCard
                 key={i}
+                animationDelay={i}
                 isSelected={selectedId === i}
                 onSelect={() => {
                   // If the congregation is already selected, unselect
