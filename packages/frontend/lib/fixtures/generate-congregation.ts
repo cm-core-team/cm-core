@@ -13,5 +13,7 @@ export function generateCongregation(): Congregation {
       },
     ],
     users: [],
+    lat: faker.location.latitude().toString(),
+    lon: faker.location.longitude().toString(),
   };
 }
