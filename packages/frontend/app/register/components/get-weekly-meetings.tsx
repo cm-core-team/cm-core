@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
+
 import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { Button } from "@nextui-org/button";
 import { MoveRight } from "lucide-react";
-import { createCongregation } from "@/lib/find-meetings/create-congregation";
 import { useRouter } from "next/navigation";
 import { fetchLocalMeetingsThunk } from "@/lib/stores/local-meetings";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/lib/stores/store";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import { MapView } from "./map-view";
+import { Spinner } from "@nextui-org/react";
 
 export function GetWeeklyMeetings() {
   const [userCoords, setUserCoords] = React.useState<GeolocationCoordinates>();
@@ -46,21 +48,32 @@ export function GetWeeklyMeetings() {
       <div className="grid place-items-center md:grid-cols-2 w-full space-y-8">
         <WeeklyMeetingsList />
 
-        <Button
-          isDisabled={state.selectedCongregation === undefined}
-          className="space-y-8 sm:p-4"
-          color="success"
-          variant="ghost"
-          onClick={(e) => {
-            if (!state.selectedCongregation) {
-              return;
-            }
+        <div className="md:grid-rows-2 space-y-16">
+          {userCoords ? (
+            <MapView
+              latitude={userCoords.latitude}
+              longitude={userCoords.longitude}
+            />
+          ) : (
+            <Spinner className="flex mx-auto" label="Loading map" />
+          )}
 
-            router.replace("/register/phone-number");
-          }}
-        >
-          Create Congregation <MoveRight />
-        </Button>
+          <Button
+            isDisabled={state.selectedCongregation === undefined}
+            className="space-y-8 sm:p-4 flex justify-center mx-auto"
+            color="success"
+            variant="ghost"
+            onClick={(e) => {
+              if (!state.selectedCongregation) {
+                return;
+              }
+
+              router.replace("/register/phone-number");
+            }}
+          >
+            Create Congregation <MoveRight />
+          </Button>
+        </div>
       </div>
     </div>
   );

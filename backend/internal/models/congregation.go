@@ -32,6 +32,10 @@ type Congregation struct {
 	Name    string `json:"name"`
 	Address string `json:"address"`
 
+	// Location of the congregation/meeting
+	Lat string `json:"lat"`
+	Lon string `json:"lon"`
+
 	// Should not be modified/retrieved directly. Only through GetPhones/SetPhones
 	PhoneNumbers datatypes.JSON `json:"phoneNumbers"`
 

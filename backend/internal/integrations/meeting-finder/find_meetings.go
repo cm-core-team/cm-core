@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 
 	"backend/internal/integrations/meeting-finder/dtos"
 	"backend/internal/models"
@@ -61,10 +62,16 @@ func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Con
 			return nil, err
 		}
 
+		fmt.Println("LOCATION:")
+		fmt.Println(meeting.Location.Latitude)
+		fmt.Println(meeting.Location.Longitude)
+
 		newCong := models.Congregation{
 			Name:    meeting.Properties.OrgName,
 			Address: meeting.Properties.Address,
 			Users:   []models.User{}, // Empty until a user is added
+			Lat:     strconv.FormatFloat(meeting.Location.Latitude, 'E', -1, 64),
+			Lon:     strconv.FormatFloat(meeting.Location.Longitude, 'E', -1, 64),
 		}
 		if err := newCong.SetPhones(phones); err != nil {
 			return nil, err

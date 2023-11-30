@@ -33,6 +33,10 @@ describe("Congregation CRUD Actions", () => {
     expect(createdCongregation.phoneNumbers).toEqual(
       selectedCongregation.phoneNumbers
     );
+
+    // Location attributes
+    expect(createdCongregation.lat).toBeTruthy();
+    expect(createdCongregation.lon).toBeTruthy();
   });
 
   it("should correctly identify invalid signatures", async () => {
