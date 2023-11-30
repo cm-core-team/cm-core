@@ -1,7 +1,7 @@
 "use client";
 
 import { Button as NextUIButton } from "@nextui-org/button";
-import { RootState } from "@/lib/stores/store";
+import { RootState } from "@/lib/stores/app-store";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useSelector } from "react-redux";

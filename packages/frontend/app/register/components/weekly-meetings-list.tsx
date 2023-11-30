@@ -6,7 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import React from "react";
 import { Spinner } from "@nextui-org/spinner";
 import { DisabledButton } from "@/components/disabled-button";
-import { RootState } from "@/lib/stores/store";
+import { RootState } from "@/lib/stores/app-store";
 import { useDispatch, useSelector } from "react-redux";
 import { localMeetingsReducer } from "@/lib/stores/local-meetings";
 
