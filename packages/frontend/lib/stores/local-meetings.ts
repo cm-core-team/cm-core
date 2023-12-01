@@ -3,7 +3,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { backendErrorHandle } from "../backend-error-handle";
 import {
   CongregationGroups,
-  groupByCoords,
+  groupByLocation,
 } from "../congregation/group-by-coords";
 import { fetchLocalMeetings } from "../find-meetings/fetch-meetings";
 import { getUserLocation } from "../find-meetings/get-user-location";
@@ -73,7 +73,7 @@ export const localMeetingsSlice = createSlice({
       state.selectedCongregation = action.payload;
     },
     regroupCongregations: (state, action: PayloadAction<Congregation[]>) => {
-      state.groupedCongregationsByLocation = groupByCoords(action.payload);
+      state.groupedCongregationsByLocation = groupByLocation(action.payload);
     },
     setDisplayCongregations: (
       state,

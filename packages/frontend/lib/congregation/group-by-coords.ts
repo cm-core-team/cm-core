@@ -7,7 +7,13 @@ export function generateKey(meeting: Congregation): string {
   return `${meeting.lat}-${meeting.lon}`;
 }
 
-export function groupByCoords(meetings: Congregation[]): CongregationGroups {
+/**
+ * Group a list of congregations by their location.
+ *
+ * @param meetings meetings to group.
+ * @returns grouped congregations in a hashmap.
+ */
+export function groupByLocation(meetings: Congregation[]): CongregationGroups {
   // Create a key unique to coordinates
   return meetings.reduce((acc: CongregationGroups, meeting) => {
     const key = generateKey(meeting);

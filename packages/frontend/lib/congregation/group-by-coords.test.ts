@@ -1,10 +1,10 @@
 import { CongregationGenerator } from "../fixtures/generate-congregation";
 
-import { generateKey, groupByCoords } from "./group-by-coords";
+import { generateKey, groupByLocation } from "./group-by-coords";
 
 test("should correctly group congregations with subs", () => {
   const meetings = CongregationGenerator.instance.randomWithSubs();
-  const groupedMeetings = groupByCoords(meetings);
+  const groupedMeetings = groupByLocation(meetings);
 
   meetings.forEach((meeting) => {
     const key = generateKey(meeting);

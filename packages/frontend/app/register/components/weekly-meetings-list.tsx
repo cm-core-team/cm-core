@@ -10,7 +10,6 @@ import { MapToggle } from "./map-toggle";
 import { MeetingCard } from "./meeting-card";
 
 import { DisabledButton } from "@/components/disabled-button";
-import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
@@ -25,7 +24,6 @@ const { setSelectedCongregation, setDisplayCongregations } =
   localMeetingsSlice.actions;
 
 export function WeeklyMeetingsList() {
-  const { isSmall } = useScreenWidth();
   // Selected congregation to create
   const [selectedId, setSelectedId] = React.useState<number>();
 
@@ -59,43 +57,9 @@ export function WeeklyMeetingsList() {
   return (
     <div className="w-full border-solid border-3 rounded-xl border-spacing-3 shadow-xl shadow-secondary sm:p-4 p-2">
       {isFiltered ? (
-        <>
-          <span
-            className="flex p-3 gap-x-3"
-            role="button"
-            onClick={() =>
-              dispatch(setDisplayCongregations(state.localCongregations))
-            }
-          >
-            <ArrowLeft /> Go back
-          </span>
-          <p className="opacity-50">
-            Results at this location: {state.displayCongregations.length}
-          </p>
-        </>
+        <FilteredResultsHeader />
       ) : (
-        <>
-          <div className="flex">
-            <big className="p-3">Your Weekly Meetings</big>
-            <div className="flex ml-auto justify-end p-3">
-              {isSmall && <MapToggle />}
-            </div>
-          </div>
-
-          <p className="p-3 text-xs">
-            Select your congregation from the list below
-          </p>
-          <DisabledButton className="flex ml-auto">
-            <p>
-              Selected:{" "}
-              {selectedId !== undefined ? (
-                state.displayCongregations[selectedId].name
-              ) : (
-                <span className="text-red-600">No selection</span>
-              )}
-            </p>
-          </DisabledButton>
-        </>
+        <MainWeeklyMeetingsHeader selectedId={selectedId} />
       )}
 
       <ScrollArea className="md:h-unit-9xl h-unit-7xl rounded">
@@ -120,5 +84,57 @@ export function WeeklyMeetingsList() {
         <ScrollBar orientation="vertical" />
       </ScrollArea>
     </div>
+  );
+}
+
+function MainWeeklyMeetingsHeader({ selectedId }: { selectedId?: number }) {
+  const { isSmall } = useScreenWidth();
+  const state = useSelector((state: RootState) => state.localMeetings);
+
+  return (
+    <>
+      <div className="flex">
+        <big className="p-3">Your Weekly Meetings</big>
+        <div className="flex ml-auto justify-end p-3">
+          {isSmall && <MapToggle />}
+        </div>
+      </div>
+
+      <p className="p-3 text-xs">
+        Select your congregation from the list below
+      </p>
+      <DisabledButton className="flex ml-auto">
+        <p>
+          Selected:{" "}
+          {selectedId !== undefined ? (
+            state.displayCongregations[selectedId].name
+          ) : (
+            <span className="text-red-600">No selection</span>
+          )}
+        </p>
+      </DisabledButton>
+    </>
+  );
+}
+
+function FilteredResultsHeader() {
+  const dispatch: AppDispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.localMeetings);
+
+  return (
+    <>
+      <span
+        className="flex p-3 gap-x-3"
+        role="button"
+        onClick={() =>
+          dispatch(setDisplayCongregations(state.localCongregations))
+        }
+      >
+        <ArrowLeft /> Go back
+      </span>
+      <p className="opacity-50">
+        Results at this location: {state.displayCongregations.length}
+      </p>
+    </>
   );
 }

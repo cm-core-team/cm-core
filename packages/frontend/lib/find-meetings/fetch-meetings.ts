@@ -8,7 +8,7 @@ const fetchMeetingsSchema = z.array(congregationSchema.passthrough());
 
 export async function fetchLocalMeetings(
   latitude: string,
-  longitude: string
+  longitude: string,
 ): Promise<Congregation[]> {
   const response = await axios.post(backendRoutes.getLocalMeetings, {
     latitude: latitude,

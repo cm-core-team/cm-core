@@ -6,9 +6,7 @@ import { backendErrorHandle } from "../backend-error-handle";
 import { backendRoutes, userErrors } from "../config";
 import { Congregation, congregationSchema } from "../types/congregation";
 
-
 import { toast } from "@/components/ui/use-toast";
-
 
 export const createCongregationResponseSchema = z.object({
   congregation: congregationSchema,
@@ -16,21 +14,20 @@ export const createCongregationResponseSchema = z.object({
 
 export async function createCongregation(
   congregation: Congregation,
-  router: AppRouterInstance
+  router: AppRouterInstance,
 ) {
   // TODO:
   // - Verify congregation phone number (dummy for DEV environment)
-  console.log("Create congregation");
   // NOTE: No need to check if congregation exists as the
   // "Create" button is disabled when congregation is not selected
 
   try {
     const response = await axios.post(
       backendRoutes.congregation.create,
-      congregation
+      congregation,
     );
     const objectMatch = createCongregationResponseSchema.safeParse(
-      response.data
+      response.data,
     );
 
     if (!objectMatch.success) {
