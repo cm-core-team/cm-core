@@ -1,14 +1,14 @@
 import axios from "axios";
-
 import { describe, expect, it } from "bun:test";
-import { DBClient } from "../pool";
 import { backendRoutes } from "frontend/lib/config";
-import { generateCongregation } from "frontend/lib/fixtures/generate-congregation";
+import { CongregationGenerator } from "frontend/lib/fixtures/generate-congregation";
+
+import { DBClient } from "../pool";
 
 describe("Congregation Phone Verification", () => {
   it("should correctly identify correct codes", async () => {
     const client = await DBClient.shared.getClient();
-    const congregation = generateCongregation();
+    const congregation = CongregationGenerator.instance.random();
     const phoneNumber = congregation.phoneNumbers[0].phone;
 
     await axios.post(backendRoutes.congregation.sendVerificationCode, {
@@ -30,7 +30,7 @@ describe("Congregation Phone Verification", () => {
   });
 
   it("should correctly identify incorrect codes", async () => {
-    const congregation = generateCongregation();
+    const congregation = CongregationGenerator.instance.random();
     const phoneNumber = congregation.phoneNumbers[0].phone;
 
     await axios.post(backendRoutes.congregation.sendVerificationCode, {

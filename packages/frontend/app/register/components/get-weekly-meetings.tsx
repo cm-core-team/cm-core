@@ -1,17 +1,33 @@
 "use client";
 
 import React from "react";
-import { WeeklyMeetingsList } from "./weekly-meetings-list";
+
 import { Button } from "@nextui-org/button";
 import { MoveRight } from "lucide-react";
-import { createCongregation } from "@/lib/find-meetings/create-congregation";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { fetchLocalMeetingsThunk } from "@/lib/stores/local-meetings";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/lib/stores/store";
+
+import { WeeklyMeetingsList } from "./weekly-meetings-list";
+
+import { useScreenWidth } from "@/lib/hooks/screen-width";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import {
+  fetchLocalMeetingsThunk,
+  getUserCoordsThunk,
+  localMeetingsSlice,
+} from "@/lib/stores/local-meetings";
+
+const DynamicMapView = dynamic(
+  () => import("./map-view").then((mod) => mod.MapView),
+  { ssr: false },
+);
+
+const { regroupCongregations, setDisplayCongregations } =
+  localMeetingsSlice.actions;
 
 export function GetWeeklyMeetings() {
-  const [userCoords, setUserCoords] = React.useState<GeolocationCoordinates>();
+  const { isSmall } = useScreenWidth();
 
   const router = useRouter();
   const state = useSelector((state: RootState) => state.localMeetings);
@@ -20,47 +36,62 @@ export function GetWeeklyMeetings() {
 
   React.useEffect(() => {
     // Get LatLon on page load
-    navigator.geolocation.getCurrentPosition((position) => {
-      setUserCoords(position.coords);
-    });
-  }, []);
+    dispatch(getUserCoordsThunk());
+  }, [dispatch]);
 
   React.useEffect(() => {
-    // Get all the local congregations around latitude and longitude
-    if (!(userCoords?.latitude && userCoords.longitude)) {
+    if (!state.localCongregations) {
       return;
     }
 
+    // Whenever localCongregations is modified
+
+    // We want to recompute the groupings
+    dispatch(regroupCongregations(state.localCongregations));
+    // And set the displayable congregations to our updated ones
+    dispatch(setDisplayCongregations(state.localCongregations));
+  }, [state.localCongregations, dispatch]);
+
+  React.useEffect(() => {
+    if (!(state.userCoords?.latitude && state.userCoords.longitude)) {
+      return;
+    }
+
+    // Fetch all local meetings at this location
     dispatch(
       fetchLocalMeetingsThunk({
-        latitude: String(userCoords.latitude),
-        longitude: String(userCoords.longitude),
-      })
+        latitude: String(state.userCoords.latitude),
+        longitude: String(state.userCoords.longitude),
+      }),
     );
-  }, [userCoords, dispatch]);
+  }, [state.userCoords, dispatch]);
 
   return (
     <div className="grid place-items-center space-y-8 md:p-4 p-1">
       <h2 className="text-2xl">Register a Congregation</h2>
 
-      <div className="grid place-items-center md:grid-cols-2 w-full space-y-8">
+      <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
         <WeeklyMeetingsList />
 
-        <Button
-          isDisabled={state.selectedCongregation === undefined}
-          className="space-y-8 sm:p-4"
-          color="success"
-          variant="ghost"
-          onClick={(e) => {
-            if (!state.selectedCongregation) {
-              return;
-            }
+        <div className="md:grid-rows-2 space-y-16 w-full">
+          {!isSmall && <DynamicMapView />}
 
-            router.replace("/register/phone-number");
-          }}
-        >
-          Create Congregation <MoveRight />
-        </Button>
+          <Button
+            isDisabled={state.selectedCongregation === undefined}
+            className="space-y-8 sm:p-4 flex justify-center mx-auto"
+            color="success"
+            variant="ghost"
+            onClick={(e) => {
+              if (!state.selectedCongregation) {
+                return;
+              }
+
+              router.replace("/register/phone-number");
+            }}
+          >
+            Create Congregation <MoveRight />
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -13,11 +13,17 @@ type MeetingProperties struct {
 	Phones  []MeetingPhone `json:"phones"`
 }
 
+type MeetingLocation struct {
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
+}
+
 type GeoLocation struct {
 	GeoID      string            `json:"geoId"`
 	Type       string            `json:"type"`
 	IsPrimary  bool              `json:"isPrimary"`
 	Properties MeetingProperties `json:"properties"`
+	Location   MeetingLocation   `json:"location"`
 }
 
 type GeoLocationList struct {

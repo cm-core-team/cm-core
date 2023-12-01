@@ -1,6 +1,8 @@
+import fs from "fs";
+
 import { beforeAll, afterAll } from "bun:test";
 import { config } from "dotenv";
-import fs from "fs";
+
 import { DBClient } from "./pool";
 
 beforeAll(async () => {

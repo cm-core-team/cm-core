@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { localMeetingsReducer } from "./local-meetings";
+
+import { localMeetingsSlice } from "./local-meetings";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      localMeetings: localMeetingsReducer.reducer,
+      localMeetings: localMeetingsSlice.reducer,
     },
   });
 };

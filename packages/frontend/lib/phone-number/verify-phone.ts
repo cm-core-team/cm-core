@@ -1,7 +1,9 @@
 import axios from "axios";
+
+import { backendErrorHandle } from "../backend-error-handle";
 import { backendRoutes } from "../config";
 import { Congregation } from "../types/congregation";
-import { backendErrorHandle } from "../backend-error-handle";
+
 import { toast } from "@/components/ui/use-toast";
 
 export async function sendVerificationCode(

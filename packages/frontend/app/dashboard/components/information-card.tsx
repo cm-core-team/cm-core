@@ -1,3 +1,5 @@
+import ItemCards from "./item-cards";
+
 import {
   Card,
   CardContent,
@@ -6,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import ItemCards from "./item-cards";
 
 const InformationCard = ({
   informationBoardData,

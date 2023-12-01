@@ -30,4 +30,12 @@ func TestFindLocalMeetings(t *testing.T) {
 	if len(meetings[0].Users) != 0 {
 		t.Error("Expected to find no users")
 	}
+
+	if meetings[0].Lat == "" {
+		t.Error("Latitude is not found")
+	}
+
+	if meetings[0].Lon == "" {
+		t.Error("Longitude is not found")
+	}
 }

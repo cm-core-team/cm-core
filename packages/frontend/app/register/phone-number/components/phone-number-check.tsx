@@ -1,10 +1,14 @@
 "use client";
 
-import { Button as NextUIButton } from "@nextui-org/button";
-import { RootState } from "@/lib/stores/store";
-import { useRouter } from "next/navigation";
 import React from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button as NextUIButton } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { z } from "zod";
+
 import {
   Form,
   FormDescription,
@@ -14,9 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Select,
   SelectContent,
@@ -28,6 +29,7 @@ import {
   sendVerificationCode,
   verifyPhone,
 } from "@/lib/phone-number/verify-phone";
+import { RootState } from "@/lib/stores/app-store";
 
 export function PhoneNumberCheck() {
   const [didSendCode, setDidSendCode] = React.useState(false);
@@ -42,14 +44,10 @@ export function PhoneNumberCheck() {
   });
   const router = useRouter();
   const selectedCongregation = useSelector(
-    (state: RootState) => state.localMeetings.selectedCongregation
+    (state: RootState) => state.localMeetings.selectedCongregation,
   );
-  if (selectedCongregation === undefined) {
-    router.replace("/register");
-    return;
-  }
 
-  const startCountdown = (duration: number) => {
+  const startCountdown = React.useCallback((duration: number) => {
     setCountdown(duration);
     const interval = setInterval(() => {
       setCountdown((currentCountdown) => {
@@ -60,7 +58,24 @@ export function PhoneNumberCheck() {
         return currentCountdown - 1;
       });
     }, 1000); // Decrease countdown every second
-  };
+  }, []);
+
+  const onSendVerificationCode = React.useCallback(() => {
+    if (selectedCongregation === undefined || countdown !== 0) {
+      return;
+    }
+
+    sendVerificationCode(
+      selectedCongregation,
+      form.getValues().phoneNumber,
+    ).then(() => setDidSendCode(true));
+    startCountdown(30); // Start a 30 seconds countdown
+  }, [countdown, form, selectedCongregation, startCountdown]);
+
+  if (selectedCongregation === undefined) {
+    router.replace("/register");
+    return;
+  }
 
   const onSubmit = () => {
     verifyPhone(selectedCongregation, form.getValues().verificationCode);
@@ -96,7 +111,7 @@ export function PhoneNumberCheck() {
                           <SelectItem value={phoneNumber.phone} key={i}>
                             {phoneNumber.phone}
                           </SelectItem>
-                        )
+                        ),
                       )}
                     </SelectContent>
                   </Select>
@@ -105,15 +120,7 @@ export function PhoneNumberCheck() {
                     variant="ghost"
                     color="default"
                     className="text-xs"
-                    onClick={() => {
-                      if (countdown === 0) {
-                        sendVerificationCode(
-                          selectedCongregation,
-                          form.getValues().phoneNumber
-                        ).then(() => setDidSendCode(true));
-                        startCountdown(30); // Start a 30 seconds countdown
-                      }
-                    }}
+                    onClick={onSendVerificationCode}
                   >
                     {countdown > 0 ? `Resend in ${countdown}s` : "Send Code"}
                   </NextUIButton>
