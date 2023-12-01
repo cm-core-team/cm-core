@@ -33,6 +33,10 @@ export function WeeklyMeetingsList() {
   const isFiltered =
     state.displayCongregations.length !== state.localCongregations.length;
 
+  React.useEffect(() => {
+    setSelectedId(undefined);
+  }, [state.displayCongregations]);
+
   const onMeetingSelect = React.useCallback(
     (i: number) => {
       // If the congregation is already selected, unselect
@@ -57,10 +61,21 @@ export function WeeklyMeetingsList() {
   return (
     <div className="w-full border-solid border-3 rounded-xl border-spacing-3 shadow-xl shadow-secondary sm:p-4 p-2">
       {isFiltered ? (
-        <FilteredResultsHeader />
+        <FilteredResultsHeader selectedId={selectedId} />
       ) : (
         <MainWeeklyMeetingsHeader selectedId={selectedId} />
       )}
+
+      <DisabledButton className="flex ml-auto">
+        <p>
+          Selected:{" "}
+          {selectedId !== undefined ? (
+            state.displayCongregations[selectedId].name
+          ) : (
+            <span className="text-red-600">No selection</span>
+          )}
+        </p>
+      </DisabledButton>
 
       <ScrollArea className="md:h-unit-9xl h-unit-7xl rounded">
         <div className="space-y-8">
@@ -103,35 +118,32 @@ function MainWeeklyMeetingsHeader({ selectedId }: { selectedId?: number }) {
       <p className="p-3 text-xs">
         Select your congregation from the list below
       </p>
-      <DisabledButton className="flex ml-auto">
-        <p>
-          Selected:{" "}
-          {selectedId !== undefined ? (
-            state.displayCongregations[selectedId].name
-          ) : (
-            <span className="text-red-600">No selection</span>
-          )}
-        </p>
-      </DisabledButton>
     </>
   );
 }
 
-function FilteredResultsHeader() {
+function FilteredResultsHeader({ selectedId }: { selectedId?: number }) {
   const dispatch: AppDispatch = useDispatch();
   const state = useSelector((state: RootState) => state.localMeetings);
 
   return (
     <>
-      <span
-        className="flex p-3 gap-x-3"
-        role="button"
-        onClick={() =>
-          dispatch(setDisplayCongregations(state.localCongregations))
-        }
-      >
-        <ArrowLeft /> Go back
-      </span>
+      <div className="flex gap-x-8">
+        <span
+          className="flex p-3 gap-x-3 hover:bg-secondary rounded-lg"
+          role="button"
+          onClick={() =>
+            dispatch(setDisplayCongregations(state.localCongregations))
+          }
+        >
+          <ArrowLeft /> Go back
+        </span>
+        {state.displayCongregations.length && (
+          <small className="opacity-50 p-3 flex ml-auto justify-end">
+            At the location of: {state.displayCongregations.slice(-1)[0].name}
+          </small>
+        )}
+      </div>
       <p className="opacity-50">
         Results at this location: {state.displayCongregations.length}
       </p>
