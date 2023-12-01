@@ -1,4 +1,8 @@
 "use client";
+
+import * as React from "react";
+
+import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
   CardContent,
@@ -7,10 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import * as React from "react";
-
-import { Calendar } from "@/components/ui/calendar";
 
 function CalendarDemo() {
   const [date, setDate] = React.useState<Date | undefined>(new Date());

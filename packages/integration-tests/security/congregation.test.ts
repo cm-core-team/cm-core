@@ -1,9 +1,9 @@
 import axios from "axios";
-
 import { describe, expect, it } from "bun:test";
-import { DBClient } from "../pool";
 import { backendRoutes } from "frontend/lib/config";
 import { CongregationGenerator } from "frontend/lib/fixtures/generate-congregation";
+
+import { DBClient } from "../pool";
 
 describe("Congregation Phone Verification", () => {
   it("should correctly identify correct codes", async () => {

@@ -5,10 +5,11 @@ import "leaflet/dist/leaflet.css";
 import { Marker, Popup } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
-import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { useDispatch, useSelector } from "react-redux";
-import { localMeetingsSlice } from "@/lib/stores/local-meetings";
+
 import { generateKey, groupByCoords } from "@/lib/congregation/group-by-coords";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import { localMeetingsSlice } from "@/lib/stores/local-meetings";
 
 export interface MapViewProps {
   userCoords: {

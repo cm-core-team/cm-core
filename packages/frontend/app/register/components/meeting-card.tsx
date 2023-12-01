@@ -1,9 +1,10 @@
 "use client";
 
-import { Congregation } from "@/lib/types/congregation";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
+
+import { Congregation } from "@/lib/types/congregation";
 
 export interface MeetingCardProps {
   congregation: Congregation;

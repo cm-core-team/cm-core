@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { tokenSchema } from "./token";
 
 export const userTypeSchema = z.enum(["Admin", "Regular"]);

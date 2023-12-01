@@ -1,5 +1,6 @@
-import { Congregation } from "../types/congregation";
 import { faker } from "@faker-js/faker";
+
+import { Congregation } from "../types/congregation";
 
 export class CongregationGenerator {
   public static instance = new CongregationGenerator();

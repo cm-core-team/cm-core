@@ -1,11 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Congregation } from "../types/congregation";
-import { fetchLocalMeetings } from "../find-meetings/fetch-meetings";
+
 import { backendErrorHandle } from "../backend-error-handle";
 import {
   CongregationGroups,
   groupByCoords,
 } from "../congregation/group-by-coords";
+import { fetchLocalMeetings } from "../find-meetings/fetch-meetings";
+import { Congregation } from "../types/congregation";
 
 export interface LocalMeetingsState {
   localCongregations: Congregation[];

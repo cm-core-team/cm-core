@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import { localMeetingsSlice } from "./local-meetings";
 
 export const makeStore = () => {

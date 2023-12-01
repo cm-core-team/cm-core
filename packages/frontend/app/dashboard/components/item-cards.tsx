@@ -1,3 +1,5 @@
+import { Separator } from "../../../components/ui/separator";
+
 import {
   Card,
   CardContent,
@@ -6,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "../../../components/ui/separator";
 
 const ItemCards = ({ data }: { data: any }) => {
   return (

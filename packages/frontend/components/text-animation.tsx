@@ -1,9 +1,11 @@
 "use client";
 
+import React, { useEffect } from "react";
+
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect } from "react";
+
 import BlinkingCursor from "./blinking-cursor";
-import React from "react";
+
 
 export default function TextAnim() {
   // The typing animation was copied from this article:

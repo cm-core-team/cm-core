@@ -1,11 +1,11 @@
+import axios from "axios";
 import { describe, expect, it } from "bun:test";
+import { backendRoutes } from "frontend/lib/config";
+import { CongregationGenerator } from "frontend/lib/fixtures/generate-congregation";
 import {
   congregationSchema,
   Congregation,
 } from "frontend/lib/types/congregation.ts";
-import { backendRoutes } from "frontend/lib/config";
-import { CongregationGenerator } from "frontend/lib/fixtures/generate-congregation";
-import axios from "axios";
 
 describe("Congregation CRUD Actions", () => {
   it("should correctly create a congregation", async () => {

@@ -1,5 +1,10 @@
 "use client";
 
+import { Github } from "lucide-react";
+import Link from "next/link";
+
+import { ModeToggle } from "../components/theme-mode-toggle";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,9 +14,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { ModeToggle } from "../components/theme-mode-toggle";
-import { Github } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export function RootNavMenu(): JSX.Element {
@@ -61,7 +63,7 @@ export function RootNavMenu(): JSX.Element {
                         <NavigationMenuLink
                           className={cn(
                             navigationMenuTriggerStyle(),
-                            "w-full flex justify-start"
+                            "w-full flex justify-start",
                           )}
                         >
                           {feature.title}
