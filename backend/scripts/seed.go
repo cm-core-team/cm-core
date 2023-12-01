@@ -28,8 +28,8 @@ func main() {
 
 		// Congregation needs to be created first because of foreign key constraint
 		congregation := models.Congregation{
-			Name: address.State,
-			Area: address.City,
+			Name:    address.State,
+			Address: address.Address,
 		}
 		db.Create(&congregation)
 

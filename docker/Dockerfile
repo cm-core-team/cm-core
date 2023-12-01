@@ -6,7 +6,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 RUN add-apt-repository ppa:longsleep/golang-backports && \
     apt-get update && \
-    apt-get install golang-go git ca-certificates -y
+    apt-get install golang-go git ca-certificates curl -y
 
 
 RUN go install github.com/cosmtrek/air@latest

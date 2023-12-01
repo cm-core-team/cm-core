@@ -1,0 +1,1164 @@
+{
+    "geoLocationList": [
+        {
+            "geoId": "C7C3018E-A9E7-4222-95AD-7FE211BAD23D",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.518281,
+                "longitude": -0.57704
+            },
+            "properties": {
+                "orgGuid": "C7C3018E-A9E7-4222-95AD-7FE211BAD23D",
+                "orgName": "Windsor",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nSheehy Way\r\nSLOUGH\r\nSL2 5SS\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": "2023-12-31",
+                    "changeStamp": null,
+                    "future": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "15:30"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:30"
+                        }
+                    }
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07516 249401",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "67F04C68-39B7-48B1-A863-F80098753288",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.518281,
+                "longitude": -0.57704
+            },
+            "properties": {
+                "orgGuid": "67F04C68-39B7-48B1-A863-F80098753288",
+                "orgName": "Slough, West",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nSheehy Way\r\nSLOUGH\r\nSL2 5SS\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07813 063936",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "25775D90-6362-43AC-A676-8FFDC4C16AF1",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.518281,
+                "longitude": -0.57704
+            },
+            "properties": {
+                "orgGuid": "25775D90-6362-43AC-A676-8FFDC4C16AF1",
+                "orgName": "Slough, East",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nSheehy Way\r\nSLOUGH\r\nSL2 5SS\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "15:30"
+                        },
+                        "midweek": {
+                            "weekday": 2,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07986446234",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "30577714-3546-4F6D-9366-49DC9796CD9A",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.52575,
+                "longitude": -0.716555
+            },
+            "properties": {
+                "orgGuid": "30577714-3546-4F6D-9366-49DC9796CD9A",
+                "orgName": "Maidenhead, Bray",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nHolmanleaze\r\nMAIDENHEAD\r\nSL6 8AW\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": "2024-01-07",
+                    "changeStamp": null,
+                    "future": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:15"
+                        }
+                    }
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07795557217",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "B46781A8-43D5-4848-8DCB-3E1C11804671",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.52575,
+                "longitude": -0.716555
+            },
+            "properties": {
+                "orgGuid": "B46781A8-43D5-4848-8DCB-3E1C11804671",
+                "orgName": "Maidenhead, Cookham",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nHolmanleaze\r\nMAIDENHEAD\r\nSL6 8AW\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "01628 773427",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "9086E21E-D32B-4953-866A-995CF53CC689",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.422977,
+                "longitude": -0.755605
+            },
+            "properties": {
+                "orgGuid": "9086E21E-D32B-4953-866A-995CF53CC689",
+                "orgName": "Bracknell, East",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nHorsneile Lane\r\nPriestwood\r\nBRACKNELL\r\nRG42 2DL\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 2,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "+44 7399611733",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "0EEEA92F-B59F-4675-80C2-D10D8EE2506E",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.422977,
+                "longitude": -0.755605
+            },
+            "properties": {
+                "orgGuid": "0EEEA92F-B59F-4675-80C2-D10D8EE2506E",
+                "orgName": "Bracknell, North",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nHorsneile Lane\r\nPriestwood\r\nBRACKNELL\r\nRG42 2DL\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07739 456802",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "5443EA83-2EF6-4BD1-B052-9433BDBE04F6",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.63536,
+                "longitude": -0.754299
+            },
+            "properties": {
+                "orgGuid": "5443EA83-2EF6-4BD1-B052-9433BDBE04F6",
+                "orgName": "High Wycombe, Cressex",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Rear of Morrisons\r\nBellfield Road                          \r\nHIGH WYCOMBE\r\nHP13 5HP\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "01494 436856",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "91489D93-AC6E-4522-A55B-BEE81F081D19",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.63536,
+                "longitude": -0.754299
+            },
+            "properties": {
+                "orgGuid": "91489D93-AC6E-4522-A55B-BEE81F081D19",
+                "orgName": "High Wycombe, Hughenden",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Rear of Morrisons\r\nBellfield Road                          \r\nHIGH WYCOMBE\r\nHP13 5HP\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "01494 436856",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "0C574797-2B80-449C-B4B8-633F4997A11F",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.426847,
+                "longitude": -0.49042
+            },
+            "properties": {
+                "orgGuid": "0C574797-2B80-449C-B4B8-633F4997A11F",
+                "orgName": "London, Staines",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nChestnut Grove\r\nSTAINES\r\nTW18 1DB\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "01784 682258",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "77332574-3C8C-41CD-8A77-EBDC473BFAE4",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.641963,
+                "longitude": -0.501577
+            },
+            "properties": {
+                "orgGuid": "77332574-3C8C-41CD-8A77-EBDC473BFAE4",
+                "orgName": "London, Uxbridge",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nSwannells Walk\r\nChorleywood\r\nRICKMANSWORTH\r\nWD3 5FH\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:00"
+                        },
+                        "midweek": {
+                            "weekday": 2,
+                            "time": "19:25"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07795 181590",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "BD5EC48E-33E1-4C0D-8CF8-FADF895EF354",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.641963,
+                "longitude": -0.501577
+            },
+            "properties": {
+                "orgGuid": "BD5EC48E-33E1-4C0D-8CF8-FADF895EF354",
+                "orgName": "Chorleywood",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nSwannells Walk\r\nChorleywood\r\nRICKMANSWORTH\r\nWD3 5FH\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07594 142382",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "EA4A90FC-4287-4E8C-BE6D-A969CF51B4BF",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.711834,
+                "longitude": -0.612658
+            },
+            "properties": {
+                "orgGuid": "EA4A90FC-4287-4E8C-BE6D-A969CF51B4BF",
+                "orgName": "Chesham",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Griffetts Yard                          \r\nBellingdon Road                         \r\nCHESHAM\r\nHP5 2NW   \r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07966 019385",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "2B4087E4-187D-41AC-BA29-4EB5F58E1BE1",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.388379,
+                "longitude": -0.794926
+            },
+            "properties": {
+                "orgGuid": "2B4087E4-187D-41AC-BA29-4EB5F58E1BE1",
+                "orgName": "Wokingham",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nNewlands Farm\r\nOld Wokingham Road, Wokingham\r\nCROWTHORNE\r\nRG40 3BU\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07970929427",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "E2F6685A-FA12-40B0-BE75-8CDA06A1EA55",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.388379,
+                "longitude": -0.794926
+            },
+            "properties": {
+                "orgGuid": "E2F6685A-FA12-40B0-BE75-8CDA06A1EA55",
+                "orgName": "Bracknell, South",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nNewlands Farm\r\nOld Wokingham Road, Wokingham\r\nCROWTHORNE\r\nRG40 3BU\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07523 813167",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "485246EE-B26E-4003-8CCC-765A85784035",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.388379,
+                "longitude": -0.794926
+            },
+            "properties": {
+                "orgGuid": "485246EE-B26E-4003-8CCC-765A85784035",
+                "orgName": "Bracknell, West",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nNewlands Farm\r\nOld Wokingham Road, Wokingham\r\nCROWTHORNE\r\nRG40 3BU\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "15:45"
+                        },
+                        "midweek": {
+                            "weekday": 2,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "01344 371 526",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "653C5AD6-E482-417A-BBC2-FBBC0BCA87E9",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.304636,
+                "longitude": -0.641104
+            },
+            "properties": {
+                "orgGuid": "653C5AD6-E482-417A-BBC2-FBBC0BCA87E9",
+                "orgName": "Woking",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\n160A Connaught Road\r\nBrookwood\r\nWOKING\r\nGU24 0AL\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07864 699423",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "21990EB8-F55F-43C6-922C-6F75B3CB05A4",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.519472,
+                "longitude": -0.424874
+            },
+            "properties": {
+                "orgGuid": "21990EB8-F55F-43C6-922C-6F75B3CB05A4",
+                "orgName": "London, West Drayton",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's witnesses\r\n12A Wood End Green Road\r\nHAYES\r\nUB3 2SH   \r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:00"
+                        },
+                        "midweek": {
+                            "weekday": 2,
+                            "time": "19:25"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "020 8561 2180",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "86F37A61-CE9F-4CFB-80E6-807367451D4B",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.519472,
+                "longitude": -0.424874
+            },
+            "properties": {
+                "orgGuid": "86F37A61-CE9F-4CFB-80E6-807367451D4B",
+                "orgName": "London, Yeading Brook",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's witnesses\r\n12A Wood End Green Road\r\nHAYES\r\nUB3 2SH   \r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 6,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 1,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07788674473",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "FF3B9DEB-FF16-472F-A4A1-91D96E619E26",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.519472,
+                "longitude": -0.424874
+            },
+            "properties": {
+                "orgGuid": "FF3B9DEB-FF16-472F-A4A1-91D96E619E26",
+                "orgName": "London, Hayes",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's witnesses\r\n12A Wood End Green Road\r\nHAYES\r\nUB3 2SH   \r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "16:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:25"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "020 8561 2180",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "B3DECD44-1B6A-45C8-8237-1D25CAB62D58",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.519472,
+                "longitude": -0.424874
+            },
+            "properties": {
+                "orgGuid": "B3DECD44-1B6A-45C8-8237-1D25CAB62D58",
+                "orgName": "London, Southall",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's witnesses\r\n12A Wood End Green Road\r\nHAYES\r\nUB3 2SH   \r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "020 8561 2180",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "3F35356D-BFA1-4E21-AD19-34C697EEC8E6",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.337081,
+                "longitude": -0.754975
+            },
+            "properties": {
+                "orgGuid": "3F35356D-BFA1-4E21-AD19-34C697EEC8E6",
+                "orgName": "Camberley",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\n2 The Avenue\r\nCAMBERLEY\r\nGU15 3LL\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:30"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:15"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07766 019267",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "B34E252D-171A-4512-B7B4-DF49FF4D9355",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.337081,
+                "longitude": -0.754975
+            },
+            "properties": {
+                "orgGuid": "B34E252D-171A-4512-B7B4-DF49FF4D9355",
+                "orgName": "Yateley",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\n2 The Avenue\r\nCAMBERLEY\r\nGU15 3LL\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "01276 677418",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "6954EEC7-96FB-46CC-97C6-8DD8680BBA47",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.338252,
+                "longitude": -0.471149
+            },
+            "properties": {
+                "orgGuid": "6954EEC7-96FB-46CC-97C6-8DD8680BBA47",
+                "orgName": "Byfleet",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\n145 High Road\r\nWEST BYFLEET\r\nKT14 7RJ  \r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "13:30"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07871 922498",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "2FF6991C-777C-4DF6-B02B-F54750BD142A",
+            "type": "weekly",
+            "isPrimary": true,
+            "location": {
+                "latitude": 51.338252,
+                "longitude": -0.471149
+            },
+            "properties": {
+                "orgGuid": "2FF6991C-777C-4DF6-B02B-F54750BD142A",
+                "orgName": "Chertsey",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\n145 High Road\r\nWEST BYFLEET\r\nKT14 7RJ  \r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "E",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 7,
+                            "time": "10:00"
+                        },
+                        "midweek": {
+                            "weekday": 4,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07436564305",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "136A44BB-C392-41E2-8FFC-88E3514F9FE6",
+            "type": "weekly",
+            "isPrimary": false,
+            "location": {
+                "latitude": 51.518281,
+                "longitude": -0.57704
+            },
+            "properties": {
+                "orgGuid": "136A44BB-C392-41E2-8FFC-88E3514F9FE6",
+                "orgName": "Slough, Polish",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nSheehy Way\r\nSLOUGH\r\nSL2 5SS\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "P",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 6,
+                            "time": "10:30"
+                        },
+                        "midweek": {
+                            "weekday": 1,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07576112037",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        },
+        {
+            "geoId": "E62DAF00-43A0-420F-8D6A-DADD556DC9FB",
+            "type": "weekly",
+            "isPrimary": false,
+            "location": {
+                "latitude": 51.422977,
+                "longitude": -0.755605
+            },
+            "properties": {
+                "orgGuid": "E62DAF00-43A0-420F-8D6A-DADD556DC9FB",
+                "orgName": "Bracknell, Polish",
+                "orgType": "CONG",
+                "orgTransliteratedName": "",
+                "address": "Kingdom Hall of Jehovah's Witnesses\r\nHorsneile Lane\r\nPriestwood\r\nBRACKNELL\r\nRG42 2DL\r\nUNITED KINGDOM\r\n",
+                "transliteratedAddress": "",
+                "languageCode": "P",
+                "schedule": {
+                    "current": {
+                        "weekend": {
+                            "weekday": 6,
+                            "time": "17:00"
+                        },
+                        "midweek": {
+                            "weekday": 3,
+                            "time": "19:30"
+                        }
+                    },
+                    "futureDate": null,
+                    "changeStamp": null
+                },
+                "relatedLanguageCodes": [],
+                "phones": [
+                    {
+                        "phone": "07709623945",
+                        "ext": ""
+                    }
+                ],
+                "isPrivateMtgPlace": false,
+                "memorialAddress": "",
+                "memorialTime": ""
+            }
+        }
+    ],
+    "suggestedLanguageCodeList": [
+        "PTG",
+        "S"
+    ],
+    "hasMoreResults": true,
+    "isBroadSearch": false
+}

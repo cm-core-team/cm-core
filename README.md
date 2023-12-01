@@ -6,6 +6,8 @@ Manage a congregation with ease.
 
 ### To start
 
+#### Backend:
+
 - In the project root (where the `docker-compose.yml` file is located), run:
 
 ```bash
@@ -16,10 +18,19 @@ This will run in watch mode, so any changes to the code will be reflected in the
 
 - Ensure you have a .env.secret. You can use the .env.example as a template.
 
+#### Frontend:
+
+- In the project root also run:
+
+```bash
+bun i
+bun frontend
+```
+
 ### Seeder
 
 - To seed the database, run in the `backend/` folder:
 
 ```bash
-go run scripts/main.go
+go run scripts/seed.go
 ```
