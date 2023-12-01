@@ -12,8 +12,13 @@ import {
 } from "@/lib/stores/local-meetings";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { MapView } from "./map-view";
 import { Spinner } from "@nextui-org/react";
+import dynamic from "next/dynamic";
+
+const DynamicMapView = dynamic(
+  () => import("./map-view").then((mod) => mod.MapView),
+  { ssr: false }
+);
 
 const { regroupCongregations, setDisplayCongregations } =
   localMeetingsSlice.actions;
@@ -73,7 +78,7 @@ export function GetWeeklyMeetings() {
 
         <div className="md:grid-rows-2 space-y-16 w-full">
           {userCoords ? (
-            <MapView userCoords={userCoords} />
+            <DynamicMapView userCoords={userCoords} />
           ) : (
             <Spinner className="flex mx-auto" label="Loading map" />
           )}
