@@ -35,7 +35,7 @@ func TestFindLocalMeetings(t *testing.T) {
 		t.Error("Latitude is not found")
 	}
 
-	if meetings[0].Lat == "" {
+	if meetings[0].Lon == "" {
 		t.Error("Longitude is not found")
 	}
 }
