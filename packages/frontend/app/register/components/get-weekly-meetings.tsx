@@ -3,7 +3,6 @@
 import React from "react";
 
 import { Button } from "@nextui-org/button";
-import { Spinner } from "@nextui-org/react";
 import { MoveRight } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -11,9 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { WeeklyMeetingsList } from "./weekly-meetings-list";
 
+import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import {
   fetchLocalMeetingsThunk,
+  getUserCoordsThunk,
   localMeetingsSlice,
 } from "@/lib/stores/local-meetings";
 
@@ -26,7 +27,7 @@ const { regroupCongregations, setDisplayCongregations } =
   localMeetingsSlice.actions;
 
 export function GetWeeklyMeetings() {
-  const [userCoords, setUserCoords] = React.useState<GeolocationCoordinates>();
+  const { isSmall } = useScreenWidth();
 
   const router = useRouter();
   const state = useSelector((state: RootState) => state.localMeetings);
@@ -35,10 +36,8 @@ export function GetWeeklyMeetings() {
 
   React.useEffect(() => {
     // Get LatLon on page load
-    navigator.geolocation.getCurrentPosition((position) => {
-      setUserCoords(position.coords);
-    });
-  }, []);
+    dispatch(getUserCoordsThunk());
+  }, [dispatch]);
 
   React.useEffect(() => {
     if (!state.localCongregations) {
@@ -54,18 +53,18 @@ export function GetWeeklyMeetings() {
   }, [state.localCongregations, dispatch]);
 
   React.useEffect(() => {
-    if (!(userCoords?.latitude && userCoords.longitude)) {
+    if (!(state.userCoords?.latitude && state.userCoords.longitude)) {
       return;
     }
 
     // Fetch all local meetings at this location
     dispatch(
       fetchLocalMeetingsThunk({
-        latitude: String(userCoords.latitude),
-        longitude: String(userCoords.longitude),
+        latitude: String(state.userCoords.latitude),
+        longitude: String(state.userCoords.longitude),
       }),
     );
-  }, [userCoords, dispatch]);
+  }, [state.userCoords, dispatch]);
 
   return (
     <div className="grid place-items-center space-y-8 md:p-4 p-1">
@@ -75,11 +74,7 @@ export function GetWeeklyMeetings() {
         <WeeklyMeetingsList />
 
         <div className="md:grid-rows-2 space-y-16 w-full">
-          {userCoords ? (
-            <DynamicMapView userCoords={userCoords} />
-          ) : (
-            <Spinner className="flex mx-auto" label="Loading map" />
-          )}
+          {!isSmall && <DynamicMapView />}
 
           <Button
             isDisabled={state.selectedCongregation === undefined}
