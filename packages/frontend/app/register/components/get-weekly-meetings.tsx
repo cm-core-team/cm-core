@@ -49,7 +49,7 @@ export function GetWeeklyMeetings() {
 
     // We want to recompute the groupings
     dispatch(regroupCongregations(state.localCongregations));
-    // Set the displayable congregations to our updated ones
+    // And set the displayable congregations to our updated ones
     dispatch(setDisplayCongregations(state.localCongregations));
   }, [state.localCongregations, dispatch]);
 
