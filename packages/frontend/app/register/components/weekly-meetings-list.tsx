@@ -1,14 +1,17 @@
 "use client";
 
-import { Congregation } from "@/lib/types/congregation";
-import { MeetingCard } from "./meeting-card";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import React from "react";
+
 import { Spinner } from "@nextui-org/spinner";
-import { DisabledButton } from "@/components/disabled-button";
-import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { useDispatch, useSelector } from "react-redux";
+
+import { MeetingCard } from "./meeting-card";
+
+import { DisabledButton } from "@/components/disabled-button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
+import { Congregation } from "@/lib/types/congregation";
 
 export interface WeeklyMeetingsListProps {
   localCongregations?: Congregation[];
@@ -60,8 +63,8 @@ export function WeeklyMeetingsList() {
                     setSelectedCongregation(
                       state.displayCongregations
                         ? state.displayCongregations[i]
-                        : undefined
-                    )
+                        : undefined,
+                    ),
                   );
                 }}
                 congregation={congregation}

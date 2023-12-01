@@ -2,22 +2,24 @@
 
 import React from "react";
 
-import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { Button } from "@nextui-org/button";
+import { Spinner } from "@nextui-org/react";
 import { MoveRight } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+
+import { WeeklyMeetingsList } from "./weekly-meetings-list";
+
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import {
   fetchLocalMeetingsThunk,
   localMeetingsSlice,
 } from "@/lib/stores/local-meetings";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { Spinner } from "@nextui-org/react";
-import dynamic from "next/dynamic";
 
 const DynamicMapView = dynamic(
   () => import("./map-view").then((mod) => mod.MapView),
-  { ssr: false }
+  { ssr: false },
 );
 
 const { regroupCongregations, setDisplayCongregations } =
@@ -57,7 +59,7 @@ export function GetWeeklyMeetings() {
       fetchLocalMeetingsThunk({
         latitude: String(userCoords.latitude),
         longitude: String(userCoords.longitude),
-      })
+      }),
     );
   }, [userCoords, dispatch]);
 
