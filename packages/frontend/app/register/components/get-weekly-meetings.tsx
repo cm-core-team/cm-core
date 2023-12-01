@@ -45,8 +45,12 @@ export function GetWeeklyMeetings() {
       return;
     }
 
-    // Whenever localCongregations is modified, we want to compute the groupings
+    // Whenever localCongregations is modified
+
+    // We want to recompute the groupings
     dispatch(regroupCongregations(state.localCongregations));
+    // Set the displayable congregations to our updated ones
+    dispatch(setDisplayCongregations(state.localCongregations));
   }, [state.localCongregations, dispatch]);
 
   React.useEffect(() => {
@@ -62,14 +66,6 @@ export function GetWeeklyMeetings() {
       }),
     );
   }, [userCoords, dispatch]);
-
-  React.useEffect(() => {
-    if (!state.localCongregations) {
-      return;
-    }
-
-    dispatch(setDisplayCongregations(state.localCongregations));
-  }, [state.localCongregations, dispatch]);
 
   return (
     <div className="grid place-items-center space-y-8 md:p-4 p-1">

@@ -2,7 +2,9 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   "rules": {
     "import/no-unresolved": "off",
@@ -21,6 +23,15 @@
         "order": "asc",
         "caseInsensitive": true
       }
+    }],
+    "max-len": ["error", {
+      "code": 100,
+      "comments": 80,
+      "ignoreUrls": true,
+      "ignoreComments": false,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+      "ignoreRegExpLiterals": true
     }]
   }
 }

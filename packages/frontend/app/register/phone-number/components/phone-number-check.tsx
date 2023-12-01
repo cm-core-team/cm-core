@@ -46,12 +46,8 @@ export function PhoneNumberCheck() {
   const selectedCongregation = useSelector(
     (state: RootState) => state.localMeetings.selectedCongregation,
   );
-  if (selectedCongregation === undefined) {
-    router.replace("/register");
-    return;
-  }
 
-  const startCountdown = (duration: number) => {
+  const startCountdown = React.useCallback((duration: number) => {
     setCountdown(duration);
     const interval = setInterval(() => {
       setCountdown((currentCountdown) => {
@@ -62,7 +58,24 @@ export function PhoneNumberCheck() {
         return currentCountdown - 1;
       });
     }, 1000); // Decrease countdown every second
-  };
+  }, []);
+
+  const onSendVerificationCode = React.useCallback(() => {
+    if (selectedCongregation === undefined || countdown !== 0) {
+      return;
+    }
+
+    sendVerificationCode(
+      selectedCongregation,
+      form.getValues().phoneNumber,
+    ).then(() => setDidSendCode(true));
+    startCountdown(30); // Start a 30 seconds countdown
+  }, [countdown, form, selectedCongregation, startCountdown]);
+
+  if (selectedCongregation === undefined) {
+    router.replace("/register");
+    return;
+  }
 
   const onSubmit = () => {
     verifyPhone(selectedCongregation, form.getValues().verificationCode);
@@ -107,15 +120,7 @@ export function PhoneNumberCheck() {
                     variant="ghost"
                     color="default"
                     className="text-xs"
-                    onClick={() => {
-                      if (countdown === 0) {
-                        sendVerificationCode(
-                          selectedCongregation,
-                          form.getValues().phoneNumber,
-                        ).then(() => setDidSendCode(true));
-                        startCountdown(30); // Start a 30 seconds countdown
-                      }
-                    }}
+                    onClick={onSendVerificationCode}
                   >
                     {countdown > 0 ? `Resend in ${countdown}s` : "Send Code"}
                   </NextUIButton>

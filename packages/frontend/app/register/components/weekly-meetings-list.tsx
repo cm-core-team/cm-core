@@ -26,6 +26,27 @@ export function WeeklyMeetingsList() {
   const dispatch: AppDispatch = useDispatch();
   const state = useSelector((state: RootState) => state.localMeetings);
 
+  const onMeetingSelect = React.useCallback(
+    (i: number) => {
+      // If the congregation is already selected, unselect
+      if (selectedId == i) {
+        setSelectedId(undefined);
+        dispatch(setSelectedCongregation(undefined));
+        return;
+      }
+
+      setSelectedId(i);
+      dispatch(
+        setSelectedCongregation(
+          state.displayCongregations
+            ? state.displayCongregations[i]
+            : undefined,
+        ),
+      );
+    },
+    [dispatch, selectedId, state.displayCongregations],
+  );
+
   return (
     <div className="w-full border-solid border-3 rounded-xl border-spacing-3 shadow-xl shadow-secondary sm:p-4 p-2">
       <big className="p-3">Your local Congregations</big>
@@ -50,23 +71,7 @@ export function WeeklyMeetingsList() {
                 key={i}
                 animationDelay={i}
                 isSelected={selectedId === i}
-                onSelect={() => {
-                  // If the congregation is already selected, unselect
-                  if (selectedId == i) {
-                    setSelectedId(undefined);
-                    dispatch(setSelectedCongregation(undefined));
-                    return;
-                  }
-
-                  setSelectedId(i);
-                  dispatch(
-                    setSelectedCongregation(
-                      state.displayCongregations
-                        ? state.displayCongregations[i]
-                        : undefined,
-                    ),
-                  );
-                }}
+                onSelect={() => onMeetingSelect(i)}
                 congregation={congregation}
               />
             ))
