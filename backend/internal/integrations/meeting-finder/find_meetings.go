@@ -62,10 +62,6 @@ func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Con
 			return nil, err
 		}
 
-		fmt.Println("LOCATION:")
-		fmt.Println(meeting.Location.Latitude)
-		fmt.Println(meeting.Location.Longitude)
-
 		newCong := models.Congregation{
 			Name:    meeting.Properties.OrgName,
 			Address: meeting.Properties.Address,
