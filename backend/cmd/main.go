@@ -37,6 +37,7 @@ func main() {
 
 	r.Use(cors.New(config))
 	r.Use(middleware.DatabaseSession(db))
+	r.Use(middleware.RateLimit())
 
 	models.SetupModels(db)
 	r = routes.SetupRoutes(r)
