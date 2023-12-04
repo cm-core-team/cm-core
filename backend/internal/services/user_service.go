@@ -19,8 +19,12 @@ func CreateUserInDB(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
 
 	// Fetch DB context
 	user := models.User{
+		FirstName:    dto.FirstName,
+		LastName:     dto.LastName,
 		Email:        dto.Email,
 		PasswordHash: string(hashedPassword),
+		Type:         dto.Type,
+		JoinToken:    dto.JoinToken,
 	}
 	user.Create(db)
 
@@ -67,7 +71,7 @@ func BindUserToCongregation(dto JoinTokenMatchDTO, db *gorm.DB) error {
 	}
 
 	// Congregation update
-	user.CongregationID = token.CongregationID
+	user.CongregationID = &token.CongregationID
 	db.Save(&user)
 	// Update the Congregation based on CongregationID (preloading)
 	db.Preload("Congregation").First(&user, user.ID)

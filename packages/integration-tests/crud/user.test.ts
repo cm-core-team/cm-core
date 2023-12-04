@@ -2,7 +2,7 @@ import axios from "axios";
 import { it, describe, expect } from "bun:test";
 import { backendRoutes } from "frontend/lib/config";
 import { ModelGenerator } from "frontend/lib/fixtures/generate";
-import { userSchema } from "frontend/lib/types/user";
+import { User, userSchema } from "frontend/lib/types/user";
 
 import { DBClient } from "../pool";
 
@@ -16,7 +16,6 @@ describe("User CRUD", () => {
 
     // Check that the response matches
     const matchResult = userSchema.safeParse(response.data.user);
-    console.log(response.data);
     expect(matchResult.success).toBeTrue();
 
     if (!matchResult.success) return;
@@ -28,11 +27,16 @@ describe("User CRUD", () => {
     expect(createdUser.type).toBe(user.type);
 
     // Check that the user is in the db
-    const result = await client.query("SELECT id FROM users WHERE id = $1", [
+    const result = await client.query("SELECT * FROM users WHERE id = $1", [
       createdUser.id,
     ]);
 
     expect(result.rows.length).toBe(1);
-    expect(result.rows[0].id).toBe(createdUser.id);
+    // The SQL uses snake_case instead of camelCase
+    const dbUser = result.rows[0];
+    expect(dbUser.email).toBe(createdUser.email);
+    expect(dbUser.first_name).toBe(createdUser.firstName);
+    expect(dbUser.last_name).toBe(createdUser.lastName);
+    expect(dbUser.type).toBe(createdUser.type);
   });
 });

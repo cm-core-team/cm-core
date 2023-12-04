@@ -11,7 +11,7 @@ export class ModelGenerator {
    */
   public randomCongregation(): Congregation {
     return {
-      id: randomId(),
+      id: 0,
       name: faker.location.county(),
       address: faker.location.streetAddress({ useFullAddress: true }),
       phoneNumbers: [
@@ -35,7 +35,7 @@ export class ModelGenerator {
     }
 
     return {
-      id: randomId(),
+      id: 0,
       email: faker.internet.email(),
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),

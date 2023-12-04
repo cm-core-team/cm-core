@@ -37,7 +37,7 @@ func main() {
 			FirstName:      faker.FirstName(),
 			LastName:       faker.LastName(),
 			PasswordHash:   faker.Password(),
-			CongregationID: congregation.ID,
+			CongregationID: &congregation.ID,
 		}
 		db.Create(&user)
 

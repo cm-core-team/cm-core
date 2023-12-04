@@ -23,8 +23,8 @@ type User struct {
 
 	Type UserType `json:"type"`
 
-	CongregationID uint         `json:"congregationId"`
-	Congregation   Congregation `json:"congregation" gorm:"foreignKey:CongregationID"`
+	CongregationID *uint         `json:"congregationId"`
+	Congregation   *Congregation `json:"congregation" gorm:"foreignKey:CongregationID"`
 
 	JoinToken *Token `json:"joinToken" gorm:"foreignKey:UserID"`
 }
