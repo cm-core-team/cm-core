@@ -4,11 +4,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserType int
+type UserType string
 
 const (
-	Admin UserType = iota
-	Regular
+	Admin   UserType = "ADMIN"
+	Regular UserType = "REGULAR"
 )
 
 type User struct {
@@ -16,9 +16,10 @@ type User struct {
 
 	ID uint `json:"id" gorm:"primarykey"`
 
-	Name         string `json:"name"`
+	FirstName    string `json:"firstName"`
+	LastName     string `json:"lastName"`
 	Email        string `json:"email"`
-	PasswordHash string
+	PasswordHash string `json:"-"`
 
 	Type UserType `json:"type"`
 

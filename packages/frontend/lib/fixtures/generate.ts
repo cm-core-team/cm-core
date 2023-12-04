@@ -1,16 +1,17 @@
 import { faker } from "@faker-js/faker";
 
 import { Congregation } from "../types/congregation";
+import { User, UserType, userTypeSchema } from "../types/user";
 
-export class CongregationGenerator {
-  public static instance = new CongregationGenerator();
+export class ModelGenerator {
+  public static instance = new ModelGenerator();
 
   /**
    * Generates a random congregation
    */
-  public random(): Congregation {
+  public randomCongregation(): Congregation {
     return {
-      id: 0,
+      id: randomId(),
       name: faker.location.county(),
       address: faker.location.streetAddress({ useFullAddress: true }),
       phoneNumbers: [
@@ -19,9 +20,28 @@ export class CongregationGenerator {
           phone: faker.phone.number(),
         },
       ],
-      users: [],
       lat: faker.location.latitude().toString(),
       lon: faker.location.longitude().toString(),
+      signature: null,
+    };
+  }
+
+  public randomUser(userType?: UserType): User {
+    if (userType === undefined) {
+      userType = faker.helpers.arrayElement([
+        userTypeSchema.Values.ADMIN,
+        userTypeSchema.Values.REGULAR,
+      ]);
+    }
+
+    return {
+      id: randomId(),
+      email: faker.internet.email(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      type: userType,
+      congregationId: null,
+      joinToken: null,
     };
   }
 
@@ -33,17 +53,17 @@ export class CongregationGenerator {
    *
    * Total will be nsame * nsets
    */
-  public randomWithSubs(nsame: number = 5, nsets: number = 10) {
+  public randomCongregationWithSubs(nsame: number = 5, nsets: number = 10) {
     const rootWithSubs = [];
 
     for (let i = 0; i < nsets; i++) {
       // The congregation with the main address
-      const root = this.random();
+      const root = this.randomCongregation();
       rootWithSubs.push(root);
 
       for (let j = 0; j < nsame; j++) {
         // A congregation that has the same address as root congregation
-        const child = this.random();
+        const child = this.randomCongregation();
         child.lat = root.lat;
         child.lon = root.lon;
         child.address = root.address;
@@ -54,4 +74,15 @@ export class CongregationGenerator {
 
     return rootWithSubs;
   }
+}
+
+export function randomId(): number {
+  return parseInt(
+    faker.number
+      .bigInt({
+        min: Number.MIN_SAFE_INTEGER,
+        max: Number.MAX_SAFE_INTEGER,
+      })
+      .toString(),
+  );
 }

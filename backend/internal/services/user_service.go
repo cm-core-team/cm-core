@@ -1,6 +1,7 @@
 package services
 
 import (
+	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"errors"
 	"fmt"
@@ -9,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateUserInDB(dto CreateUserDTO, db *gorm.DB) (models.User, error) {
+func CreateUserInDB(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
 	// Hash user password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(dto.Password), 12)
 
