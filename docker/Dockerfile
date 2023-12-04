@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 # Install Go
-RUN apt-get update && apt-get upgrade -y && \
+RUN apt-get update && \
     apt-get install software-properties-common -y
 
 RUN add-apt-repository ppa:longsleep/golang-backports && \
