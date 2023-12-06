@@ -1,12 +1,13 @@
 FROM ubuntu:20.04
 
+# Install necessary packages and add Go repository
+RUN apt-get update && \
+    apt-get install -y software-properties-common ca-certificates curl && \
+    add-apt-repository ppa:longsleep/golang-backports
+
 # Install Go
 RUN apt-get update && \
-    apt-get install software-properties-common -y
-
-RUN add-apt-repository ppa:longsleep/golang-backports && \
-    apt-get update && \
-    apt-get install golang-go git ca-certificates curl -y
+    apt-get install -y golang-go
 
 
 RUN go install github.com/cosmtrek/air@latest
