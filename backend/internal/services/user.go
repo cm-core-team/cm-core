@@ -44,7 +44,7 @@ func VerifyToken(dto JoinTokenMatchDTO, db *gorm.DB) error {
 		}
 	}
 
-	tokenMatches := user.JoinToken.TokenValue == dto.JoinTokenValue
+	tokenMatches := user.JoinToken.Value == dto.JoinTokenValue
 	if !tokenMatches {
 		fmt.Println("[Error] Token does not match")
 		return errors.New("incorrect token provided")
@@ -60,7 +60,7 @@ func BindUserToCongregation(dto JoinTokenMatchDTO, db *gorm.DB) error {
 
 	// Find the token object that matches the token value
 	var token models.Token
-	db.Where(&models.Token{TokenValue: dto.JoinTokenValue}).First(&token)
+	db.Where(&models.Token{Value: dto.JoinTokenValue}).First(&token)
 
 	// Update the user's congregation to the token's congregation
 	var user models.User

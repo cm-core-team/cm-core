@@ -25,5 +25,8 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 	base.POST("/user/create", handlers.CreateUser)
 	base.POST("/user/verify-token", handlers.VerifyToken)
 
+	// Tokens
+	base.POST("/token/create", handlers.CreateToken)
+
 	return r
 }
