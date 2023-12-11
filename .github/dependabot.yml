@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+  # Not sure how well this will work with bun???
+  # - package-ecosystem: "npm"
+  #   directory: "/packages/frontend"
+  #   schedule:
+  #     interval: "weekly"
