@@ -34,9 +34,10 @@ func main() {
 		db.Create(&congregation)
 
 		user := models.User{
-			Name:           faker.Name(),
+			FirstName:      faker.FirstName(),
+			LastName:       faker.LastName(),
 			PasswordHash:   faker.Password(),
-			CongregationID: congregation.ID,
+			CongregationID: &congregation.ID,
 		}
 		db.Create(&user)
 

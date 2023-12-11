@@ -2,14 +2,15 @@ import { z } from "zod";
 
 import { tokenSchema } from "./token";
 
-export const userTypeSchema = z.enum(["Admin", "Regular"]);
+export const userTypeSchema = z.enum(["ADMIN", "REGULAR"]);
 export const userSchema = z.object({
-  id: z.number(),
-  name: z.string(),
+  id: z.number().nullable(),
+  firstName: z.string(),
+  lastName: z.string(),
   email: z.string(),
   type: userTypeSchema,
-  congregationId: z.number(),
-  joinToken: tokenSchema.optional(),
+  congregationId: z.number().nullable(),
+  joinToken: tokenSchema.nullable(),
 });
 
 export type User = z.infer<typeof userSchema>;

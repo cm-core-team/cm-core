@@ -2,6 +2,7 @@ package routes
 
 import (
 	"backend/internal/handlers"
+	"backend/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,6 +25,9 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 	// Users
 	base.POST("/user/create", handlers.CreateUser)
 	base.POST("/user/verify-token", handlers.VerifyToken)
+
+	// Tokens
+	base.POST("/token/create", middleware.Authenticate(), handlers.CreateToken)
 
 	return r
 }

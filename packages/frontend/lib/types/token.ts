@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const tokenSchema = z.object({
   id: z.number(),
-  tokenValue: z.string(),
+  value: z.string(),
   userId: z.number(),
   congregationId: z.number(),
   createdByUserId: z.number(),

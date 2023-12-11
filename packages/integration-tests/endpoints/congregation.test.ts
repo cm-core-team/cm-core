@@ -1,7 +1,7 @@
 import axios from "axios";
 import { describe, expect, it } from "bun:test";
 import { backendRoutes } from "frontend/lib/config";
-import { CongregationGenerator } from "frontend/lib/fixtures/generate-congregation";
+import { ModelGenerator } from "frontend/lib/fixtures/generate";
 import {
   congregationSchema,
   Congregation,
@@ -12,15 +12,15 @@ describe("Congregation CRUD Actions", () => {
     console.log("LOOK HERE");
     console.log(backendRoutes.congregation.create);
 
-    const selectedCongregation = CongregationGenerator.instance.random();
+    const selectedCongregation = ModelGenerator.instance.randomCongregation();
     const response = await axios.post(
       backendRoutes.congregation.create,
-      selectedCongregation
+      selectedCongregation,
     );
 
     // First check backend response matches
     const responseMatch = congregationSchema.safeParse(
-      response.data.congregation
+      response.data.congregation,
     );
 
     expect(responseMatch.success).toBe(true);
@@ -31,7 +31,7 @@ describe("Congregation CRUD Actions", () => {
     expect(createdCongregation.address).toBe(selectedCongregation.address);
     expect(createdCongregation.name).toBe(selectedCongregation.name);
     expect(createdCongregation.phoneNumbers).toEqual(
-      selectedCongregation.phoneNumbers
+      selectedCongregation.phoneNumbers,
     );
 
     // Location attributes
@@ -40,15 +40,15 @@ describe("Congregation CRUD Actions", () => {
   });
 
   it("should correctly identify invalid signatures", async () => {
-    const selectedCongregation = CongregationGenerator.instance.random();
+    const selectedCongregation = ModelGenerator.instance.randomCongregation();
     const response = await axios.post(
       backendRoutes.congregation.create,
-      selectedCongregation
+      selectedCongregation,
     );
 
     // First check backend response matches
     const responseMatch = congregationSchema.safeParse(
-      response.data.congregation
+      response.data.congregation,
     );
     expect(responseMatch.success).toBe(true);
 

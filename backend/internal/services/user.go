@@ -1,6 +1,7 @@
 package services
 
 import (
+	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"errors"
 	"fmt"
@@ -9,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateUserInDB(dto CreateUserDTO, db *gorm.DB) (models.User, error) {
+func CreateUserInDB(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
 	// Hash user password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(dto.Password), 12)
 
@@ -18,8 +19,12 @@ func CreateUserInDB(dto CreateUserDTO, db *gorm.DB) (models.User, error) {
 
 	// Fetch DB context
 	user := models.User{
+		FirstName:    dto.FirstName,
+		LastName:     dto.LastName,
 		Email:        dto.Email,
 		PasswordHash: string(hashedPassword),
+		Type:         dto.Type,
+		JoinToken:    dto.JoinToken,
 	}
 	user.Create(db)
 
@@ -39,7 +44,7 @@ func VerifyToken(dto JoinTokenMatchDTO, db *gorm.DB) error {
 		}
 	}
 
-	tokenMatches := user.JoinToken.TokenValue == dto.JoinTokenValue
+	tokenMatches := user.JoinToken.Value == dto.JoinTokenValue
 	if !tokenMatches {
 		fmt.Println("[Error] Token does not match")
 		return errors.New("incorrect token provided")
@@ -55,7 +60,7 @@ func BindUserToCongregation(dto JoinTokenMatchDTO, db *gorm.DB) error {
 
 	// Find the token object that matches the token value
 	var token models.Token
-	db.Where(&models.Token{TokenValue: dto.JoinTokenValue}).First(&token)
+	db.Where(&models.Token{Value: dto.JoinTokenValue}).First(&token)
 
 	// Update the user's congregation to the token's congregation
 	var user models.User
@@ -66,7 +71,7 @@ func BindUserToCongregation(dto JoinTokenMatchDTO, db *gorm.DB) error {
 	}
 
 	// Congregation update
-	user.CongregationID = token.CongregationID
+	user.CongregationID = &token.CongregationID
 	db.Save(&user)
 	// Update the Congregation based on CongregationID (preloading)
 	db.Preload("Congregation").First(&user, user.ID)

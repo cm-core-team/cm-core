@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"backend/internal/common"
+	"backend/internal/handlers/dtos"
 	"backend/internal/services"
 	"net/http"
 
@@ -14,7 +15,7 @@ func CreateUser(ctx *gin.Context) {
 	 * Create a new user in the DB
 	 */
 
-	var dto services.CreateUserDTO
+	var dto dtos.CreateUserDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{

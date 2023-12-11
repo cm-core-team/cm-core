@@ -11,9 +11,12 @@ type Token struct {
 
 	ID uint `json:"id" gorm:"primarykey"`
 
-	TokenValue string `json:"tokenValue"`
+	Value string `json:"value"`
 
-	UserID          uint `json:"userId"`
-	CongregationID  uint `json:"congregationId"`
+	// Target user
+	UserID uint `json:"userId"`
+	// Congregation to bind to
+	CongregationID uint `json:"congregationId"`
+	// The ID of the user who created this token
 	CreatedByUserId uint `json:"createdByUserId"`
 }
