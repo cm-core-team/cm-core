@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 
 import { Providers } from "./providers";
 import { RootNavMenu } from "./root-nav-menu";
+import { Footer } from "./footer";
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Providers>
           <RootNavMenu />
           {children}
+          <Footer />
           <Toaster />
         </Providers>
       </body>
