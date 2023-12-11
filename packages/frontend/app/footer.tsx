@@ -1,0 +1,38 @@
+import { Github } from "lucide-react";
+import Link from "next/link";
+
+import { Separator } from "@/components/ui/separator";
+import { FooterLinks, FooterLink } from "../lib/types/footer-link";
+
+export function Footer(): JSX.Element {
+  // These should probably be retrieved automatically but that can be figured out another time
+  const links: FooterLinks = [
+    { name: "Home", content: "Home", pageToNavigateTo: "/" },
+    { name: "Register", content: "Register", pageToNavigateTo: "/register" },
+    {
+      name: "GitHub",
+      content: <Github />,
+      pageToNavigateTo: "https://github.com/j-koziel/cong-manager",
+    },
+  ];
+
+  return (
+    <div className="w-full h-[10vh] flex flex-col">
+      <Separator />
+      <div className="w-full h-full flex items-center justify-evenly">
+        {links.map((footerLink: FooterLink, i: number) => {
+          return (
+            <Link
+              key={i}
+              href={footerLink.pageToNavigateTo}
+              // Screen reader will read what this link does or where it goes to
+              aria-label={footerLink.name}
+            >
+              {footerLink.content}
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
