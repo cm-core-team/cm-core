@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface UseScreenWidthReturn {
-  isSmall?: boolean;
+  isSmall: boolean;
 }
 
 export function useScreenWidth(): UseScreenWidthReturn {
