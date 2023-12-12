@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 export interface UseScreenWidthReturn {
@@ -9,11 +7,15 @@ export interface UseScreenWidthReturn {
 export function useScreenWidth(): UseScreenWidthReturn {
   // The value for tailwind's SM breakpoint
   const smallPx = 640;
-  const [isSmall, setIsSmall] = React.useState(window.innerWidth < smallPx);
+  const [isSmall, setIsSmall] = React.useState(false);
 
   React.useEffect(() => {
+    // For the on page load
+    const checkIfSmall = () => window.innerWidth < smallPx;
+    setIsSmall(checkIfSmall());
+
     // Called every resize
-    const handleResize = () => setIsSmall(window.innerWidth < smallPx);
+    const handleResize = () => setIsSmall(checkIfSmall());
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);

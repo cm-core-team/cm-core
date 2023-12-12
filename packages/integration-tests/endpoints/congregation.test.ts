@@ -9,7 +9,7 @@ import {
 
 describe("Congregation CRUD Actions", () => {
   it("should correctly create a congregation", async () => {
-    console.log("LOOK HERE");
+    console.log("Using backend URL:");
     console.log(backendRoutes.congregation.create);
 
     const selectedCongregation = ModelGenerator.instance.randomCongregation();
