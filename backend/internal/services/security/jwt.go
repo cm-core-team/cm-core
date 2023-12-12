@@ -10,13 +10,13 @@ import (
 
 type SessionTokenPayload struct {
 	jwt.StandardClaims
-	ID string
+	UserID string
 }
 
 func GenerateJWT(ID string) (string, error) {
 	jwtSecret := []byte(os.Getenv("JWT_SECRET"))
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, SessionTokenPayload{
-		ID: fmt.Sprint(ID),
+		UserID: fmt.Sprint(ID),
 	})
 	tokenString, err := token.SignedString(jwtSecret)
 	if err != nil {

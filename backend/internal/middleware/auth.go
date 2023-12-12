@@ -19,19 +19,15 @@ func Authenticate() gin.HandlerFunc {
 		cookie, err := ctx.Request.Cookie("sessionToken")
 		if err != nil {
 			// If no cookie, check the body for the session token
-			var authPayload AuthenticatePayload
-			err = ctx.BindJSON(&authPayload)
+			sessionToken = ctx.GetHeader("Authorization")
 
-			if err != nil {
+			if sessionToken == "" {
 				// There was no cookie, nor sessionToken in the body
 				fmt.Println("[-] No cookie, no sessionToken, or invalid request.")
 				fmt.Println(err)
 				jsonUnauthorized(ctx)
 				return
 			}
-
-			// There was a session token in the body
-			sessionToken = authPayload.SessionToken
 		} else {
 			sessionToken = cookie.Value
 		}
