@@ -11,3 +11,8 @@ type CreateUserDTO struct {
 	Type      models.UserType `json:"type"`
 	JoinToken *models.Token   `json:"joinToken" gorm:"foreignKey:UserID"`
 }
+
+type BindAdminToCongregationDTO struct {
+	AdminID        string `json:"adminId"`
+	CongregationID string `json:"congregationId"`
+}
