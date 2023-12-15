@@ -39,12 +39,11 @@ export function GetWeeklyMeetings() {
     dispatch(getUserCoordsThunk());
   }, [dispatch]);
 
+  // Whenever localCongregations is modified
   React.useEffect(() => {
     if (!state.localCongregations) {
       return;
     }
-
-    // Whenever localCongregations is modified
 
     // We want to recompute the groupings
     dispatch(regroupCongregations(state.localCongregations));
@@ -86,7 +85,7 @@ export function GetWeeklyMeetings() {
                 return;
               }
 
-              router.replace("/register/phone-number");
+              router.replace("/register/user");
             }}
           >
             Create Congregation <MoveRight />
