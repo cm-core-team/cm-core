@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,35 +14,36 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  RegisterUserFormData,
+  registerUserFormSchema,
+} from "@/lib/types/registration/user-form";
+import {
+  Select,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectContent,
+  SelectValue,
+} from "@/components/ui/select";
+import { userTypeSchema } from "@/lib/types/user";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/stores/app-store";
+import { userRegistrationSlice } from "@/lib/stores/register-user";
 
-const formSchema = z
-  .object({
-    firstName: z.string().min(1, "Required").max(512, "Too long"),
-    lastName: z.string().min(1, "Required").max(512, "Too long"),
-    email: z.string().email("Invalid email"),
-    password: z
-      .string()
-      .min(8, "Your password should have a minimum of 8 characters")
-      .max(50, "Your password should not have more than 50 characters"),
-    retypedPassword: z.string(),
-  })
-  .refine((data) => data.password === data.retypedPassword, {
-    message: "Both passwords must match.",
-    path: ["retypedPassword"],
-  });
+const { updateUserRegistrationState } = userRegistrationSlice.actions;
 
 export function RegisterForm() {
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const dispatch = useDispatch();
+  const state = useSelector<RootState>((state) => state.userRegistration);
+
+  const form = useForm<RegisterUserFormData>({
+    resolver: zodResolver(registerUserFormSchema),
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = (data: RegisterUserFormData) => {
+    dispatch(updateUserRegistrationState(data));
+  };
 
   return (
     <div className="p-4 mx-auto lg:w-1/3 w-full sm:w-2/3">
@@ -79,22 +79,54 @@ export function RegisterForm() {
               )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormDescription>
-                  Email for contact and account.
-                </FormDescription>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex gap-x-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormDescription>
+                    Email for contact and account.
+                  </FormDescription>
+                  <FormControl>
+                    <Input placeholder="Email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>User Type</FormLabel>
+                  <FormDescription>
+                    Your role in the congregation.
+                  </FormDescription>
+                  <FormControl>
+                    <Select {...field}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your user type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {userTypeSchema.options.map((item) => (
+                            <SelectItem value={item}>
+                              {item.toLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <FormField
             control={form.control}
             name="password"
@@ -123,6 +155,7 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
+
           <Button type="submit" className="flex ml-auto" variant="outline">
             Submit
           </Button>
