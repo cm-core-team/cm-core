@@ -16,25 +16,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const formSchema = z.object({
-  firstName: z
-    .string()
-    .min(2, "Your first name should have at least 2 characters")
-    .max(20, "Your first name should not have more than 20 characters"),
-  lastName: z
-    .string()
-    .min(2, "Your last name should have at least 2 characters")
-    .max(20, "Your last name should not have more than 2 characters"),
-  email: z.string().email("Invalid email"),
-  username: z
-    .string()
-    .min(2, "Your username should have at least 2 characters")
-    .max(20, "Your username should not have more than 20 characters"),
-  password: z
-    .string()
-    .min(8, "Your password should have a minimum of 8 characters")
-    .max(50, "Your password should not have more than 50 characters"),
-});
+const formSchema = z
+  .object({
+    firstName: z.string().min(1, "Required").max(512, "Too long"),
+    lastName: z.string().min(1, "Required").max(512, "Too long"),
+    email: z.string().email("Invalid email"),
+    password: z
+      .string()
+      .min(8, "Your password should have a minimum of 8 characters")
+      .max(50, "Your password should not have more than 50 characters"),
+    retypedPassword: z.string(),
+  })
+  .refine((data) => data.password === data.retypedPassword, {
+    message: "Both passwords must match.",
+    path: ["retypedPassword"],
+  });
 
 export function RegisterForm() {
   // 1. Define your form.
@@ -50,39 +46,39 @@ export function RegisterForm() {
   }
 
   return (
-    <div className="p-4 w-1/3 mx-auto">
+    <div className="p-4 mx-auto lg:w-1/3 w-full sm:w-2/3">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormDescription>
-                  This is the name that most people know you by.
-                </FormDescription>
-                <FormControl>
-                  <Input placeholder="First Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormDescription>Your last name.</FormDescription>
-                <FormControl>
-                  <Input placeholder="Last Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex gap-x-4">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>First Name</FormLabel>
+                  <FormDescription>Your first name.</FormDescription>
+                  <FormControl>
+                    <Input placeholder="First Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Last Name</FormLabel>
+                  <FormDescription>Your last name.</FormDescription>
+                  <FormControl>
+                    <Input placeholder="Last Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="email"
@@ -90,26 +86,10 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormDescription>
-                  A professional email is preferred.
+                  Email for contact and account.
                 </FormDescription>
                 <FormControl>
                   <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormDescription>
-                  This is will be your public display name.
-                </FormDescription>
-                <FormControl>
-                  <Input placeholder="Username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,10 +101,7 @@ export function RegisterForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
-                <FormDescription>
-                  This is the password that you will use to login to your
-                  account.
-                </FormDescription>
+                <FormDescription>Create a password.</FormDescription>
                 <FormControl>
                   <Input placeholder="Password" type="password" {...field} />
                 </FormControl>
@@ -132,7 +109,23 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <FormField
+            control={form.control}
+            name="retypedPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Retype Password</FormLabel>
+                <FormDescription>Re-enter password.</FormDescription>
+                <FormControl>
+                  <Input placeholder="Password" type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="flex ml-auto" variant="outline">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
