@@ -3,7 +3,10 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "bun-types": "^1.0.14"
+    "bun-types": "^1.0.14",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "latest",
+    "husky": "^8.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -13,7 +16,9 @@
     "packages/*"
   ],
   "scripts": {
-    "frontend": "cd packages/frontend && bun dev"
+    "frontend": "cd packages/frontend && bun dev",
+    "prepare": "husky install",
+    "lint": "eslint ./packages"
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",

@@ -6,33 +6,50 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
+  "ignorePatterns": [
+    "**/frontend/components/ui/*.ts",
+    "**/frontend/components/ui/*.tsx"
+  ],
   "rules": {
     "import/no-unresolved": "off",
     "import/named": "off",
-    "import/order": ["error", {
-      "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-      "pathGroups": [
-        {
-          "pattern": "react",
-          "group": "external",
-          "position": "before"
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
         }
-      ],
-      "pathGroupsExcludedImportTypes": ["react"],
-      "newlines-between": "always",
-      "alphabetize": {
-        "order": "asc",
-        "caseInsensitive": true
       }
-    }],
-    "max-len": ["error", {
-      "code": 100,
-      "comments": 80,
-      "ignoreUrls": true,
-      "ignoreComments": false,
-      "ignoreStrings": true,
-      "ignoreTemplateLiterals": true,
-      "ignoreRegExpLiterals": true
-    }]
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 100,
+        "comments": 80,
+        "ignoreUrls": true,
+        "ignoreComments": false,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ]
   }
 }
