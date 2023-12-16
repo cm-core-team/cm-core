@@ -1,6 +1,7 @@
 .vscode
 .DS_Store
 tmp/
+bin/
 
 .env.*
 !.env.example
