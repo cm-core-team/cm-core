@@ -33,6 +33,10 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.21.x
+      - name: Init backend modules
+        run: |
+          cd ./backend
+          go mod init
 
       - name: Format backend
         run: go fmt ./backend
