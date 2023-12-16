@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"strconv"
 
+	"backend/internal/common"
 	"backend/internal/integrations/meeting-finder/dtos"
 	"backend/internal/models"
 
@@ -20,7 +21,7 @@ type UserLocation struct {
 }
 
 func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Congregation, error) {
-	baseEndpoint := "https://apps.jw.org/api/public/meeting-search/weekly-meetings"
+	baseEndpoint := common.JwApiEndpointsInstance.FindWeeklyMeetings
 	urlObj, err := url.Parse(baseEndpoint)
 	if err != nil {
 		return nil, err
