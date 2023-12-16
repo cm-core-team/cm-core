@@ -5,8 +5,7 @@
   "devDependencies": {
     "bun-types": "^1.0.14",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "latest",
-    "husky": "^8.0.0"
+    "eslint-plugin-prettier": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -17,7 +16,6 @@
   ],
   "scripts": {
     "frontend": "cd packages/frontend && bun dev",
-    "prepare": "husky install",
     "lint": "eslint ./packages"
   },
   "dependencies": {
