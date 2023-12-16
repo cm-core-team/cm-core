@@ -1,11 +1,12 @@
 import { Github } from "lucide-react";
 import Link from "next/link";
 
-import { Separator } from "@/components/ui/separator";
 import { FooterLinks, FooterLink } from "../lib/types/footer-link";
 
+import { Separator } from "@/components/ui/separator";
+
 export function Footer(): JSX.Element {
-  // These should probably be retrieved automatically but that can be figured out another time
+  // These should probably be retrieved automatically
   const links: FooterLinks = [
     { name: "Home", content: "Home", pageToNavigateTo: "/" },
     { name: "Register", content: "Register", pageToNavigateTo: "/register" },

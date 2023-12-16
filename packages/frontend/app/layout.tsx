@@ -2,9 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { Footer } from "./footer";
 import { Providers } from "./providers";
 import { RootNavMenu } from "./root-nav-menu";
-import { Footer } from "./footer";
 
 import { Toaster } from "@/components/ui/toaster";
 

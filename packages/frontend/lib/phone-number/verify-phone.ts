@@ -8,7 +8,7 @@ import { toast } from "@/components/ui/use-toast";
 
 export async function sendVerificationCode(
   congregation: Congregation,
-  phoneNumber: string
+  phoneNumber: string,
 ) {
   try {
     await axios.post(backendRoutes.congregation.sendVerificationCode, {
@@ -26,7 +26,7 @@ export async function sendVerificationCode(
 
 export async function verifyPhone(
   congregation: Congregation,
-  userCode: string
+  userCode: string,
 ) {
   try {
     await axios.post(backendRoutes.congregation.verifyPhone, {
