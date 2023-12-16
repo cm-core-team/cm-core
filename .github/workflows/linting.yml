@@ -1,5 +1,8 @@
 name: Linting and formatting
 
+permissions:
+  contents: write
+
 on:
   push:
 
