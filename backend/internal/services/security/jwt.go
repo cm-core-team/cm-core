@@ -3,7 +3,8 @@ package security
 import (
 	"errors"
 	"fmt"
-	"os"
+
+	"backend/internal/common"
 
 	"github.com/golang-jwt/jwt"
 )
@@ -14,7 +15,7 @@ type SessionTokenPayload struct {
 }
 
 func GenerateJWT(ID string) (string, error) {
-	jwtSecret := []byte(os.Getenv("JWT_SECRET"))
+	jwtSecret := []byte(common.EnvSecretsInstance.JwtSecret)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, SessionTokenPayload{
 		ID: fmt.Sprint(ID),
 	})
@@ -28,7 +29,7 @@ func GenerateJWT(ID string) (string, error) {
 
 func VerifyJWT(tokenString string) (*SessionTokenPayload, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &SessionTokenPayload{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(os.Getenv("JWT_SECRET")), nil
+		return []byte(common.EnvSecretsInstance.JwtSecret), nil
 	})
 	if err != nil || !token.Valid {
 		return nil, errors.New("jwt token not valid")
