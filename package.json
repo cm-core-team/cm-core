@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "frontend": "cd packages/frontend && bun dev",
-    "lint": "eslint ./packages"
+    "lint": "eslint ./packages --fix"
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
