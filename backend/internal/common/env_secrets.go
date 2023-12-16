@@ -7,6 +7,7 @@ type EnvSecrets struct {
 	CorsAllowOrigin string
 	JwtSecret       string
 	Environment     string
+	JwAPIEndpoint   string
 }
 
 var EnvSecretsInstance = EnvSecrets{
@@ -14,4 +15,5 @@ var EnvSecretsInstance = EnvSecrets{
 	CorsAllowOrigin: os.Getenv("CORS_ALLOW_ORIGIN"),
 	JwtSecret:       os.Getenv("JWT_SECRET"),
 	Environment:     os.Getenv("ENVIRONMENT"),
+	JwAPIEndpoint:   os.Getenv("JW_API_ENDPOINT"),
 }

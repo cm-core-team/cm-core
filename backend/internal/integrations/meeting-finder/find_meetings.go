@@ -21,7 +21,7 @@ type UserLocation struct {
 }
 
 func FindLocalMeetings(location UserLocation, languageCode string) ([]models.Congregation, error) {
-	baseEndpoint := common.JwApiEndpointsInstance.FindWeeklyMeetings
+	baseEndpoint := common.EnvSecretsInstance.JwAPIEndpoint
 	urlObj, err := url.Parse(baseEndpoint)
 	if err != nil {
 		return nil, err
