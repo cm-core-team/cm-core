@@ -36,7 +36,7 @@ jobs:
       - name: Init backend modules
         run: |
           cd ./backend
-          go mod init
+          go get .
 
       - name: Format backend
         run: go fmt ./backend
