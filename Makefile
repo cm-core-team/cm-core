@@ -17,7 +17,7 @@ rebuild:
 down:
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down
 
-integration-test:
+integration-tests:
 	docker compose -f docker-compose.yml -f docker-compose.test.yml build
 	docker compose -f docker-compose.yml up -d
 

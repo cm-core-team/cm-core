@@ -1,8 +1,11 @@
 FROM ubuntu:20.04
 
+# Copy default vsftpd.conf
+COPY docker/conf/vsftpd.conf /etc/
+
 # Install necessary packages and add Go repository
 RUN apt-get update && \
-    apt-get install -y software-properties-common ca-certificates curl && \
+    apt-get install -y software-properties-common ca-certificates curl git && \
     add-apt-repository ppa:longsleep/golang-backports
 
 # Install Go
