@@ -1,8 +1,10 @@
 "use client";
 
+import React from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,11 +25,8 @@ import {
   SelectContent,
   SelectValue,
 } from "@/components/ui/select";
-import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import {
-  submitUserThunk,
-  userRegistrationSlice,
-} from "@/lib/stores/register-user";
+import { AppDispatch } from "@/lib/stores/app-store";
+import { submitUserThunk } from "@/lib/stores/register-user";
 import {
   RegisterUserFormData,
   registerUserFormSchema,
@@ -36,7 +35,6 @@ import { userTypeSchema } from "@/lib/types/user";
 
 export function RegisterForm() {
   const dispatch: AppDispatch = useDispatch();
-  const state = useSelector<RootState>((state) => state.userRegistration);
 
   const form = useForm<RegisterUserFormData>({
     resolver: zodResolver(registerUserFormSchema),
@@ -44,7 +42,6 @@ export function RegisterForm() {
 
   const onSubmit = (data: RegisterUserFormData) => {
     dispatch(submitUserThunk(data));
-    console.log(state);
   };
 
   return (

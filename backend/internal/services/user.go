@@ -13,6 +13,9 @@ import (
 func CreateUserInDB(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
 	// Hash user password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(dto.Password), 12)
+	if err != nil {
+		return models.User{}, err
+	}
 
 	// Remove password from response
 	dto.Password = ""
@@ -26,7 +29,6 @@ func CreateUserInDB(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
 		Type:         dto.Type,
 		JoinToken:    dto.JoinToken,
 	}
-	user.Create(db)
 
 	return user, err
 }

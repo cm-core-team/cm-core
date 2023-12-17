@@ -1,11 +1,8 @@
 import axios from "axios";
 
-import { backendErrorHandle } from "../backend-error-handle";
 import { backendRoutes } from "../config";
 import { RegisterUserFormData } from "../types/registration/user-form";
 import { User, userSchema } from "../types/user";
-
-import { toast } from "@/components/ui/use-toast";
 
 export async function submitUser(
   userFormData: RegisterUserFormData,
@@ -18,7 +15,8 @@ export async function submitUser(
     email: userFormData.email,
     type: userFormData.type,
   };
+
   const response = await axios.post(backendRoutes.user.create, user);
 
-  return userSchema.parse(response.data);
+  return userSchema.parse(response.data.user);
 }

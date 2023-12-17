@@ -33,6 +33,14 @@ func CreateUser(ctx *gin.Context) {
 		return
 	}
 
+	result := db.Create(&user)
+	if result.Error != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserAlreadyExists,
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusCreated, gin.H{"user": user})
 }
 

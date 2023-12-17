@@ -12,6 +12,8 @@ type UserErrors struct {
 	CongregationNotFound                  string
 	IncorrectCongregationVerificationCode string
 
+	UserAlreadyExists string
+
 	Unknown string
 }
 
@@ -25,6 +27,8 @@ var UserErrorInstance = UserErrors{
 	CongregationAlreadyExists:             "Congregation already exists!",
 	CongregationNotFound:                  "Could not find provided congregation or ID.",
 	IncorrectCongregationVerificationCode: "The congregation verification code is incorrect. Please check again.",
+
+	UserAlreadyExists: "User already exists. Please login using that email or enter a different one.",
 
 	Unknown: "Unknown error. Please report this if the error persists.",
 }

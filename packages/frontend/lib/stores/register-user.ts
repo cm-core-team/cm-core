@@ -1,9 +1,11 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { backendErrorHandle } from "../backend-error-handle";
 import { submitUser } from "../registration/submit-user";
 import { RegisterUserFormData } from "../types/registration/user-form";
 import { User } from "../types/user";
+
+import { toast } from "@/components/ui/use-toast";
 
 export interface UserRegistrationState {
   formState: Partial<RegisterUserFormData>;
@@ -28,9 +30,22 @@ export const submitUserThunk = createAsyncThunk<User, RegisterUserFormData>(
   "userRegistration/submitUser",
   async (arg, { rejectWithValue }) => {
     try {
-      return await submitUser(arg);
+      const user = await submitUser(arg);
+      toast({
+        title: "Success",
+        description: "Created user",
+        variant: "success",
+      });
+
+      return user;
     } catch (error) {
-      return rejectWithValue(backendErrorHandle(error));
+      const errorMsg = backendErrorHandle(error);
+      toast({
+        title: "Error",
+        description: errorMsg,
+        variant: "destructive",
+      });
+      return rejectWithValue(errorMsg);
     }
   },
 );
