@@ -15,7 +15,7 @@ type SessionTokenPayload struct {
 }
 
 func GenerateJWT(ID string) (string, error) {
-	jwtSecret := []byte(common.EnvSecretsInstance.JwtSecret)
+	jwtSecret := []byte(common.GetEnvSecrets().JwtSecret)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, SessionTokenPayload{
 		ID: fmt.Sprint(ID),
 	})
@@ -29,7 +29,7 @@ func GenerateJWT(ID string) (string, error) {
 
 func VerifyJWT(tokenString string) (*SessionTokenPayload, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &SessionTokenPayload{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(common.EnvSecretsInstance.JwtSecret), nil
+		return []byte(common.GetEnvSecrets().JwtSecret), nil
 	})
 	if err != nil || !token.Valid {
 		return nil, errors.New("jwt token not valid")

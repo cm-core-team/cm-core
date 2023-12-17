@@ -16,7 +16,8 @@ import (
 
 func main() {
 	godotenv.Load(".env.secret")
-	DB_URL := common.EnvSecretsInstance.DbUrl
+	envSecrets := common.GetEnvSecrets()
+	DB_URL := envSecrets.DbUrl
 	r := gin.Default()
 
 	db, err := gorm.Open(postgres.Open(DB_URL), &gorm.Config{})
@@ -25,11 +26,14 @@ func main() {
 	}
 
 	fmt.Print("CORS: ")
-	fmt.Println(common.EnvSecretsInstance.CorsAllowOrigin)
+	fmt.Println(envSecrets.CorsAllowOrigin)
+
+	fmt.Print("JW API ENDPOINT")
+	fmt.Println(envSecrets.GetWeeklyMeetings_JwAPI)
 
 	// Configuring CORS
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{common.EnvSecretsInstance.CorsAllowOrigin}
+	config.AllowOrigins = []string{envSecrets.CorsAllowOrigin}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization"}
 	config.AllowCredentials = true
