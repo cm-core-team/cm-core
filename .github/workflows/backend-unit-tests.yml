@@ -3,6 +3,12 @@ name: Backend Unit Tests
 on:
   push:
 
+env:
+  JWT_SECRET: ${{vars.JWT_SECRET}}
+  CORS_ALLOW_ORIGIN: ${{vars.CORS_ALLOW_ORIGIN}}
+  DB_URL: ${{vars.DB_URL}}
+  ENVIRONMENT: ${{vars.ENVIRONMENT}}
+  GET_WEEKLY_MEETINGS_JW_API: ${{vars.GET_WEEKLY_MEETINGS_JW_API}}
 jobs:
   test:
     runs-on: ubuntu-latest
