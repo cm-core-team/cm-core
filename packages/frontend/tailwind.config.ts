@@ -79,7 +79,7 @@ module.exports = {
     nextui({
       themes: {
         light: {
-          // For now we have to use the raw hsl colours because nextui seems to have a problem parsing css vars 🤔
+          // For now we have to use the raw hsl colours
           colors: {
             background: "hsl(0 0% 100%)",
             foreground: "hsl(222.2 84% 4.9%)",

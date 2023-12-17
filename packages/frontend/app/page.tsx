@@ -2,7 +2,7 @@ import FeatureItem from "@/components/feature-item";
 import TextAnim from "@/components/text-animation";
 
 export default function Home() {
-  // For now just using images from a random watchtower but these will be changed to screenshots displaying the actual features.
+  // For now just using images from a random watchtower
   const features = [
     {
       label: "Display media for the meeting",

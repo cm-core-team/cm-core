@@ -6,7 +6,6 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 import BlinkingCursor from "./blinking-cursor";
 
-
 export default function TextAnim() {
   // The typing animation was copied from this article:
   // https://blog.noelcserepy.com/how-i-created-a-typing-text-animation-with-framer-motion
@@ -14,7 +13,7 @@ export default function TextAnim() {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const displayText = useTransform(rounded, (latest) =>
-    baseText.slice(0, latest)
+    baseText.slice(0, latest),
   );
 
   const [isAnimationCompleted, setIsAnimationCompleted] = React.useState(false);

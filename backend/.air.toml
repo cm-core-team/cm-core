@@ -2,25 +2,22 @@
 
 # The command to run when everything is ready
 [build]
-  cmd = "go build -o ./tmp/main ./cmd/main.go"
-  bin = "tmp/main"
-  log = "tmp/build-errors.log"
+cmd = "go build -o ./bin/main ./cmd/main.go"
+bin = "bin/main"
+log = "bin/build-errors.log"
 
 # Watch these directories for changes
 [watch]
-  # List of search paths
-  includes = [
-    "cmd/**/*",
-    "internal/**/*"
-  ]
-  # Exclude the tmp directory from being watched
-  excludes = ["tmp"]
-  delay = 1000 # in milliseconds
+# List of search paths
+includes = ["cmd/**/*", "internal/**/*"]
+# Exclude the tmp directory from being watched
+excludes = ["bin"]
+delay = 1000       # in milliseconds
 
 # Configurations for log output
 [log]
-  level = "info"
-  color = true
+level = "info"
+color = true
 
 
 # Send interrupt signal before killing process
