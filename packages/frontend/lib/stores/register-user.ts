@@ -6,6 +6,10 @@ import { submitUser } from "../registration/submit-user";
 
 export interface UserRegistrationState {
   formState: Partial<RegisterUserFormData>;
+  isLoading: boolean;
+  errorMsg?: string;
+
+  responseUser?: User;
 }
 
 const initialState: UserRegistrationState = {
@@ -16,9 +20,10 @@ const initialState: UserRegistrationState = {
     password: "",
     retypedPassword: "",
   },
+  isLoading: false,
 };
 
-const submitUserThunk = createAsyncThunk<User, RegisterUserFormData>(
+export const submitUserThunk = createAsyncThunk<User, RegisterUserFormData>(
   "userRegistration/submitUser",
   async (arg, { rejectWithValue }) => {
     try {
@@ -39,5 +44,19 @@ export const userRegistrationSlice = createSlice({
     ) => {
       state.formState = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(submitUserThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(submitUserThunk.rejected, (state, action) => {
+        state.errorMsg = action.payload as string;
+        state.isLoading = false;
+      })
+      .addCase(submitUserThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.responseUser = action.payload;
+      });
   },
 });

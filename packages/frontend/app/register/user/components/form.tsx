@@ -28,13 +28,16 @@ import {
 } from "@/components/ui/select";
 import { userTypeSchema } from "@/lib/types/user";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/lib/stores/app-store";
-import { userRegistrationSlice } from "@/lib/stores/register-user";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import {
+  submitUserThunk,
+  userRegistrationSlice,
+} from "@/lib/stores/register-user";
 
 const { updateUserRegistrationState } = userRegistrationSlice.actions;
 
 export function RegisterForm() {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const state = useSelector<RootState>((state) => state.userRegistration);
 
   const form = useForm<RegisterUserFormData>({
@@ -43,6 +46,8 @@ export function RegisterForm() {
 
   const onSubmit = (data: RegisterUserFormData) => {
     dispatch(updateUserRegistrationState(data));
+    dispatch(submitUserThunk(data));
+    console.log(state);
   };
 
   return (
@@ -106,14 +111,17 @@ export function RegisterForm() {
                     Your role in the congregation.
                   </FormDescription>
                   <FormControl>
-                    <Select {...field}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Select your user type" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
                           {userTypeSchema.options.map((item) => (
-                            <SelectItem value={item}>
+                            <SelectItem value={item} key={item}>
                               {item.toLowerCase()}
                             </SelectItem>
                           ))}
