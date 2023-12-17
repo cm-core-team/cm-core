@@ -38,14 +38,7 @@ export const submitUserThunk = createAsyncThunk<User, RegisterUserFormData>(
 export const userRegistrationSlice = createSlice({
   name: "userRegistration",
   initialState,
-  reducers: {
-    updateUserRegistrationState: (
-      state,
-      action: PayloadAction<RegisterUserFormData>,
-    ) => {
-      state.formState = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(submitUserThunk.pending, (state) => {

@@ -2,6 +2,15 @@
 
 import "leaflet/dist/leaflet.css";
 
+import L from "leaflet";
+
+delete (L.Icon.Default as any).prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "/marker-icon-2x.png",
+  iconUrl: "/marker-icon.png",
+  shadowUrl: "/marker-shadow.png",
+});
+
 import React from "react";
 
 import { Spinner } from "@nextui-org/react";
@@ -28,6 +37,7 @@ export function MapView() {
           const key = generateKey(meeting);
           const groupedCongregations = state.groupedCongregationsByLocation;
 
+          // Set the displayable congregations to the ones that are clicked on
           dispatch(setDisplayCongregations(groupedCongregations[key]));
         },
       };

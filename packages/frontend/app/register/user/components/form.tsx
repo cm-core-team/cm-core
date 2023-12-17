@@ -34,8 +34,6 @@ import {
 } from "@/lib/types/registration/user-form";
 import { userTypeSchema } from "@/lib/types/user";
 
-const { updateUserRegistrationState } = userRegistrationSlice.actions;
-
 export function RegisterForm() {
   const dispatch: AppDispatch = useDispatch();
   const state = useSelector<RootState>((state) => state.userRegistration);
@@ -45,7 +43,6 @@ export function RegisterForm() {
   });
 
   const onSubmit = (data: RegisterUserFormData) => {
-    dispatch(updateUserRegistrationState(data));
     dispatch(submitUserThunk(data));
     console.log(state);
   };
