@@ -12,15 +12,6 @@ type EnvSecrets struct {
 	GetWeeklyMeetings_JwAPI string
 }
 
-// This broke
-// var EnvSecretsInstance = EnvSecrets{
-// 	DbUrl:                   os.Getenv("DB_URL"),
-// 	CorsAllowOrigin:         os.Getenv("CORS_ALLOW_ORIGIN"),
-// 	JwtSecret:               os.Getenv("JWT_SECRET"),
-// 	Environment:             os.Getenv("ENVIRONMENT"),
-// 	GetWeeklyMeetings_JwAPI: os.Getenv("GET_WEEKLY_MEETINGS_JW_API"),
-// }
-
 func GetEnvSecrets() EnvSecrets {
 	return EnvSecrets{
 		DbUrl:                   os.Getenv("DB_URL"),

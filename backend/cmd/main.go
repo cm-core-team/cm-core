@@ -5,7 +5,6 @@ import (
 	"backend/internal/middleware"
 	"backend/internal/models"
 	"backend/internal/routes"
-	"fmt"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -24,12 +23,6 @@ func main() {
 	if err != nil {
 		panic("Failed to connect database")
 	}
-
-	fmt.Print("CORS: ")
-	fmt.Println(envSecrets.CorsAllowOrigin)
-
-	fmt.Print("JW API ENDPOINT")
-	fmt.Println(envSecrets.GetWeeklyMeetings_JwAPI)
 
 	// Configuring CORS
 	config := cors.DefaultConfig()
