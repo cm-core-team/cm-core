@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 
-import { LoginForm } from "./components/login-form";
 import { RegisterForm } from "../register/user/components/form";
+
+import { LoginForm } from "./components/login-form";
 
 export default function Login() {
   const [formState, setFormState] = useState("login");

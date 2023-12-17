@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,10 +16,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-  RegisterUserFormData,
-  registerUserFormSchema,
-} from "@/lib/types/registration/user-form";
-import {
   Select,
   SelectGroup,
   SelectItem,
@@ -26,13 +23,16 @@ import {
   SelectContent,
   SelectValue,
 } from "@/components/ui/select";
-import { userTypeSchema } from "@/lib/types/user";
-import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import {
   submitUserThunk,
   userRegistrationSlice,
 } from "@/lib/stores/register-user";
+import {
+  RegisterUserFormData,
+  registerUserFormSchema,
+} from "@/lib/types/registration/user-form";
+import { userTypeSchema } from "@/lib/types/user";
 
 const { updateUserRegistrationState } = userRegistrationSlice.actions;
 

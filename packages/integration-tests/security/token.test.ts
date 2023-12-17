@@ -19,7 +19,8 @@ describe("Join Token Security", () => {
   // it("should correctly identify correct tokens", async () => {
   //   const adminUser = ModelGenerator.instance.randomUser();
   //   const joinUser = ModelGenerator.instance.randomUser();
-  //   const randomCongregation = ModelGenerator.instance.randomCongregation();
+  //   const randomCongregation =
+  // ModelGenerator.instance.randomCongregation();
   //   // Create a congregation that the admin is linked to
   //   const congregationResponse = await axios.post(
   //     backendRoutes.congregation.create,
@@ -35,7 +36,8 @@ describe("Join Token Security", () => {
   //     backendRoutes.user.create,
   //     adminUser,
   //   );
-  //   const joinResponse = await axios.post(backendRoutes.user.create, joinUser);
+  //   const joinResponse =
+  // await axios.post(backendRoutes.user.create, joinUser);
   //   // Check the response
   //   const adminPayload = createUserSchema.parse(adminResponse.data);
   //   const joinPayload = createUserSchema.parse(joinResponse.data);

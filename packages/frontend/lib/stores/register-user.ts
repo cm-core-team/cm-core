@@ -1,8 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RegisterUserFormData } from "../types/registration/user-form";
-import { User } from "../types/user";
+
 import { backendErrorHandle } from "../backend-error-handle";
 import { submitUser } from "../registration/submit-user";
+import { RegisterUserFormData } from "../types/registration/user-form";
+import { User } from "../types/user";
 
 export interface UserRegistrationState {
   formState: Partial<RegisterUserFormData>;

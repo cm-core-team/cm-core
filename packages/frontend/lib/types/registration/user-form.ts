@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { userTypeSchema } from "../user";
 
 export const registerUserFormSchema = z

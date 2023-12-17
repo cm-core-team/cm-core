@@ -1,9 +1,11 @@
-import { toast } from "@/components/ui/use-toast";
+import axios from "axios";
+
 import { backendErrorHandle } from "../backend-error-handle";
+import { backendRoutes } from "../config";
 import { RegisterUserFormData } from "../types/registration/user-form";
 import { User, userSchema } from "../types/user";
-import axios from "axios";
-import { backendRoutes } from "../config";
+
+import { toast } from "@/components/ui/use-toast";
 
 export async function submitUser(
   userFormData: RegisterUserFormData,
