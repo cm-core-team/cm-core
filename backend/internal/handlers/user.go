@@ -87,6 +87,7 @@ func LoginUser(ctx *gin.Context) {
 		})
 		return
 	}
+
 	cookie := http.Cookie{
 		Name:     "sessionToken",
 		Value:    sessionToken,
