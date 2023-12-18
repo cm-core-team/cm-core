@@ -3,10 +3,14 @@ package handlers
 import (
 	"backend/internal/common"
 	"backend/internal/handlers/dtos"
+	"backend/internal/models"
 	"backend/internal/services"
+	"backend/internal/services/security"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -42,6 +46,65 @@ func CreateUser(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{"user": user})
+}
+
+func LoginUser(ctx *gin.Context) {
+	/**
+	 * Compare the password hash and set a USER-level JWT.
+	 */
+
+	var dto dtos.LoginUserDTO
+	err := ctx.BindJSON(&dto)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	db := ctx.MustGet("db").(*gorm.DB)
+
+	var foundUser models.User
+	result := db.First(&foundUser, "email = ?", dto.Email)
+	if result.Error != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserNotFound,
+		})
+		return
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(foundUser.PasswordHash), []byte(dto.Password))
+	if err != nil {
+		ctx.JSON(http.StatusNotAcceptable, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserPasswordInvalid,
+		})
+		return
+	}
+
+	sessionToken, err := security.GenerateJWT(strconv.FormatUint(uint64(foundUser.ID), 10))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
+		})
+		return
+	}
+	cookie := http.Cookie{
+		Name:     "sessionToken",
+		Value:    sessionToken,
+		Path:     "/",
+		Domain:   "",
+		HttpOnly: true,
+	}
+
+	if common.GetEnvSecrets().Environment != "local" {
+		cookie.Secure = true
+		cookie.SameSite = http.SameSiteNoneMode
+	}
+
+	http.SetCookie(ctx.Writer, &cookie)
+
+	ctx.JSON(http.StatusAccepted, gin.H{
+		"sessionToken": sessionToken,
+	})
 }
 
 func VerifyToken(ctx *gin.Context) {
