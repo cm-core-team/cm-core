@@ -27,6 +27,7 @@ func main() {
 	if err != nil {
 		panic("Failed to connect database")
 	}
+	models.SetupModels(db)
 
 	// Configuring CORS
 	config := cors.DefaultConfig()
@@ -38,7 +39,6 @@ func main() {
 	r.Use(cors.New(config))
 	r.Use(middleware.DatabaseSession(db))
 
-	models.SetupModels(db)
 	r = routes.SetupRoutes(r)
 
 	r.Run("0.0.0.0:8080")
