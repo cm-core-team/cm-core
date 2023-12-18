@@ -8,8 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
 
-const ItemCards = ({ data }: { data: any }) => {
+const ItemCards = ({ data }: { data: PlaceholderDashData[] }) => {
   return (
     <div className="flex flex-col gap-2">
       {data.map((item: any, i: number) => {

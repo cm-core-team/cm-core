@@ -1,5 +1,3 @@
-import { Separator } from "../../../components/ui/separator";
-
 import ItemCards from "./item-cards";
 
 import {
@@ -10,8 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
 
-const CongEventsCard = ({ congEventsData }: { congEventsData: any }) => {
+const CongEventsCard = ({ data }: { data: PlaceholderDashData[] }) => {
   return (
     <Card>
       <CardHeader>
@@ -20,7 +19,7 @@ const CongEventsCard = ({ congEventsData }: { congEventsData: any }) => {
       </CardHeader>
       {/* CO visits, assemblies, conventions etc */}
       <CardContent>
-        <ItemCards data={congEventsData} />
+        <ItemCards data={data} />
       </CardContent>
       <CardFooter></CardFooter>
     </Card>

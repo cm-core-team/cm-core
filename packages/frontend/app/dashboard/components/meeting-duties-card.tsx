@@ -8,8 +8,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
 
-const MeetingDutiesCard = ({ dutiesData }: { dutiesData: any }) => {
+const MeetingDutiesCard = ({
+  data,
+}: {
+  data: PlaceholderDashData[] /* | DashData[] */;
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -19,7 +24,7 @@ const MeetingDutiesCard = ({ dutiesData }: { dutiesData: any }) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ItemCards data={dutiesData} />
+        <ItemCards data={data} />
       </CardContent>
       <CardFooter></CardFooter>
     </Card>
