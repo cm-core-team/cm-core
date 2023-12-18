@@ -19,4 +19,12 @@ export const registerUserFormSchema = z
     path: ["retypedPassword"],
   });
 
+export const loginUserFormSchema = z.object({
+  email: z.string().email(),
+  password: z
+    .string()
+    .max(50, "Your password should not have more than 50 characters"),
+});
+
 export type RegisterUserFormData = z.infer<typeof registerUserFormSchema>;
+export type LoginUserFormData = z.infer<typeof loginUserFormSchema>;

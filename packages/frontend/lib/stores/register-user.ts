@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import { submitUser } from "../auth/submit-user";
 import { backendErrorHandle } from "../backend-error-handle";
-import { submitUser } from "../registration/submit-user";
-import { RegisterUserFormData } from "../types/registration/user-form";
+import { RegisterUserFormData } from "../types/auth/user-form";
 import { User } from "../types/user";
 
 import { toast } from "@/components/ui/use-toast";

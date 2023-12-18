@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,28 +16,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z
-    .string()
-    .max(50, "Your password should not have more than 50 characters"),
-});
+import {
+  LoginUserFormData,
+  loginUserFormSchema,
+} from "@/lib/types/auth/user-form";
 
 export function LoginForm() {
   const router = useRouter();
-
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginUserFormData>({
+    resolver: zodResolver(loginUserFormSchema),
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  function onSubmit(data: LoginUserFormData) {}
 
   return (
     <Form {...form}>

@@ -30,7 +30,7 @@ import { submitUserThunk } from "@/lib/stores/register-user";
 import {
   RegisterUserFormData,
   registerUserFormSchema,
-} from "@/lib/types/registration/user-form";
+} from "@/lib/types/auth/user-form";
 import { userTypeSchema } from "@/lib/types/user";
 
 export function RegisterForm() {
