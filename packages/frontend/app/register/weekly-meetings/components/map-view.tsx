@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import React from "react";
 
 import { Spinner } from "@nextui-org/react";
+import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
@@ -14,6 +15,13 @@ import { generateKey } from "@/lib/congregation/group-by-coords";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
 import { Congregation } from "@/lib/types/congregation";
+
+delete (L.Icon.Default as any).prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "/marker-icon-2x.png",
+  iconUrl: "/marker-icon.png",
+  shadowUrl: "/marker-shadow.png",
+});
 
 const { setDisplayCongregations } = localMeetingsSlice.actions;
 
@@ -28,6 +36,7 @@ export function MapView() {
           const key = generateKey(meeting);
           const groupedCongregations = state.groupedCongregationsByLocation;
 
+          // Set the displayable congregations to the ones that are clicked on
           dispatch(setDisplayCongregations(groupedCongregations[key]));
         },
       };

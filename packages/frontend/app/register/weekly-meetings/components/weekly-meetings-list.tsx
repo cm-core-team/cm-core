@@ -60,11 +60,7 @@ export function WeeklyMeetingsList() {
 
   return (
     <div className="w-full border-solid border-3 rounded-xl border-spacing-3 shadow-xl shadow-secondary sm:p-4 p-2">
-      {isFiltered ? (
-        <FilteredResultsHeader selectedId={selectedId} />
-      ) : (
-        <MainWeeklyMeetingsHeader selectedId={selectedId} />
-      )}
+      {isFiltered ? <FilteredResultsHeader /> : <MainWeeklyMeetingsHeader />}
 
       <DisabledButton className="flex ml-auto">
         <p>
@@ -102,9 +98,8 @@ export function WeeklyMeetingsList() {
   );
 }
 
-function MainWeeklyMeetingsHeader({ selectedId }: { selectedId?: number }) {
+function MainWeeklyMeetingsHeader() {
   const { isSmall } = useScreenWidth();
-  const state = useSelector((state: RootState) => state.localMeetings);
 
   return (
     <>
@@ -122,7 +117,7 @@ function MainWeeklyMeetingsHeader({ selectedId }: { selectedId?: number }) {
   );
 }
 
-function FilteredResultsHeader({ selectedId }: { selectedId?: number }) {
+function FilteredResultsHeader() {
   const dispatch: AppDispatch = useDispatch();
   const state = useSelector((state: RootState) => state.localMeetings);
 

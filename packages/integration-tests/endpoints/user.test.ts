@@ -2,7 +2,7 @@ import axios from "axios";
 import { it, describe, expect } from "bun:test";
 import { backendRoutes } from "frontend/lib/config";
 import { ModelGenerator } from "frontend/lib/fixtures/generate";
-import { User, userSchema } from "frontend/lib/types/user";
+import { userSchema } from "frontend/lib/types/user";
 
 import { DBClient } from "../pool";
 

@@ -18,7 +18,7 @@ type User struct {
 
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
-	Email        string `json:"email"`
+	Email        string `json:"email" gorm:"unique"`
 	PasswordHash string `json:"-"`
 
 	Type UserType `json:"type"`

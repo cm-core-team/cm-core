@@ -6,9 +6,15 @@ export const backendRoutes = {
     sendVerificationCode:
       baseBackendUrl + "/congregation/send-verification-code",
     verifyPhone: baseBackendUrl + "/congregation/verify-phone",
+    verifyToken: baseBackendUrl + "/user/verify-token",
   },
   user: {
     create: baseBackendUrl + "/user/create",
+    login: baseBackendUrl + "/user/login",
+    auth: baseBackendUrl + "/user/auth",
+  },
+  token: {
+    create: baseBackendUrl + "/token/create",
   },
   getLocalMeetings: baseBackendUrl + "/meetings",
 };

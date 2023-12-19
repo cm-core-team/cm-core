@@ -24,10 +24,12 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 
 	// Users
 	base.POST("/user/create", handlers.CreateUser)
+	base.POST("/user/login", handlers.LoginUser)
 	base.POST("/user/verify-token", handlers.VerifyToken)
+	base.GET("/user/auth", middleware.Authenticate())
 
 	// Tokens
-	base.POST("/token/create", middleware.Authenticate(), handlers.CreateToken)
+	base.POST("/token/create", handlers.CreateToken)
 
 	return r
 }

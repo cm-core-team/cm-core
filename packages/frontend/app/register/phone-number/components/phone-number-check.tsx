@@ -72,12 +72,17 @@ export function PhoneNumberCheck() {
     startCountdown(30); // Start a 30 seconds countdown
   }, [countdown, form, selectedCongregation, startCountdown]);
 
-  if (selectedCongregation === undefined) {
-    router.replace("/register");
-    return;
-  }
+  React.useEffect(() => {
+    if (selectedCongregation === undefined) {
+      router.replace("/register");
+    }
+  }, [router, selectedCongregation]);
 
   const onSubmit = () => {
+    if (!selectedCongregation) {
+      return;
+    }
+
     verifyPhone(selectedCongregation, form.getValues().verificationCode);
   };
 
