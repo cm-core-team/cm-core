@@ -13,7 +13,7 @@ export function Footer(): JSX.Element {
     {
       name: "GitHub",
       content: <Github />,
-      pageToNavigateTo: "https://github.com/j-koziel/cong-manager",
+      pageToNavigateTo: "https://github.com/cm-core-team/cm-core",
     },
   ];
 

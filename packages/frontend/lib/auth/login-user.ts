@@ -8,8 +8,4 @@ import { isAuthorized } from "./is-authorized";
 
 export async function loginUser(data: LoginUserFormData) {
   await axios.post(backendRoutes.user.login, data);
-
-  if (await isAuthorized()) {
-    return;
-  }
 }

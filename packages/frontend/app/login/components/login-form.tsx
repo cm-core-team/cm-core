@@ -27,7 +27,7 @@ export function LoginForm() {
     resolver: zodResolver(loginUserFormSchema),
   });
 
-  function onSubmit(data: LoginUserFormData) {}
+  const onSubmit = (data: LoginUserFormData) => {};
 
   return (
     <Form {...form}>

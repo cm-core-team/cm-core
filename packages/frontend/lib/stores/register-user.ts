@@ -26,7 +26,7 @@ const initialState: UserRegistrationState = {
   isLoading: false,
 };
 
-export const submitUserThunk = createAsyncThunk<User, RegisterUserFormData>(
+export const createUserThunk = createAsyncThunk<User, RegisterUserFormData>(
   "userRegistration/submitUser",
   async (arg, { rejectWithValue }) => {
     try {
@@ -56,14 +56,14 @@ export const userRegistrationSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(submitUserThunk.pending, (state) => {
+      .addCase(createUserThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(submitUserThunk.rejected, (state, action) => {
+      .addCase(createUserThunk.rejected, (state, action) => {
         state.errorMsg = action.payload as string;
         state.isLoading = false;
       })
-      .addCase(submitUserThunk.fulfilled, (state, action) => {
+      .addCase(createUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.responseUser = action.payload;
       });

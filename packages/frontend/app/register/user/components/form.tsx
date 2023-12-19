@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AppDispatch } from "@/lib/stores/app-store";
-import { submitUserThunk } from "@/lib/stores/register-user";
+import { createUserThunk } from "@/lib/stores/register-user";
 import {
   RegisterUserFormData,
   registerUserFormSchema,
@@ -41,7 +41,7 @@ export function RegisterForm() {
   });
 
   const onSubmit = (data: RegisterUserFormData) => {
-    dispatch(submitUserThunk(data));
+    dispatch(createUserThunk(data));
   };
 
   return (
