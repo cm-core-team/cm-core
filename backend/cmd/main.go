@@ -16,6 +16,7 @@ import (
 
 func main() {
 	godotenv.Load(".env.secret")
+
 	envSecrets := common.GetEnvSecrets()
 	DB_URL := envSecrets.DbUrl
 	r := gin.Default()

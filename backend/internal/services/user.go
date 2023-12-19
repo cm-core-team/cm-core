@@ -27,7 +27,6 @@ func CreateUserInDB(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
 		Email:        dto.Email,
 		PasswordHash: string(hashedPassword),
 		Type:         dto.Type,
-		JoinToken:    dto.JoinToken,
 	}
 
 	return user, err

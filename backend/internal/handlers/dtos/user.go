@@ -8,8 +8,7 @@ type CreateUserDTO struct {
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 
-	Type      models.UserType `json:"type"`
-	JoinToken *models.Token   `json:"joinToken" gorm:"foreignKey:UserID"`
+	Type models.UserType `json:"type"`
 }
 
 type LoginUserDTO struct {

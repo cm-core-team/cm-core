@@ -8,6 +8,7 @@ import (
 	"backend/internal/services/security"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -88,17 +89,17 @@ func LoginUser(ctx *gin.Context) {
 		return
 	}
 
+	sessionTokenExpiry := int(time.Hour * 24 * 14 / time.Second)
+
 	cookie := http.Cookie{
 		Name:     "sessionToken",
 		Value:    sessionToken,
 		Path:     "/",
 		Domain:   "",
 		HttpOnly: true,
-	}
-
-	if common.GetEnvSecrets().Environment != "local" {
-		cookie.Secure = true
-		cookie.SameSite = http.SameSiteNoneMode
+		MaxAge:   sessionTokenExpiry,
+		Secure:   true,
+		SameSite: http.SameSiteNoneMode,
 	}
 
 	http.SetCookie(ctx.Writer, &cookie)
