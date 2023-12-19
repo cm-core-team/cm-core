@@ -37,7 +37,6 @@ export const createUserThunk = createAsyncThunk<User, RegisterUserFormData>(
   async (formData, { rejectWithValue }) => {
     try {
       const user = await submitUser(formData);
-      console.log(formData.password);
       toast({
         title: "Success",
         description: "Created user",
@@ -62,8 +61,6 @@ export const loginUserThunk = createAsyncThunk<void, LoginUserFormData>(
         variant: "success",
       });
     } catch (error) {
-      console.log("jjdfisd");
-      console.log(error);
       return rejectWithValue(handleThunkError(error));
     }
   },
