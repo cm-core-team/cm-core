@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AppDispatch } from "@/lib/stores/app-store";
+import { loginUserThunk } from "@/lib/stores/register-user";
 import {
   LoginUserFormData,
   loginUserFormSchema,
@@ -23,11 +26,14 @@ import {
 
 export function LoginForm() {
   const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
   const form = useForm<LoginUserFormData>({
     resolver: zodResolver(loginUserFormSchema),
   });
 
-  const onSubmit = (data: LoginUserFormData) => {};
+  const onSubmit = (data: LoginUserFormData) => {
+    dispatch(loginUserThunk(data));
+  };
 
   return (
     <Form {...form}>

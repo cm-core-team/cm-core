@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateUserInDB(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
+func GenerateUserModel(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
 	// Hash user password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(dto.Password), 12)
 	if err != nil {

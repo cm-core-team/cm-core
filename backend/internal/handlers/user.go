@@ -6,6 +6,7 @@ import (
 	"backend/internal/models"
 	"backend/internal/services"
 	"backend/internal/services/security"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -30,8 +31,9 @@ func CreateUser(ctx *gin.Context) {
 	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
-	user, err := services.CreateUserInDB(dto, db)
+	user, err := services.GenerateUserModel(dto, db)
 	if err != nil {
+		fmt.Println("[CreateUser] Could not generate user model.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -40,6 +42,8 @@ func CreateUser(ctx *gin.Context) {
 
 	result := db.Create(&user)
 	if result.Error != nil {
+		fmt.Println("[CreateUser] Could not create user in database.")
+		fmt.Println(result.Error)
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserAlreadyExists,
 		})
@@ -68,6 +72,7 @@ func LoginUser(ctx *gin.Context) {
 	var foundUser models.User
 	result := db.First(&foundUser, "email = ?", dto.Email)
 	if result.Error != nil {
+		fmt.Println("[LoginUser] Could not find user")
 		ctx.JSON(http.StatusNotFound, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserNotFound,
 		})
@@ -75,6 +80,8 @@ func LoginUser(ctx *gin.Context) {
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(foundUser.PasswordHash), []byte(dto.Password))
 	if err != nil {
+		fmt.Println("[LoginUser] Incorrect password")
+
 		ctx.JSON(http.StatusNotAcceptable, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserPasswordInvalid,
 		})
@@ -83,6 +90,7 @@ func LoginUser(ctx *gin.Context) {
 
 	sessionToken, err := security.GenerateJWT(strconv.FormatUint(uint64(foundUser.ID), 10))
 	if err != nil {
+		fmt.Println("[LoginUser] Couldn't generate JWT")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})
@@ -91,7 +99,7 @@ func LoginUser(ctx *gin.Context) {
 
 	sessionTokenExpiry := int(time.Hour * 24 * 14 / time.Second)
 
-	cookie := http.Cookie{
+	cookie := &http.Cookie{
 		Name:     "sessionToken",
 		Value:    sessionToken,
 		Path:     "/",
@@ -102,7 +110,7 @@ func LoginUser(ctx *gin.Context) {
 		SameSite: http.SameSiteNoneMode,
 	}
 
-	http.SetCookie(ctx.Writer, &cookie)
+	http.SetCookie(ctx.Writer, cookie)
 
 	ctx.JSON(http.StatusAccepted, gin.H{
 		"sessionToken": sessionToken,

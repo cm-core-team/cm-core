@@ -16,7 +16,10 @@ export async function submitUser(
     type: userFormData.type,
   };
 
-  const response = await axios.post(backendRoutes.user.create, user);
+  const response = await axios.post(backendRoutes.user.create, {
+    ...user,
+    password: userFormData.password,
+  });
 
   return userSchema.parse(response.data.user);
 }

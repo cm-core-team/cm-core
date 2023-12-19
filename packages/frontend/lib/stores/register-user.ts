@@ -1,9 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import { loginUser } from "../auth/login-user";
 import { submitUser } from "../auth/submit-user";
 import { backendErrorHandle } from "../backend-error-handle";
-import { RegisterUserFormData } from "../types/auth/user-form";
+import {
+  LoginUserFormData,
+  RegisterUserFormData,
+} from "../types/auth/user-form";
 import { User } from "../types/user";
+
+import { handleThunkError } from "./errors";
 
 import { toast } from "@/components/ui/use-toast";
 
@@ -28,9 +34,10 @@ const initialState: UserRegistrationState = {
 
 export const createUserThunk = createAsyncThunk<User, RegisterUserFormData>(
   "userRegistration/submitUser",
-  async (arg, { rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const user = await submitUser(arg);
+      const user = await submitUser(formData);
+      console.log(formData.password);
       toast({
         title: "Success",
         description: "Created user",
@@ -39,13 +46,25 @@ export const createUserThunk = createAsyncThunk<User, RegisterUserFormData>(
 
       return user;
     } catch (error) {
-      const errorMsg = backendErrorHandle(error);
+      return rejectWithValue(handleThunkError(error));
+    }
+  },
+);
+
+export const loginUserThunk = createAsyncThunk<void, LoginUserFormData>(
+  "userRegistration/loginUser",
+  async (formData, { rejectWithValue }) => {
+    try {
+      await loginUser(formData);
       toast({
-        title: "Error",
-        description: errorMsg,
-        variant: "destructive",
+        title: "Success",
+        description: "Loggined in!",
+        variant: "success",
       });
-      return rejectWithValue(errorMsg);
+    } catch (error) {
+      console.log("jjdfisd");
+      console.log(error);
+      return rejectWithValue(handleThunkError(error));
     }
   },
 );

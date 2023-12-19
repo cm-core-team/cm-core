@@ -48,7 +48,7 @@ export function RootNavMenu(): JSX.Element {
           <NavigationMenuList>
             <div className="flex gap-x-4 items-center">
               <NavigationMenuItem>
-                <Link href="/register/weekly-meetings" legacyBehavior passHref>
+                <Link href="/register/user" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Register
                   </NavigationMenuLink>

@@ -143,6 +143,7 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="retypedPassword"
