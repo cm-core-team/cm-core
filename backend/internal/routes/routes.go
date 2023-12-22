@@ -26,7 +26,7 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 	base.POST("/user/create", handlers.CreateUser)
 	base.POST("/user/login", handlers.LoginUser)
 	base.POST("/user/verify-token", handlers.VerifyToken)
-	base.GET("/user/auth", middleware.Authenticate())
+	base.GET("/user/auth", middleware.Authenticate(), handlers.GetUser)
 
 	// Tokens
 	base.POST("/token/create", handlers.CreateToken)

@@ -152,6 +152,33 @@ func VerifyToken(ctx *gin.Context) {
 	ctx.JSON(http.StatusAccepted, gin.H{"message": "Token matches"})
 }
 
+func GetUser(ctx *gin.Context) {
+	tokenRaw, exists := ctx.Get("sessionToken")
+
+	if !exists {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": "An internal server error seems to have happened. Please try another time."})
+	}
+
+	token, ok := tokenRaw.(string)
+
+	if !ok {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": "Session token is not a string"})
+
+	}
+
+	tokenPayload, _ := security.VerifyJWT(token)
+
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+
+	user := db.First(&tokenPayload.UserID)
+
+	if user.Error != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"err": "An internal server error seems to have happened. Please try another time."})
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"data": user})
+}
+
 /**
  * Given an ADMIN user and congregation (which you need to verify), update the
  * congregation id foreign key of the admin to the required
