@@ -5,6 +5,7 @@ import (
 	"backend/internal/middleware"
 	"backend/internal/models"
 	"backend/internal/routes"
+	"fmt"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -15,14 +16,19 @@ import (
 
 func main() {
 	godotenv.Load(".env.secret")
+
 	envSecrets := common.GetEnvSecrets()
 	DB_URL := envSecrets.DbUrl
 	r := gin.Default()
+
+	fmt.Println("USING DB: ")
+	fmt.Println(DB_URL)
 
 	db, err := gorm.Open(postgres.Open(DB_URL), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
 	}
+	models.SetupModels(db)
 
 	// Configuring CORS
 	config := cors.DefaultConfig()
@@ -34,7 +40,6 @@ func main() {
 	r.Use(cors.New(config))
 	r.Use(middleware.DatabaseSession(db))
 
-	models.SetupModels(db)
 	r = routes.SetupRoutes(r)
 
 	r.Run("0.0.0.0:8080")

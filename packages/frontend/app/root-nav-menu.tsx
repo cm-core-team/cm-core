@@ -43,13 +43,22 @@ export function RootNavMenu(): JSX.Element {
             Congregation Manager
           </a>
         </div>
+
         <NavigationMenu>
           <NavigationMenuList>
             <div className="flex gap-x-4 items-center">
               <NavigationMenuItem>
-                <Link href="/register" legacyBehavior passHref>
+                <Link href="/register/user" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Register
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/login" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Login
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -76,7 +85,7 @@ export function RootNavMenu(): JSX.Element {
 
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="https://github.com/j-koziel/cong-manager"
+                  href="https://github.com/cm-core-team/cm-core"
                   target="_blank"
                 >
                   <Github />

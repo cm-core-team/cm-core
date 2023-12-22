@@ -9,6 +9,8 @@ import { fetchLocalMeetings } from "../find-meetings/fetch-meetings";
 import { getUserLocation } from "../find-meetings/get-user-location";
 import { Congregation } from "../types/congregation";
 
+import { toast } from "@/components/ui/use-toast";
+
 export interface LocalMeetingsState {
   localCongregations: Congregation[];
   isLoading: boolean;
@@ -56,7 +58,13 @@ export const getUserCoordsThunk = createAsyncThunk<GeolocationCoordinates>(
     try {
       return await getUserLocation();
     } catch (error) {
-      return rejectWithValue(undefined);
+      const errorMsg = backendErrorHandle(error);
+      toast({
+        title: "Error",
+        description: errorMsg,
+        variant: "destructive",
+      });
+      return rejectWithValue(errorMsg);
     }
   },
 );
@@ -97,6 +105,9 @@ export const localMeetingsSlice = createSlice({
       })
       .addCase(getUserCoordsThunk.fulfilled, (state, action) => {
         state.userCoords = action.payload;
+      })
+      .addCase(getUserCoordsThunk.rejected, (state, action) => {
+        state.errorMsg = action.payload as string;
       });
   },
 });
