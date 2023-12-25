@@ -160,9 +160,10 @@ func GetCurrentUser(ctx *gin.Context) {
 
 	// Get the first user which matches the ID
 	tokenPayload, _ := security.VerifyJWT(*token)
-	user := db.First(&tokenPayload.UserID)
+	var foundUser models.User
+	queryResult := db.First(&foundUser, "id = ?", tokenPayload.UserID)
 
-	if user.Error != nil {
+	if queryResult.Error != nil {
 		ctx.JSON(
 			http.StatusInternalServerError,
 			gin.H{
@@ -172,7 +173,7 @@ func GetCurrentUser(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusOK, foundUser)
 }
 
 /**
