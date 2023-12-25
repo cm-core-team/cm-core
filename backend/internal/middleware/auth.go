@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"backend/internal/common"
 	"backend/internal/services/security"
 	"fmt"
 	"net/http"
@@ -48,6 +49,6 @@ func Authenticate() gin.HandlerFunc {
 }
 
 func jsonUnauthorized(ctx *gin.Context) {
-	ctx.JSON(http.StatusUnauthorized, gin.H{"userError": "You need to be logged in to access this resource."})
+	ctx.JSON(http.StatusUnauthorized, gin.H{"userError": common.UserErrorInstance.AuthInvalid})
 	ctx.Abort()
 }
