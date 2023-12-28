@@ -1,7 +1,7 @@
 package findmeetings
 
 import (
-	meetingfinder "backend/internal/integrations/meeting-finder"
+	meetingfinder "backend/core/integrations/meeting-finder"
 	"fmt"
 	"net/http"
 

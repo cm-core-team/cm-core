@@ -1,8 +1,8 @@
 package congregation
 
 import (
-	"backend/internal/common"
-	"backend/internal/models"
+	"backend/core/common"
+	"backend/core/models"
 	"fmt"
 	"net/http"
 

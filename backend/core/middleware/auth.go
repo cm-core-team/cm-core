@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"backend/internal/services/security"
+	"backend/core/services/security"
 	"fmt"
 	"net/http"
 

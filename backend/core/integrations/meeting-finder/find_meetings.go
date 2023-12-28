@@ -8,9 +8,9 @@ import (
 	"net/url"
 	"strconv"
 
-	"backend/internal/common"
-	"backend/internal/integrations/meeting-finder/dtos"
-	"backend/internal/models"
+	"backend/core/common"
+	"backend/core/integrations/meeting-finder/dtos"
+	"backend/core/models"
 
 	"github.com/mitchellh/mapstructure"
 )

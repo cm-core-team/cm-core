@@ -1,7 +1,7 @@
 package user
 
 import (
-	"backend/internal/models"
+	"backend/core/models"
 	"errors"
 	"fmt"
 

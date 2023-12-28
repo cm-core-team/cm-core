@@ -1,13 +1,13 @@
 package routes
 
 import (
-	"backend/internal/api/congregation"
-	findmeetings "backend/internal/api/find-meetings"
-	"backend/internal/api/hello"
-	"backend/internal/api/token"
-	"backend/internal/api/user"
+	"backend/core/api/congregation"
+	findmeetings "backend/core/api/find-meetings"
+	"backend/core/api/hello"
+	"backend/core/api/token"
+	"backend/core/api/user"
 
-	"backend/internal/middleware"
+	"backend/core/middleware"
 
 	"github.com/gin-gonic/gin"
 )

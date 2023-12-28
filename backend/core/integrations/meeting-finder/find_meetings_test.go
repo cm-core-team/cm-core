@@ -1,7 +1,7 @@
 package meetingfinder_test
 
 import (
-	meetingfinder "backend/internal/integrations/meeting-finder"
+	meetingfinder "backend/core/integrations/meeting-finder"
 	"testing"
 )
 

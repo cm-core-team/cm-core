@@ -1,7 +1,7 @@
 package main
 
 import (
-	"backend/internal/models"
+	"backend/core/models"
 	"fmt"
 	"reflect"
 

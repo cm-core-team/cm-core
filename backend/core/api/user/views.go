@@ -1,9 +1,9 @@
 package user
 
 import (
-	"backend/internal/common"
-	"backend/internal/models"
-	"backend/internal/services/security"
+	"backend/core/common"
+	"backend/core/models"
+	"backend/core/services/security"
 	"fmt"
 	"net/http"
 	"strconv"

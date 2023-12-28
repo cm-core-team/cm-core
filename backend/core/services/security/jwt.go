@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"backend/internal/common"
+	"backend/core/common"
 
 	"github.com/golang-jwt/jwt"
 )
