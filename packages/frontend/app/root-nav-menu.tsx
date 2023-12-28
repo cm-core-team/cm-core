@@ -14,9 +14,8 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  NavbarMenuItem,
 } from "@nextui-org/react";
-import { ChevronDown, Github } from "lucide-react";
+import { Github } from "lucide-react";
 
 import { ModeToggle } from "../components/theme-mode-toggle";
 
