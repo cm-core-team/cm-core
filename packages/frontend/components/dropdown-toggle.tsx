@@ -11,7 +11,7 @@ export function DropdownToggle({
   open,
 }: React.PropsWithChildren<DropdownToggleProps>) {
   return (
-    <div className="flex items-center gap-x-2 cursor-pointer">
+    <div className="flex items-center gap-x-1 cursor-pointer">
       {children}
       <ChevronDownIcon
         className={`h-5 w-5 transition-transform duration-200 ${

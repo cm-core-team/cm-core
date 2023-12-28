@@ -14,6 +14,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  NavbarMenuItem,
 } from "@nextui-org/react";
 import { ChevronDown, Github } from "lucide-react";
 
@@ -23,41 +24,46 @@ import { DropdownToggle } from "@/components/dropdown-toggle";
 
 export function RootNavMenu(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const mainItems = (
+    <>
+      <NavbarItem>
+        <Link href="/register/user">Register</Link>
+      </NavbarItem>
+
+      <NavbarItem>
+        <Link href="/login">Login</Link>
+      </NavbarItem>
+
+      <NavbarItem>
+        <FeaturesDropdown />
+      </NavbarItem>
+      <NavbarItem>
+        <Link href="https://github.com/cm-core-team/cm-core" target="_blank">
+          <Github />
+        </Link>
+      </NavbarItem>
+      <NavbarItem>
+        <ModeToggle />
+      </NavbarItem>
+    </>
+  );
 
   return (
     <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
-      <NavbarBrand>
-        <a href="/" className="font-bold hover:underline">
-          Congregation Manager
-        </a>
-      </NavbarBrand>
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />
       </NavbarContent>
+      <NavbarBrand>
+        <a href="/" className="font-bold hover:underline">
+          Congregation Manager
+        </a>
+      </NavbarBrand>
 
-      <NavbarMenu>
-        <NavbarItem>
-          <Link href="/register/user">Register</Link>
-        </NavbarItem>
+      <NavbarMenu>{mainItems}</NavbarMenu>
 
-        <NavbarItem>
-          <Link href="/login">Login</Link>
-        </NavbarItem>
-
-        <NavbarItem>
-          <FeaturesDropdown />
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="https://github.com/cm-core-team/cm-core" target="_blank">
-            <Github />
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <ModeToggle />
-        </NavbarItem>
-      </NavbarMenu>
+      <NavbarContent className="hidden sm:flex">{mainItems}</NavbarContent>
     </Navbar>
   );
 }
