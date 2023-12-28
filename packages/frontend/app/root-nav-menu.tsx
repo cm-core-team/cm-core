@@ -1,20 +1,21 @@
 "use client";
 
+import {
+  Navbar,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  NavbarBrand,
+} from "@nextui-org/react";
 import { Github } from "lucide-react";
-import Link from "next/link";
 
 import { ModeToggle } from "../components/theme-mode-toggle";
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export function RootNavMenu(): JSX.Element {
   const featuresMap = [
@@ -38,65 +39,58 @@ export function RootNavMenu(): JSX.Element {
   return (
     <div className="flex flex-col justify-center flex-grow-0 flex-shrink flex-basis-auto py-4">
       <div className="flex flex-row justify-between items-center px-8 py-4">
-        <div>
-          <a href="/" className="font-bold hover:underline">
-            Congregation Manager
-          </a>
-        </div>
+        <Navbar>
+          <NavbarBrand>
+            <a href="/" className="font-bold hover:underline">
+              Congregation Manager
+            </a>
+          </NavbarBrand>
+          <NavbarContent>
+            <NavbarItem>
+              <Link href="/register/user">Register</Link>
+            </NavbarItem>
+          </NavbarContent>
 
-        <NavigationMenu>
-          <NavigationMenuList>
-            <div className="flex gap-x-4 items-center">
-              <NavigationMenuItem>
-                <Link href="/register/user" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Register
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+          <NavbarContent>
+            <NavbarItem>
+              <Link href="/login">Login</Link>
+            </NavbarItem>
+          </NavbarContent>
 
-              <NavigationMenuItem>
-                <Link href="/login" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Login
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+          <NavbarContent>
+            <Dropdown>
+              <NavbarItem>
+                <DropdownTrigger>
+                  <Button>Features</Button>
+                </DropdownTrigger>
+              </NavbarItem>
 
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Features</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-44 gap-2 p-2">
-                    {featuresMap.map((feature, i) => (
-                      <Link href={feature.path} key={i} legacyBehavior passHref>
-                        <NavigationMenuLink
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "w-full flex justify-start",
-                          )}
-                        >
-                          {feature.title}
-                        </NavigationMenuLink>
-                      </Link>
-                    ))}
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+              <DropdownMenu className="bg-transparent">
+                {featuresMap.map((feature, i) => (
+                  <DropdownItem key={i}>
+                    <Link className="w-full flex justify-start bg-transparent">
+                      {feature.title}
+                    </Link>
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarContent>
 
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="https://github.com/cm-core-team/cm-core"
-                  target="_blank"
-                >
-                  <Github />
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <ModeToggle />
-              </NavigationMenuItem>
-            </div>
-          </NavigationMenuList>
-        </NavigationMenu>
+          <NavbarContent>
+            <NavbarItem>
+              <Link
+                href="https://github.com/cm-core-team/cm-core"
+                target="_blank"
+              >
+                <Github />
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <ModeToggle />
+            </NavbarItem>
+          </NavbarContent>
+        </Navbar>
       </div>
       <hr className="h-px w-full bg-gray-200 border-0 dark:bg-gray-700" />
     </div>
