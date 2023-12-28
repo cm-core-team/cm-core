@@ -1,4 +1,4 @@
-package dtos
+package congregation
 
 import "backend/internal/models"
 

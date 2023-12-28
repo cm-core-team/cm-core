@@ -1,10 +1,8 @@
-package handlers
+package user
 
 import (
 	"backend/internal/common"
-	"backend/internal/handlers/dtos"
 	"backend/internal/models"
-	"backend/internal/services"
 	"backend/internal/services/security"
 	"fmt"
 	"net/http"
@@ -21,7 +19,7 @@ func CreateUser(ctx *gin.Context) {
 	 * Create a new user in the DB
 	 */
 
-	var dto dtos.CreateUserDTO
+	var dto CreateUserDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -31,7 +29,7 @@ func CreateUser(ctx *gin.Context) {
 	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
-	user, err := services.GenerateUserModel(dto, db)
+	user, err := GenerateUserModel(dto, db)
 	if err != nil {
 		fmt.Println("[CreateUser] Could not generate user model.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -58,7 +56,7 @@ func LoginUser(ctx *gin.Context) {
 	 * Compare the password hash and set a USER-level JWT.
 	 */
 
-	var dto dtos.LoginUserDTO
+	var dto LoginUserDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -122,7 +120,7 @@ func VerifyToken(ctx *gin.Context) {
 	 * Verify that a user's token matches it's assigned token
 	 */
 
-	var dto services.JoinTokenMatchDTO
+	var dto JoinTokenMatchDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -133,7 +131,7 @@ func VerifyToken(ctx *gin.Context) {
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 
-	err = services.VerifyToken(dto, db)
+	err = VerifyTokenMatch(dto, db)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -141,7 +139,7 @@ func VerifyToken(ctx *gin.Context) {
 		return
 	}
 
-	err = services.BindUserToCongregation(dto, db)
+	err = BindUserToCongregation(dto, db)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -157,7 +155,7 @@ func VerifyToken(ctx *gin.Context) {
  * congregation id foreign key of the admin to the required
  */
 // func BindAdminToCongregation(ctx *gin.Context) {
-// 	var dto dtos.BindAdminToCongregationDTO
+// 	var dto BindAdminToCongregationDTO
 // 	err := ctx.BindJSON(&dto)
 // 	if err != nil {
 // 		ctx.JSON(http.StatusBadRequest, gin.H{

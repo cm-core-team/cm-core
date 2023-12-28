@@ -1,10 +1,8 @@
-package handlers
+package congregation
 
 import (
 	"backend/internal/common"
-	"backend/internal/handlers/dtos"
 	"backend/internal/models"
-	"backend/internal/services"
 	"fmt"
 	"net/http"
 
@@ -31,7 +29,7 @@ func CreateCongregation(ctx *gin.Context) {
 
 	// Generate a signature and check if it exists
 	dto.GenerateSignature()
-	isUnique, err := services.HasUniqueSignature(dto, db)
+	isUnique, err := HasUniqueSignature(dto, db)
 	if err != nil {
 		fmt.Println("[CreateCongregation] (signature check) Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -48,7 +46,7 @@ func CreateCongregation(ctx *gin.Context) {
 		return
 	}
 
-	err = services.CreateCongregationInDB(dto, db)
+	err = CreateCongregationInDB(dto, db)
 	if err != nil {
 		fmt.Println("[CreateCongregation] Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -62,7 +60,7 @@ func CreateCongregation(ctx *gin.Context) {
 }
 
 func DeleteCongregation(ctx *gin.Context) {
-	var dto dtos.DeleteCongregationDTO
+	var dto DeleteCongregationDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		fmt.Println("[DeleteCongregation] incorrect payload.")
@@ -86,7 +84,7 @@ func DeleteCongregation(ctx *gin.Context) {
 }
 
 func SendCongregationVerificationCode(ctx *gin.Context) {
-	var dto dtos.SendCongregationVerificationCodeDTO
+	var dto SendCongregationVerificationCodeDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
@@ -101,7 +99,7 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 	// Needs a signature
 	dto.Congregation.GenerateSignature()
 
-	verificationCode, userErr := services.CreateVerificationCode(dto, db)
+	verificationCode, userErr := CreateVerificationCode(dto, db)
 	if userErr != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: userErr.Error(),
@@ -110,10 +108,10 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 	}
 
 	// TODO (Jude): need to connect to 3rd party OTP services
-	services.SendVerificationCode(verificationCode)
+	SendVerificationCode(verificationCode)
 
 	// Expire verification code
-	err = services.ScheduleVerificationCodeRemoval(verificationCode, db)
+	err = ScheduleVerificationCodeRemoval(verificationCode, db)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
@@ -125,7 +123,7 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 }
 
 func VerifyCongregationPhone(ctx *gin.Context) {
-	var dto dtos.VerifyCongregationPhoneDTO
+	var dto VerifyCongregationPhoneDTO
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		fmt.Println("[VerifyCongregationPhone] incorrect payload.")
@@ -138,7 +136,7 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 
-	userErr := services.CheckVerificationCode(dto, db, ctx)
+	userErr := CheckVerificationCode(dto, db, ctx)
 	if userErr != nil {
 		// CheckVerificationCode will handle the ctx response
 		ctx.JSON(http.StatusBadRequest, gin.H{

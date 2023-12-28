@@ -1,7 +1,6 @@
-package handlers
+package findmeetings
 
 import (
-	"backend/internal/handlers/dtos"
 	meetingfinder "backend/internal/integrations/meeting-finder"
 	"fmt"
 	"net/http"
@@ -10,7 +9,7 @@ import (
 )
 
 func FindLocalMeetings(ctx *gin.Context) {
-	var dto dtos.FindLocalMeetingsRequestDTO
+	var dto FindLocalMeetingsRequestDTO
 
 	err := ctx.BindJSON(&dto)
 	if err != nil {

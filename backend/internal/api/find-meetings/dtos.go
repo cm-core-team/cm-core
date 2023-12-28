@@ -1,4 +1,4 @@
-package dtos
+package findmeetings
 
 type FindLocalMeetingsRequestDTO struct {
 	Latitude  string `json:"latitude"`

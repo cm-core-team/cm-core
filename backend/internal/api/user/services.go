@@ -1,7 +1,6 @@
-package services
+package user
 
 import (
-	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"errors"
 	"fmt"
@@ -10,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GenerateUserModel(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error) {
+func GenerateUserModel(dto CreateUserDTO, db *gorm.DB) (models.User, error) {
 	// Hash user password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(dto.Password), 12)
 	if err != nil {
@@ -32,7 +31,7 @@ func GenerateUserModel(dto dtos.CreateUserDTO, db *gorm.DB) (models.User, error)
 	return user, err
 }
 
-func VerifyToken(dto JoinTokenMatchDTO, db *gorm.DB) error {
+func VerifyTokenMatch(dto JoinTokenMatchDTO, db *gorm.DB) error {
 	var user models.User
 	result := db.Where(&models.User{Email: dto.Email}).First(&user)
 	if result.Error != nil {

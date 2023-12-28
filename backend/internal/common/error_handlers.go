@@ -1,9 +1,8 @@
 /* TODO */
 
-package handlers
+package common
 
 import (
-	"backend/internal/common"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +16,7 @@ type ContextErrorHandle struct {
 func (handle ContextErrorHandle) RequestValidation(err error) {
 	if err != nil {
 		handle.Context.JSON(http.StatusBadRequest, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+			UserErrorInstance.UserErrKey: UserErrorInstance.BadRequestOrData,
 		})
 		return
 	}

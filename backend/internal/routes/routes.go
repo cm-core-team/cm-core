@@ -1,7 +1,12 @@
 package routes
 
 import (
-	"backend/internal/handlers"
+	"backend/internal/api/congregation"
+	findmeetings "backend/internal/api/find-meetings"
+	"backend/internal/api/hello"
+	"backend/internal/api/token"
+	"backend/internal/api/user"
+
 	"backend/internal/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -12,24 +17,24 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 
 	/* Endpoints */
 
-	base.GET("/hello", handlers.Hello)
+	base.GET("/hello", hello.Hello)
 
 	// Meetings / Congregations
-	base.POST("/congregation/create", handlers.CreateCongregation)
-	base.DELETE("/congregation/delete", handlers.DeleteCongregation)
+	base.POST("/congregation/create", congregation.CreateCongregation)
+	base.DELETE("/congregation/delete", congregation.DeleteCongregation)
 
-	base.POST("/meetings", handlers.FindLocalMeetings)
-	base.POST("/congregation/send-verification-code", handlers.SendCongregationVerificationCode)
-	base.POST("/congregation/verify-phone", handlers.VerifyCongregationPhone)
+	base.POST("/meetings", findmeetings.FindLocalMeetings)
+	base.POST("/congregation/send-verification-code", congregation.SendCongregationVerificationCode)
+	base.POST("/congregation/verify-phone", congregation.VerifyCongregationPhone)
 
 	// Users
-	base.POST("/user/create", handlers.CreateUser)
-	base.POST("/user/login", handlers.LoginUser)
-	base.POST("/user/verify-token", handlers.VerifyToken)
+	base.POST("/user/create", user.CreateUser)
+	base.POST("/user/login", user.LoginUser)
+	base.POST("/user/verify-token", user.VerifyToken)
 	base.GET("/user/auth", middleware.Authenticate())
 
 	// Tokens
-	base.POST("/token/create", handlers.CreateToken)
+	base.POST("/token/create", token.CreateToken)
 
 	return r
 }

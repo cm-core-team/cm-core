@@ -1,8 +1,7 @@
-package handlers
+package token
 
 import (
 	"backend/internal/common"
-	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"fmt"
 	"net/http"
@@ -26,7 +25,7 @@ func CreateToken(ctx *gin.Context) {
 	// 	return
 	// }
 
-	var dto dtos.CreateTokenDTO
+	var dto CreateTokenDTO
 
 	err := ctx.BindJSON(&dto)
 	if err != nil {

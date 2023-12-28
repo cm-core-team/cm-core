@@ -1,4 +1,4 @@
-package dtos
+package user
 
 import "backend/internal/models"
 
@@ -19,4 +19,9 @@ type LoginUserDTO struct {
 type BindAdminToCongregationDTO struct {
 	AdminID        string `json:"adminId"`
 	CongregationID string `json:"congregationId"`
+}
+
+type JoinTokenMatchDTO struct {
+	Email          string `json:"email"`
+	JoinTokenValue string `json:"tokenValue"`
 }

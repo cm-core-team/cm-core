@@ -1,8 +1,7 @@
-package services
+package congregation
 
 import (
 	"backend/internal/common"
-	"backend/internal/handlers/dtos"
 	"backend/internal/models"
 	"errors"
 	"fmt"
@@ -45,7 +44,7 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 	return nil
 }
 
-func CheckVerificationCode(dto dtos.VerifyCongregationPhoneDTO, db *gorm.DB, ctx *gin.Context) error {
+func CheckVerificationCode(dto VerifyCongregationPhoneDTO, db *gorm.DB, ctx *gin.Context) error {
 	// Find a verificationCode with a matching signature
 	var verificationCode models.CongregationVerificationCode
 	dbInst := db.Where(&models.CongregationVerificationCode{
@@ -69,7 +68,7 @@ func CheckVerificationCode(dto dtos.VerifyCongregationPhoneDTO, db *gorm.DB, ctx
 	return nil
 }
 
-func CreateVerificationCode(dto dtos.SendCongregationVerificationCodeDTO, db *gorm.DB) (models.CongregationVerificationCode, error) {
+func CreateVerificationCode(dto SendCongregationVerificationCodeDTO, db *gorm.DB) (models.CongregationVerificationCode, error) {
 	verificationCode := models.CongregationVerificationCode{
 		CongregationSignature: dto.Congregation.Signature,
 		PhoneNumber:           dto.PhoneNumber,

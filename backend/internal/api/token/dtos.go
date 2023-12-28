@@ -1,4 +1,4 @@
-package dtos
+package token
 
 type CreateTokenDTO struct {
 	UserID          uint `json:"userId"`
