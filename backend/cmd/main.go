@@ -1,10 +1,10 @@
 package main
 
 import (
-	"backend/internal/common"
-	"backend/internal/middleware"
-	"backend/internal/models"
-	"backend/internal/routes"
+	"backend/core/common"
+	"backend/core/middleware"
+	"backend/core/models"
+	"backend/core/routes"
 	"fmt"
 
 	"github.com/gin-contrib/cors"
