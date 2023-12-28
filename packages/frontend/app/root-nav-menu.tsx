@@ -1,22 +1,74 @@
 "use client";
 
+import React from "react";
+
+import {
+  Navbar,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarBrand,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
 import { Github } from "lucide-react";
-import Link from "next/link";
 
 import { ModeToggle } from "../components/theme-mode-toggle";
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import { DropdownToggle } from "@/components/dropdown-toggle";
 
 export function RootNavMenu(): JSX.Element {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const mainItems = (
+    <>
+      <NavbarItem>
+        <Link href="/register/user">Register</Link>
+      </NavbarItem>
+
+      <NavbarItem>
+        <Link href="/login">Login</Link>
+      </NavbarItem>
+
+      <NavbarItem>
+        <FeaturesDropdown />
+      </NavbarItem>
+      <NavbarItem>
+        <Link href="https://github.com/cm-core-team/cm-core" target="_blank">
+          <Github />
+        </Link>
+      </NavbarItem>
+      <NavbarItem>
+        <ModeToggle />
+      </NavbarItem>
+    </>
+  );
+
+  return (
+    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
+      </NavbarContent>
+      <NavbarBrand>
+        <a href="/" className="font-bold hover:underline">
+          Congregation Manager
+        </a>
+      </NavbarBrand>
+
+      <NavbarMenu>{mainItems}</NavbarMenu>
+
+      <NavbarContent className="hidden sm:flex">{mainItems}</NavbarContent>
+    </Navbar>
+  );
+}
+
+function FeaturesDropdown() {
+  const [isOpen, setIsOpen] = React.useState(false);
   const featuresMap = [
     {
       title: "Meeting Media",
@@ -35,70 +87,21 @@ export function RootNavMenu(): JSX.Element {
       path: "",
     },
   ];
+
   return (
-    <div className="flex flex-col justify-center flex-grow-0 flex-shrink flex-basis-auto py-4">
-      <div className="flex flex-row justify-between items-center px-8 py-4">
+    <Dropdown onOpenChange={setIsOpen}>
+      <DropdownTrigger>
         <div>
-          <a href="/" className="font-bold hover:underline">
-            Congregation Manager
-          </a>
+          <DropdownToggle open={isOpen}>Features</DropdownToggle>
         </div>
-
-        <NavigationMenu>
-          <NavigationMenuList>
-            <div className="flex gap-x-4 items-center">
-              <NavigationMenuItem>
-                <Link href="/register/user" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Register
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <Link href="/login" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Login
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Features</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-44 gap-2 p-2">
-                    {featuresMap.map((feature, i) => (
-                      <Link href={feature.path} key={i} legacyBehavior passHref>
-                        <NavigationMenuLink
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "w-full flex justify-start",
-                          )}
-                        >
-                          {feature.title}
-                        </NavigationMenuLink>
-                      </Link>
-                    ))}
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="https://github.com/cm-core-team/cm-core"
-                  target="_blank"
-                >
-                  <Github />
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <ModeToggle />
-              </NavigationMenuItem>
-            </div>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-      <hr className="h-px w-full bg-gray-200 border-0 dark:bg-gray-700" />
-    </div>
+      </DropdownTrigger>
+      <DropdownMenu>
+        {featuresMap.map((feature, i) => (
+          <DropdownItem key={i}>
+            <Link href={feature.path}>{feature.title}</Link>
+          </DropdownItem>
+        ))}
+      </DropdownMenu>
+    </Dropdown>
   );
 }
