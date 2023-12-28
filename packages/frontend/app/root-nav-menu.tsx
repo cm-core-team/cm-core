@@ -1,23 +1,69 @@
 "use client";
 
+import React from "react";
+
 import {
   Navbar,
   NavbarContent,
   NavbarItem,
   Link,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarBrand,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  NavbarBrand,
 } from "@nextui-org/react";
-import { Github } from "lucide-react";
+import { ChevronDown, Github } from "lucide-react";
 
 import { ModeToggle } from "../components/theme-mode-toggle";
 
-import { Button } from "@/components/ui/button";
+import { DropdownToggle } from "@/components/dropdown-toggle";
 
 export function RootNavMenu(): JSX.Element {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  return (
+    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <NavbarBrand>
+        <a href="/" className="font-bold hover:underline">
+          Congregation Manager
+        </a>
+      </NavbarBrand>
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
+      </NavbarContent>
+
+      <NavbarMenu>
+        <NavbarItem>
+          <Link href="/register/user">Register</Link>
+        </NavbarItem>
+
+        <NavbarItem>
+          <Link href="/login">Login</Link>
+        </NavbarItem>
+
+        <NavbarItem>
+          <FeaturesDropdown />
+        </NavbarItem>
+        <NavbarItem>
+          <Link href="https://github.com/cm-core-team/cm-core" target="_blank">
+            <Github />
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <ModeToggle />
+        </NavbarItem>
+      </NavbarMenu>
+    </Navbar>
+  );
+}
+
+function FeaturesDropdown() {
+  const [isOpen, setIsOpen] = React.useState(false);
   const featuresMap = [
     {
       title: "Meeting Media",
@@ -36,63 +82,21 @@ export function RootNavMenu(): JSX.Element {
       path: "",
     },
   ];
+
   return (
-    <div className="flex flex-col justify-center flex-grow-0 flex-shrink flex-basis-auto py-4">
-      <div className="flex flex-row justify-between items-center px-8 py-4">
-        <Navbar>
-          <NavbarBrand>
-            <a href="/" className="font-bold hover:underline">
-              Congregation Manager
-            </a>
-          </NavbarBrand>
-          <NavbarContent>
-            <NavbarItem>
-              <Link href="/register/user">Register</Link>
-            </NavbarItem>
-          </NavbarContent>
-
-          <NavbarContent>
-            <NavbarItem>
-              <Link href="/login">Login</Link>
-            </NavbarItem>
-          </NavbarContent>
-
-          <NavbarContent>
-            <Dropdown>
-              <NavbarItem>
-                <DropdownTrigger>
-                  <Button>Features</Button>
-                </DropdownTrigger>
-              </NavbarItem>
-
-              <DropdownMenu className="bg-transparent">
-                {featuresMap.map((feature, i) => (
-                  <DropdownItem key={i}>
-                    <Link className="w-full flex justify-start bg-transparent">
-                      {feature.title}
-                    </Link>
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </NavbarContent>
-
-          <NavbarContent>
-            <NavbarItem>
-              <Link
-                href="https://github.com/cm-core-team/cm-core"
-                target="_blank"
-              >
-                <Github />
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <ModeToggle />
-            </NavbarItem>
-          </NavbarContent>
-        </Navbar>
-      </div>
-      <hr className="h-px w-full bg-gray-200 border-0 dark:bg-gray-700" />
-    </div>
+    <Dropdown onOpenChange={setIsOpen}>
+      <DropdownTrigger>
+        <div>
+          <DropdownToggle open={isOpen}>Features</DropdownToggle>
+        </div>
+      </DropdownTrigger>
+      <DropdownMenu>
+        {featuresMap.map((feature, i) => (
+          <DropdownItem key={i}>
+            <Link href={feature.path}>{feature.title}</Link>
+          </DropdownItem>
+        ))}
+      </DropdownMenu>
+    </Dropdown>
   );
 }
