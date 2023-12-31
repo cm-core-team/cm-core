@@ -17,7 +17,7 @@ import MeetingDutiesCard from "./dashboard-components/meeting-duties-card";
 import PublicWitnessingCard from "./dashboard-components/public-witnessing-schedule-card";
 import UserInfoCard from "./dashboard-components/user-info-card";
 
-function UserDashboard() {
+function UserDashboard({ currentUser }: { currentUser: any }) {
   const userDashboardItems: DashboardItems = [
     <UserInfoCard
       userInfo={{
