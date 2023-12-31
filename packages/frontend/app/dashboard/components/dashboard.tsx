@@ -15,18 +15,20 @@ function Dashboard() {
   const [currentUser, setCurrentUser] = React.useState<any>();
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const getCurrentUser = () => {
-    axios
-      .get(backendRoutes.user.me, requestOptions())
-      .then((res) => {
-        console.log(res.data);
-        setCurrentUser({ ...res.data });
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false));
+  // This gets the current user from the backend
+  // and then sets it to some local state
+  const getCurrentUser = async () => {
+    try {
+      const res = await axios.get(backendRoutes.user.me, requestOptions());
+
+      setCurrentUser({ ...res.data });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // I hate react for this
   React.useEffect(() => {
     getCurrentUser();
   }, []);
