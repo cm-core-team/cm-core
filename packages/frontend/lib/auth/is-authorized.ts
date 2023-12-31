@@ -8,7 +8,7 @@ export async function isAuthorized(): Promise<boolean> {
     const res = await axios.get(backendRoutes.user.me, requestOptions());
     console.log(res.data);
     return true;
-  } catch (error) { }
+  } catch (error) {}
 
   return false;
 }
