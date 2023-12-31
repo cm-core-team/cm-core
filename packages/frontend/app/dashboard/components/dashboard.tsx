@@ -1,18 +1,13 @@
 import { AdminDashboard } from "./admin-dashboard";
 import { UserDashboard } from "./user-dashboard";
 
-import { GetWeeklyMeetings } from "@/app/register/weekly-meetings/components/get-weekly-meetings";
-
-function Dashboard() {
-  // Will retreive the user programatically
-  const userType = "admin";
-  const user = { type: "admin", congregation: "" };
-
-  if (!user.congregation && user.type === "admin") {
-    return <GetWeeklyMeetings />;
+function Dashboard({ currentUser }: { currentUser: any }) {
+  if (currentUser.type === "REGULAR") {
+    console.log("The user is regular woohoo!!");
   }
 
-  return userType === "admin" ? <AdminDashboard /> : <UserDashboard />;
+  // Will retreive the user programatically
+  return <UserDashboard />;
 }
 
 export { Dashboard };

@@ -7,15 +7,15 @@ import {
   placeholderCongEvents,
   placeholderInformationBoard,
   placeholderDuties,
-} from "../../../lib/config";
+} from "../../../lib/sample-data";
 import { DashboardItems } from "../../../lib/types/dashboard-item";
 
 import AnimateCard from "./animate-card";
-import CongEventsCard from "./cong-events-card";
-import InformationCard from "./information-card";
-import MeetingDutiesCard from "./meeting-duties-card";
-import PublicWitnessingCard from "./public-witnessing-schedule-card";
-import UserInfoCard from "./user-info-card";
+import CongEventsCard from "./dashboard-components/cong-events-card";
+import InformationCard from "./dashboard-components/information-card";
+import MeetingDutiesCard from "./dashboard-components/meeting-duties-card";
+import PublicWitnessingCard from "./dashboard-components/public-witnessing-schedule-card";
+import UserInfoCard from "./dashboard-components/user-info-card";
 
 function UserDashboard() {
   const userDashboardItems: DashboardItems = [

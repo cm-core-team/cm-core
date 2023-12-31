@@ -1,4 +1,4 @@
-import ItemCards from "./item-cards";
+import ItemCards from "../item-cards";
 
 import {
   Card,
