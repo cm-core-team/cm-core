@@ -154,28 +154,10 @@ func VerifyToken(ctx *gin.Context) {
 
 // Get the current authenticated user
 func GetCurrentUser(ctx *gin.Context) {
-	token, exists := ctx.Get("sessionToken")
-	fmt.Println("This is the token from the context")
-	fmt.Println(token)
-
-	if !exists {
-		fmt.Println("error on line 161")
-		ctx.JSON(
-			http.StatusUnauthorized,
-			gin.H{
-				"error": "Unauthorized",
-			},
-		)
-		return
-	}
+	token := ctx.MustGet("sessionToken")
 
 	tokenStr, ok := token.(*string)
 	if !ok || tokenStr == nil {
-		fmt.Println("error on line 173")
-		fmt.Println("This is the token string")
-		fmt.Println(tokenStr)
-		fmt.Println("This is the ok object")
-		fmt.Println(ok)
 		ctx.JSON(
 			http.StatusUnauthorized,
 			gin.H{
