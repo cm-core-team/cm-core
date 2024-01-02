@@ -31,8 +31,9 @@ export function LoginForm() {
     resolver: zodResolver(loginUserFormSchema),
   });
 
-  const onSubmit = (data: LoginUserFormData) => {
-    dispatch(loginUserThunk(data));
+  const onSubmit = async (data: LoginUserFormData) => {
+    await dispatch(loginUserThunk(data));
+    router.replace("/dashboard");
   };
 
   return (
