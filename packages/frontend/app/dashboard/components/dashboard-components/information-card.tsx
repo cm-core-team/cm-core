@@ -1,4 +1,4 @@
-import ItemCards from "./item-cards";
+import ItemCards from "../item-cards";
 
 import {
   Card,
@@ -8,12 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
 
-const InformationCard = ({
-  informationBoardData,
-}: {
-  informationBoardData: any;
-}) => {
+const InformationCard = ({ data }: { data: PlaceholderDashData[] }) => {
   return (
     <Card>
       <CardHeader>
@@ -24,7 +21,7 @@ const InformationCard = ({
       </CardHeader>
       {/* Probably put some links to docs here...? */}
       <CardContent>
-        <ItemCards data={informationBoardData} />
+        <ItemCards data={data} />
       </CardContent>
       <CardFooter></CardFooter>
     </Card>

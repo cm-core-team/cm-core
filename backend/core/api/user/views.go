@@ -150,6 +150,31 @@ func VerifyToken(ctx *gin.Context) {
 	ctx.JSON(http.StatusAccepted, gin.H{"message": "Token matches"})
 }
 
+// Get the current authenticated user
+func GetCurrentUser(ctx *gin.Context) {
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+
+	// Get the first user which matches the ID
+	tokenPayload, _ := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
+	fmt.Println("The user id")
+	fmt.Println(tokenPayload.UserID)
+
+	var foundUser models.User
+	queryResult := db.First(&foundUser, "id = ?", tokenPayload.UserID)
+
+	if queryResult.Error != nil {
+		ctx.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+			},
+		)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, foundUser)
+}
+
 /**
  * Given an ADMIN user and congregation (which you need to verify), update the
  * congregation id foreign key of the admin to the required

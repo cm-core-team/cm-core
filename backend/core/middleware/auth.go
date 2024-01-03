@@ -40,7 +40,8 @@ func Authenticate() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set("sessionToken", payload)
+		ctx.Set("sessionToken", &sessionToken)
+		ctx.Set("jwtPayload", payload)
 
 		// We don't want to run ctx.Next() if there's an auth error
 		ctx.Next()

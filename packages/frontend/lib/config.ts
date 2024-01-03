@@ -11,7 +11,7 @@ export const backendRoutes = {
   user: {
     create: baseBackendUrl + "/user/create",
     login: baseBackendUrl + "/user/login",
-    auth: baseBackendUrl + "/user/auth",
+    me: baseBackendUrl + "/user/me",
   },
   token: {
     create: baseBackendUrl + "/token/create",

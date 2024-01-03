@@ -84,6 +84,7 @@ export function PhoneNumberCheck() {
     }
 
     verifyPhone(selectedCongregation, form.getValues().verificationCode);
+    router.replace("/dashboard");
   };
 
   return (

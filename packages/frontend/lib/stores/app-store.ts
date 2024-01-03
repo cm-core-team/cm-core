@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import { dashboardSlice } from "./dashboard";
 import { localMeetingsSlice } from "./local-meetings";
 import { userRegistrationSlice } from "./register-user";
 
@@ -8,6 +9,7 @@ export const makeStore = () => {
     reducer: {
       localMeetings: localMeetingsSlice.reducer,
       userRegistration: userRegistrationSlice.reducer,
+      dashboard: dashboardSlice.reducer,
     },
   });
 };

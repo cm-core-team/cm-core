@@ -1,91 +1,37 @@
-import AnimateCard from "./animate-card";
-import CongEventsCard from "./cong-events-card";
-import InformationCard from "./information-card";
-import MeetingDutiesCard from "./meeting-duties-card";
-import PublicWitnessingCard from "./public-witnessing-schedule-card";
-import UserInfoCard from "./user-info-card";
+"use client";
 
-// Just creating some placeholder data for testing purposes
-const congEventsData = [
-  {
-    title: "CO Visit",
-    content: "Our regular CO visit with brother xyz...",
-    date: "11/01/2024",
-  },
-  {
-    title: "CO Visit",
-    content: "Our regular CO visit with brother xyz...",
-    date: "11/01/2024",
-  },
-  {
-    title: "CO Visit",
-    content: "Our regular CO visit with brother xyz...",
-    date: "11/01/2024",
-  },
-];
+import React from "react";
 
-const congInformationBoardData = [
-  {
-    title: "Announcement",
-    content: "This can be a file, link, or a short description",
-    date: "11/01/2024",
-  },
-  {
-    title: "Announcement",
-    content: "This can be a file, link, or a short description",
-    date: "11/01/2024",
-  },
-  {
-    title: "Announcement",
-    content: "This can be a file, link, or a short description",
-    date: "11/01/2024",
-  },
-];
+import { Spinner } from "@nextui-org/react";
+import { useDispatch, useSelector } from "react-redux";
 
-const dutiesData = [
-  {
-    title: "Microphone",
-    content: "Left Microphone, Support back door in case of emergencies",
-    date: "11/01/2024",
-  },
-  {
-    title: "Microphone",
-    content: "Left Microphone, Support back door in case of emergencies",
-    date: "11/01/2024",
-  },
-  {
-    title: "Microphone",
-    content: "Left Microphone, Support back door in case of emergencies",
-    date: "11/01/2024",
-  },
-];
+import { AdminDashboard } from "./admin-dashboard";
+import { UserDashboard } from "./user-dashboard";
+
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import { getCurrentUserThunk } from "@/lib/stores/dashboard";
+import { UserType, userTypeSchema } from "@/lib/types/user";
 
 function Dashboard() {
-  return (
-    <div className="flex justify-evenly gap-x-4 mx-4">
-      <AnimateCard delay={0}>
-        <UserInfoCard
-          userInfo={{
-            name: "John Doe",
-            email: "example@gmail.com",
-            congregation: "London, Uxbridge",
-          }}
-        />
-      </AnimateCard>
-      <AnimateCard delay={0.1}>
-        <MeetingDutiesCard dutiesData={dutiesData} />
-      </AnimateCard>
-      <AnimateCard delay={0.2}>
-        <InformationCard informationBoardData={congInformationBoardData} />
-      </AnimateCard>
-      <AnimateCard delay={0.3}>
-        <CongEventsCard congEventsData={congEventsData} />
-      </AnimateCard>
-      <AnimateCard delay={0.4}>
-        <PublicWitnessingCard />
-      </AnimateCard>
-    </div>
-  );
+  const dispatch: AppDispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.dashboard);
+
+  const userTypeMap: Record<UserType, any> = {
+    ADMIN: AdminDashboard,
+    REGULAR: UserDashboard,
+  };
+
+  React.useEffect(() => {
+    dispatch(getCurrentUserThunk());
+  }, [dispatch]);
+
+  if (state.isLoading || !state.currentUser) {
+    return <Spinner />;
+  } else {
+    return userTypeMap[state.currentUser.type]({
+      currentUser: state.currentUser,
+    });
+  }
 }
 
 export { Dashboard };
