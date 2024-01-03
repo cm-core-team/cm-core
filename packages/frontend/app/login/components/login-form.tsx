@@ -40,16 +40,16 @@ export function LoginForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-1/3 p-4 mx-auto"
+        className="space-y-8 sm:w-2/3 p-4 mx-auto w-full lg:w-1/3"
       >
         <div>
           <h1 className="text-2xl font-bold pb-3">Login</h1>
-          <p>
+          <small>
             Don&apos;t have an account?{" "}
-            <Link href="/register/user">
+            <Link href="/register/user" className="hover:underline">
               <strong>Register</strong>
             </Link>
-          </p>
+          </small>
         </div>
 
         <FormField
