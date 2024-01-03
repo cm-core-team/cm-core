@@ -5,6 +5,7 @@ Just for now before I can figure out how to programatically generate these
 dashboards based on the user type
 */
 /* eslint-disable react/jsx-key */
+
 import {
   placeholderCongEvents,
   placeholderInformationBoard,
@@ -28,8 +29,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { User_WithCongregation } from "@/lib/types/compositions";
 
-function AdminDashboard({ currentUser }: { currentUser: any }) {
+function AdminDashboard({
+  currentUser,
+}: {
+  currentUser: User_WithCongregation;
+}) {
   const router = useRouter();
 
   const userDashboardItems: DashboardItems = [
