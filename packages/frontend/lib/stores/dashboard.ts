@@ -7,9 +7,13 @@ import { handleThunkError } from "./errors";
 
 import { toast } from "@/components/ui/use-toast";
 
-const initialState = {
-  currentUser: {},
-  isLoading: true,
+interface InitialDashState {
+  currentUser?: User;
+  isLoading: boolean;
+}
+
+const initialState: InitialDashState = {
+  isLoading: false,
 };
 
 export const getCurrentUserThunk = createAsyncThunk<User, void>(
@@ -30,12 +34,15 @@ export const getCurrentUserThunk = createAsyncThunk<User, void>(
   },
 );
 
-export const userSlice = createSlice({
-  name: "user",
+export const dashboardSlice = createSlice({
+  name: "dashboard",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getCurrentUserThunk.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(getCurrentUserThunk.rejected, (state, action) => {
         state.isLoading = false;
       })

@@ -3,44 +3,34 @@
 import React from "react";
 
 import { Spinner } from "@nextui-org/react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AdminDashboard } from "./admin-dashboard";
 import { UserDashboard } from "./user-dashboard";
 
-import { backendRoutes } from "@/lib/config";
-import { requestOptions } from "@/lib/request-options";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import { getCurrentUserThunk } from "@/lib/stores/dashboard";
+import { UserType, userTypeSchema } from "@/lib/types/user";
 
 function Dashboard() {
-  const [currentUser, setCurrentUser] = React.useState<any>();
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const dispatch: AppDispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.dashboard);
 
-  // This gets the current user from the backend
-  // and then sets it to some local state
-  const getCurrentUser = async () => {
-    try {
-      const res = await axios.get(backendRoutes.user.me, requestOptions());
-
-      setCurrentUser({ ...res.data });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
+  const userTypeMap: Record<UserType, any> = {
+    ADMIN: AdminDashboard,
+    REGULAR: UserDashboard,
   };
 
   React.useEffect(() => {
-    getCurrentUser();
-  }, []);
+    dispatch(getCurrentUserThunk());
+  }, [dispatch]);
 
-  if (isLoading) {
+  if (state.isLoading || !state.currentUser) {
     return <Spinner />;
   } else {
-    return currentUser.type === "REGULAR" ? (
-      <UserDashboard currentUser={currentUser} />
-    ) : (
-      <AdminDashboard currentUser={currentUser} />
-    );
+    return userTypeMap[state.currentUser.type]({
+      currentUser: state.currentUser,
+    });
   }
 }
 

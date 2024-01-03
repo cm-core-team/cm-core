@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import { dashboardSlice } from "./dashboard";
 import { localMeetingsSlice } from "./local-meetings";
 import { userRegistrationSlice } from "./register-user";
-import { userSlice } from "./user";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       localMeetings: localMeetingsSlice.reducer,
       userRegistration: userRegistrationSlice.reducer,
-      user: userSlice.reducer,
+      dashboard: dashboardSlice.reducer,
     },
   });
 };
