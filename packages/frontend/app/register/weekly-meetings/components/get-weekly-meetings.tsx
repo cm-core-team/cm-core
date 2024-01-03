@@ -85,7 +85,7 @@ export function GetWeeklyMeetings() {
                 return;
               }
 
-              router.replace("/register/user");
+              router.replace("/register/phone-number");
             }}
           >
             Create Congregation <MoveRight />

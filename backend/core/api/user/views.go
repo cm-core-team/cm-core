@@ -152,23 +152,13 @@ func VerifyToken(ctx *gin.Context) {
 
 // Get the current authenticated user
 func GetCurrentUser(ctx *gin.Context) {
-	token := ctx.MustGet("sessionToken")
-
-	tokenStr, ok := token.(*string)
-	if !ok || tokenStr == nil {
-		ctx.JSON(
-			http.StatusUnauthorized,
-			gin.H{
-				"error": "Invalid token",
-			},
-		)
-		return
-	}
-
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 
 	// Get the first user which matches the ID
-	tokenPayload, _ := security.VerifyJWT(*tokenStr)
+	tokenPayload, _ := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
+	fmt.Println("The user id")
+	fmt.Println(tokenPayload.UserID)
+
 	var foundUser models.User
 	queryResult := db.First(&foundUser, "id = ?", tokenPayload.UserID)
 
