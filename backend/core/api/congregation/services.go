@@ -45,6 +45,7 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 }
 
 func CheckVerificationCode(dto VerifyCongregationPhoneDTO, db *gorm.DB, ctx *gin.Context) error {
+	// If we are testing locally, allow any input
 	if common.GetEnvSecrets().Environment == "local" {
 		return nil
 	}
