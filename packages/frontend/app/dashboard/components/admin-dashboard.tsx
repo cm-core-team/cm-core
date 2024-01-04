@@ -14,28 +14,24 @@ import {
 import { DashboardItems } from "../../../lib/types/dashboard-item";
 
 import AnimateCard from "./animate-card";
-import CongEventsCard from "./dashboard-components/cong-events-card";
-import InformationCard from "./dashboard-components/information-card";
-import MeetingDutiesCard from "./dashboard-components/meeting-duties-card";
-import PublicWitnessingCard from "./dashboard-components/public-witnessing-schedule-card";
-import UserInfoCard from "./dashboard-components/user-info-card";
+import CongEventsCard from "./sections/cong-events-card";
+import InformationCard from "./sections/information-card";
+import MeetingDutiesCard from "./sections/meeting-duties-card";
+import PublicWitnessingCard from "./sections/public-witnessing-schedule-card";
+import UserInfoCard from "./sections/user-info-card";
+import { DashboardComponentProps } from "./types";
 
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { User_WithCongregation } from "@/lib/types/compositions";
 
-function AdminDashboard({
-  currentUser,
-}: {
-  currentUser: User_WithCongregation;
-}) {
+function AdminDashboard({ currentUser }: DashboardComponentProps) {
   const router = useRouter();
 
   const userDashboardItems: DashboardItems = [
