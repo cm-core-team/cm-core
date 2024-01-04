@@ -45,7 +45,7 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 }
 
 func CheckVerificationCode(dto VerifyCongregationPhoneDTO, db *gorm.DB, ctx *gin.Context) error {
-	if common.GetEnvSecrets().Environment != "production" {
+	if common.GetEnvSecrets().Environment == "local" {
 		return nil
 	}
 
