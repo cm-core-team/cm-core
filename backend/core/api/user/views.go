@@ -193,7 +193,7 @@ func BindAdminToCongregation(ctx *gin.Context) {
 	 * TODO (Jude): After you bind the request body to our request DTO, we need to
 	 * check that the user ID (Admin) matches the session token payload and is in fact an admin.
 	 *
-	 * Use: sessionTokenPayload := ctx.MustGet("sessionToken").(*security.SessionTokenPayload)
+	 * Use: ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
 	 * to retrieve the current user ID (sessionTokenPayload.UserID) it will be saved in the session.
 	 */
 
