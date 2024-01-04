@@ -71,11 +71,13 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
           </CardContent>
         </Card>
       ) : (
-        <div className="flex justify-evenly gap-x-4 mx-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
           {userDashboardItems.map((dashboardItem, i) => (
-            <AnimateCard key={i} delay={i / 10}>
-              {dashboardItem()}
-            </AnimateCard>
+            <div key={i} className="flex flex-col h-full">
+              <AnimateCard key={i} delay={i / 10}>
+                {dashboardItem()}
+              </AnimateCard>
+            </div>
           ))}
         </div>
       )}
