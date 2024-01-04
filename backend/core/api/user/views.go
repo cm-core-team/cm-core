@@ -156,11 +156,12 @@ func GetCurrentUser(ctx *gin.Context) {
 
 	// Get the first user which matches the ID
 	tokenPayload, _ := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
-	fmt.Println("The user id")
-	fmt.Println(tokenPayload.UserID)
 
 	var foundUser models.User
-	queryResult := db.First(&foundUser, "id = ?", tokenPayload.UserID)
+	queryResult := db.
+		// Preload the congregation to ensure it exists in the payload
+		Preload("Congregation").
+		First(&foundUser, "id = ?", tokenPayload.UserID)
 
 	if queryResult.Error != nil {
 		ctx.JSON(
