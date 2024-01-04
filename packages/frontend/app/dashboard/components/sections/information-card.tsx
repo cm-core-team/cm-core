@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
 
 const InformationCard = ({ data }: { data: PlaceholderDashData[] }) => {
@@ -21,7 +22,10 @@ const InformationCard = ({ data }: { data: PlaceholderDashData[] }) => {
       </CardHeader>
       {/* Probably put some links to docs here...? */}
       <CardContent>
-        <ItemCards data={data} />
+        <ScrollArea className="h-72">
+          <ItemCards data={data} />
+          <ScrollBar />
+        </ScrollArea>
       </CardContent>
       <CardFooter></CardFooter>
     </Card>

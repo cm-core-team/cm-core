@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
 
 const CongEventsCard = ({ data }: { data: PlaceholderDashData[] }) => {
@@ -19,7 +20,10 @@ const CongEventsCard = ({ data }: { data: PlaceholderDashData[] }) => {
       </CardHeader>
       {/* CO visits, assemblies, conventions etc */}
       <CardContent>
-        <ItemCards data={data} />
+        <ScrollArea className="h-72">
+          <ItemCards data={data} />
+          <ScrollBar />
+        </ScrollArea>
       </CardContent>
       <CardFooter></CardFooter>
     </Card>
