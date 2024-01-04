@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { z } from "zod";
+import { ZodError, z } from "zod";
 
 import { userErrors } from "./config";
 
@@ -16,15 +16,19 @@ export const backendErrorSchema = z.object({
  * @returns The error message to display to user.
  */
 export function backendErrorHandle(error: unknown): string {
-  if (!(error instanceof AxiosError)) {
-    return userErrors.unknown;
-  }
-
-  const result = backendErrorSchema.safeParse(error.response?.data);
-  if (!result.success) {
-    // TODO: Call a webhook/logger to log this error so we can monitor it.
+  if (error instanceof ZodError) {
     return userErrors.invalidBackendResponse;
   }
 
-  return result.data.userMsg;
+  if (error instanceof AxiosError) {
+    const result = backendErrorSchema.safeParse(error.response?.data);
+    if (!result.success) {
+      // TODO: Call a webhook/logger to log this error so we can monitor it.
+      return userErrors.invalidBackendResponse;
+    }
+
+    return result.data.userMsg;
+  }
+
+  return userErrors.unknown;
 }

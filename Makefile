@@ -2,7 +2,7 @@
 
 UNAME ?= postgres
 DBNAME ?= cms-db
-CONTAINER ?= cong-manager-db-1
+CONTAINER ?= cm-core-db-1
 
 
 all:

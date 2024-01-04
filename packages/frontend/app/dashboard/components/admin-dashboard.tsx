@@ -11,7 +11,6 @@ import {
   placeholderInformationBoard,
   placeholderDuties,
 } from "../../../lib/sample-data";
-import { DashboardItems } from "../../../lib/types/dashboard-item";
 
 import AnimateCard from "./animate-card";
 import CongEventsCard from "./sections/cong-events-card";
@@ -19,7 +18,7 @@ import InformationCard from "./sections/information-card";
 import MeetingDutiesCard from "./sections/meeting-duties-card";
 import PublicWitnessingCard from "./sections/public-witnessing-schedule-card";
 import UserInfoCard from "./sections/user-info-card";
-import { DashboardComponentProps } from "./types";
+import { DashboardComponentProps, DashboardItem } from "./types";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,23 +28,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { User_WithCongregation } from "@/lib/types/compositions";
 
-function AdminDashboard({ currentUser }: DashboardComponentProps) {
+export function AdminDashboard({ currentUser }: DashboardComponentProps) {
   const router = useRouter();
 
-  const userDashboardItems: DashboardItems = [
-    <UserInfoCard
-      userInfo={{
-        name: "John Doe",
-        email: "example@gmail.com",
-        congregation: "London, Uxbridge",
-      }}
-    />,
-    <MeetingDutiesCard data={placeholderDuties} />,
-    <InformationCard data={placeholderInformationBoard} />,
-    <CongEventsCard data={placeholderCongEvents} />,
-    <PublicWitnessingCard />,
+  const userDashboardItems: DashboardItem[] = [
+    () => (
+      <UserInfoCard
+        userInfo={{
+          name: "John Doe",
+          email: "example@gmail.com",
+          congregation: "London, Uxbridge",
+        }}
+      />
+    ),
+    () => <MeetingDutiesCard data={placeholderDuties} />,
+    () => <InformationCard data={placeholderInformationBoard} />,
+    () => <CongEventsCard data={placeholderCongEvents} />,
+    () => <PublicWitnessingCard />,
   ];
 
   return (
@@ -54,7 +54,7 @@ function AdminDashboard({ currentUser }: DashboardComponentProps) {
         <Card className="flex flex-col items-center">
           <CardHeader>
             <CardTitle>
-              {currentUser.firstName} you have not yet linked a congregation.{" "}
+              {currentUser.firstName}, you have not yet linked a congregation.{" "}
             </CardTitle>
             <CardDescription>
               Click below to link a congregation
@@ -74,7 +74,7 @@ function AdminDashboard({ currentUser }: DashboardComponentProps) {
         <div className="flex justify-evenly gap-x-4 mx-4">
           {userDashboardItems.map((dashboardItem, i) => (
             <AnimateCard key={i} delay={i / 10}>
-              {dashboardItem}
+              {dashboardItem()}
             </AnimateCard>
           ))}
         </div>
@@ -82,5 +82,3 @@ function AdminDashboard({ currentUser }: DashboardComponentProps) {
     </div>
   );
 }
-
-export { AdminDashboard };

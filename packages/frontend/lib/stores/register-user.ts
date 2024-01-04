@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 import { loginUser } from "../auth/login-user";
 import { submitUser } from "../auth/submit-user";
@@ -50,16 +51,19 @@ export const createUserThunk = createAsyncThunk<User, RegisterUserFormData>(
   },
 );
 
-export const loginUserThunk = createAsyncThunk<void, LoginUserFormData>(
+type LoginArgs = LoginUserFormData & { router: AppRouterInstance };
+
+export const loginUserThunk = createAsyncThunk<void, LoginArgs>(
   "userRegistration/loginUser",
-  async (formData, { rejectWithValue }) => {
+  async ({ email, password, router }, { rejectWithValue }) => {
     try {
-      await loginUser(formData);
+      await loginUser({ email, password });
       toast({
         title: "Success",
         description: "Loggined in!",
         variant: "success",
       });
+      router.replace("/dashboard");
     } catch (error) {
       return rejectWithValue(handleThunkError(error));
     }

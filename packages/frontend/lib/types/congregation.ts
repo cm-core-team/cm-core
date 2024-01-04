@@ -17,7 +17,7 @@ export const congregationSchema = z.object({
   lat: z.string(),
   lon: z.string(),
 
-  phoneNumbers: z.array(congregationPhoneSchema), // JSON string
+  phoneNumbers: z.array(congregationPhoneSchema),
 });
 
 export type Congregation = z.infer<typeof congregationSchema>;

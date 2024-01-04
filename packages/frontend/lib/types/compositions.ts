@@ -12,7 +12,7 @@ export const congregationWithUsersSchema = congregationSchema.extend({
 });
 
 export const userWithCongregationSchema = userSchema.extend({
-  congregation: congregationSchema,
+  congregation: congregationSchema.nullable(),
 });
 
 export type Congregation_WithUsers = z.infer<

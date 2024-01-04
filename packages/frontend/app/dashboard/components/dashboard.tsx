@@ -3,6 +3,7 @@
 import React from "react";
 
 import { Spinner } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AdminDashboard } from "./admin-dashboard";
@@ -13,7 +14,8 @@ import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { getCurrentUserThunk } from "@/lib/stores/dashboard";
 import { UserType } from "@/lib/types/user";
 
-function Dashboard() {
+export function Dashboard() {
+  const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const state = useSelector((state: RootState) => state.dashboard);
 
@@ -26,13 +28,20 @@ function Dashboard() {
     dispatch(getCurrentUserThunk());
   }, [dispatch]);
 
-  if (state.isLoading || !state.currentUser) {
-    return <Spinner />;
-  } else {
-    return userTypeMap[state.currentUser.type]({
-      currentUser: state.currentUser,
-    });
+  if (state.didError) {
+    router.replace("/login");
+    return;
   }
-}
 
-export { Dashboard };
+  return (
+    <div className="p-4 grid place-items-center">
+      {state.isLoading || !state.currentUser ? (
+        <Spinner />
+      ) : (
+        userTypeMap[state.currentUser.type]({
+          currentUser: state.currentUser,
+        })
+      )}
+    </div>
+  );
+}

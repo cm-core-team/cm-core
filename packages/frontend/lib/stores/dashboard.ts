@@ -6,15 +6,15 @@ import { User } from "../types/user";
 
 import { handleThunkError } from "./errors";
 
-import { toast } from "@/components/ui/use-toast";
-
 interface InitialDashState {
   currentUser?: User_WithCongregation;
   isLoading: boolean;
+  didError: boolean;
 }
 
 const initialState: InitialDashState = {
   isLoading: false,
+  didError: false,
 };
 
 export const getCurrentUserThunk = createAsyncThunk<
@@ -22,15 +22,10 @@ export const getCurrentUserThunk = createAsyncThunk<
   void
 >("user/getCurrentUser", async (_, { rejectWithValue }) => {
   try {
-    const user = await getCurrentUser();
-    toast({
-      title: "Welcome back!",
-      description: "Welcome back to your dashboard :)",
-      variant: "success",
-    });
-
-    return user;
+    return await getCurrentUser();
   } catch (error) {
+    console.log("geki");
+    console.log(error);
     return rejectWithValue(handleThunkError(error));
   }
 });
@@ -46,6 +41,7 @@ export const dashboardSlice = createSlice({
       })
       .addCase(getCurrentUserThunk.rejected, (state, action) => {
         state.isLoading = false;
+        state.didError = true;
       })
       .addCase(getCurrentUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;

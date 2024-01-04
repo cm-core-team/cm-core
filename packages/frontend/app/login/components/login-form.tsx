@@ -32,8 +32,7 @@ export function LoginForm() {
   });
 
   const onSubmit = async (data: LoginUserFormData) => {
-    await dispatch(loginUserThunk(data));
-    router.replace("/dashboard");
+    await dispatch(loginUserThunk({ ...data, router }));
   };
 
   return (

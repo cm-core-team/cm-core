@@ -49,12 +49,14 @@ export function PhoneNumberCheck() {
 
   const startCountdown = React.useCallback((duration: number) => {
     setCountdown(duration);
+
     const interval = setInterval(() => {
       setCountdown((currentCountdown) => {
         if (currentCountdown <= 1) {
           clearInterval(interval); // Stop the interval
           return 0;
         }
+
         return currentCountdown - 1;
       });
     }, 1000); // Decrease countdown every second
@@ -69,7 +71,9 @@ export function PhoneNumberCheck() {
       selectedCongregation,
       form.getValues().phoneNumber,
     ).then(() => setDidSendCode(true));
-    startCountdown(30); // Start a 30 seconds countdown
+
+    // Start a 30 seconds countdown
+    startCountdown(30);
   }, [countdown, form, selectedCongregation, startCountdown]);
 
   React.useEffect(() => {
@@ -78,13 +82,16 @@ export function PhoneNumberCheck() {
     }
   }, [router, selectedCongregation]);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!selectedCongregation) {
       return;
     }
 
-    verifyPhone(selectedCongregation, form.getValues().verificationCode);
-    router.replace("/dashboard");
+    await verifyPhone(
+      selectedCongregation,
+      form.getValues().verificationCode,
+      router,
+    );
   };
 
   return (
