@@ -11,6 +11,7 @@ import (
 
 type SessionTokenPayload struct {
 	jwt.StandardClaims
+
 	UserID string
 }
 

@@ -4,13 +4,11 @@ import { z } from "zod";
 
 import { backendErrorHandle } from "../backend-error-handle";
 import { backendRoutes, userErrors } from "../config";
+import { requestOptions } from "../request-options";
 import { Congregation, congregationSchema } from "../types/congregation";
+import { userSchema } from "../types/user";
 
 import { toast } from "@/components/ui/use-toast";
-
-export const createCongregationResponseSchema = z.object({
-  congregation: congregationSchema,
-});
 
 export async function createCongregation(
   congregation: Congregation,
@@ -22,28 +20,25 @@ export async function createCongregation(
   // "Create" button is disabled when congregation is not selected
 
   try {
-    const response = await axios.post(
+    const createCongregationResponse = await axios.post(
       backendRoutes.congregation.create,
       congregation,
     );
-    const objectMatch = createCongregationResponseSchema.safeParse(
-      response.data,
+    const createdCongregation = congregationSchema.parse(
+      createCongregationResponse.data.congregation,
+    );
+    const bindUserResponse = await axios.post(
+      backendRoutes.user.bind,
+      {
+        congregationId: createdCongregation.id,
+      },
+      requestOptions(),
     );
 
-    if (!objectMatch.success) {
-      toast({
-        title: "Error",
-        description: userErrors.invalidBackendResponse,
-        variant: "destructive",
-      });
-      return;
-    }
-
-    toast({
-      title: "Created congregation",
-      description: "The congregation has been successfully created.",
-      variant: "success",
-    });
+    // Bind user to their selected congregation
+    const bindedUser = userSchema.parse(bindUserResponse.data);
+    console.log("INDING");
+    console.log(bindedUser);
   } catch (error) {
     toast({
       title: "Error",

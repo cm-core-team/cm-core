@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateCongregationInDB(congregation models.Congregation, db *gorm.DB) error {
-	result := db.Create(&congregation)
+func CreateCongregationInDB(congregation *models.Congregation, db *gorm.DB) error {
+	result := db.Create(congregation)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -45,6 +45,11 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 }
 
 func CheckVerificationCode(dto VerifyCongregationPhoneDTO, db *gorm.DB, ctx *gin.Context) error {
+	// If we are testing locally, allow any input
+	if common.GetEnvSecrets().Environment == "local" {
+		return nil
+	}
+
 	// Find a verificationCode with a matching signature
 	var verificationCode models.CongregationVerificationCode
 	dbInst := db.Where(&models.CongregationVerificationCode{

@@ -46,7 +46,7 @@ func CreateCongregation(ctx *gin.Context) {
 		return
 	}
 
-	err = CreateCongregationInDB(dto, db)
+	err = CreateCongregationInDB(&dto, db)
 	if err != nil {
 		fmt.Println("[CreateCongregation] Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{

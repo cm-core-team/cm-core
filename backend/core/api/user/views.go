@@ -153,14 +153,14 @@ func VerifyToken(ctx *gin.Context) {
 // Get the current authenticated user
 func GetCurrentUser(ctx *gin.Context) {
 	db, _ := ctx.MustGet("db").(*gorm.DB)
-
-	// Get the first user which matches the ID
+	// Get the first user that matches the ID
 	tokenPayload, _ := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
-	fmt.Println("The user id")
-	fmt.Println(tokenPayload.UserID)
 
 	var foundUser models.User
-	queryResult := db.First(&foundUser, "id = ?", tokenPayload.UserID)
+	queryResult := db.
+		// Preload the congregation to ensure it's included in the user payload
+		Preload("Congregation").
+		First(&foundUser, "id = ?", tokenPayload.UserID)
 
 	if queryResult.Error != nil {
 		ctx.JSON(
@@ -179,35 +179,48 @@ func GetCurrentUser(ctx *gin.Context) {
  * Given an ADMIN user and congregation (which you need to verify), update the
  * congregation id foreign key of the admin to the required
  */
-// func BindAdminToCongregation(ctx *gin.Context) {
-// 	var dto BindAdminToCongregationDTO
-// 	err := ctx.BindJSON(&dto)
-// 	if err != nil {
-// 		ctx.JSON(http.StatusBadRequest, gin.H{
-// 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
-// 		})
-// 		return
-// 	}
+func BindAdminToCongregation(ctx *gin.Context) {
+	var dto BindAdminToCongregationDTO
+	err := ctx.BindJSON(&dto)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
 
-// 	/**
-// 	 * TODO (Jude): After you bind the request body to our request DTO, we need to
-// 	 * check that the user ID (Admin) matches the session token payload and is in fact an admin.
-// 	 *
-// 	 * Use: sessionTokenPayload := ctx.MustGet("sessionToken").(*security.SessionTokenPayload)
-// 	 * to retrieve the current user ID (sessionTokenPayload.UserID) it will be saved in the session.
-// 	 */
+	/**
+	 * TODO (Jude): After you bind the request body to our request DTO, we need to
+	 * check that the user ID (Admin) matches the session token payload and is in fact an admin.
+	 *
+	 * Use: ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
+	 * to retrieve the current user ID (sessionTokenPayload.UserID) it will be saved in the session.
+	 */
 
-// 	db, _ := ctx.MustGet("db").(*gorm.DB)
+	db, _ := ctx.MustGet("db").(*gorm.DB)
+	tokenPayload, _ := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
 
-// 	var adminUser models.User
-// 	result := db.First(&adminUser, "id = ?", dto.AdminID)
-// 	if result.Error != nil {
-// 		fmt.Println("[BindAdminToCongregation] ")
-// 		ctx.JSON(http.StatusNotFound, gin.H{
-// 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
-// 		})
-// 		return
-// 	}
+	var adminUser models.User
+	result := db.First(&adminUser, "id = ?", tokenPayload.UserID)
+	if result.Error != nil {
+		fmt.Println("[BindAdminToCongregation]")
+		fmt.Println(result.Error)
+		ctx.JSON(http.StatusNotFound, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
 
-// 	// Update the adminUser congregation ID property to the congregation ID
-// }
+	// Update the adminUser congregation ID property to the congregation ID
+	adminUser.CongregationID = &dto.CongregationID
+	updateResult := db.Save(&adminUser)
+	if updateResult.Error != nil {
+		fmt.Println(updateResult.Error)
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, adminUser)
+}

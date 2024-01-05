@@ -17,8 +17,7 @@ type LoginUserDTO struct {
 }
 
 type BindAdminToCongregationDTO struct {
-	AdminID        string `json:"adminId"`
-	CongregationID string `json:"congregationId"`
+	CongregationID uint `json:"congregationId"`
 }
 
 type JoinTokenMatchDTO struct {
