@@ -1,10 +1,11 @@
+import React from "react";
+
 import { useRouter } from "next/navigation";
 
 /*
 Just for now before I can figure out how to programatically generate these
 dashboards based on the user type
 */
-/* eslint-disable react/jsx-key */
 
 import {
   placeholderCongEvents,
@@ -33,19 +34,18 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
   const router = useRouter();
 
   const userDashboardItems: DashboardItem[] = [
-    () => (
-      <UserInfoCard
-        userInfo={{
-          name: "John Doe",
-          email: "example@gmail.com",
-          congregation: "London, Uxbridge",
-        }}
-      />
-    ),
-    () => <MeetingDutiesCard data={placeholderDuties} />,
-    () => <InformationCard data={placeholderInformationBoard} />,
-    () => <CongEventsCard data={placeholderCongEvents} />,
-    () => <PublicWitnessingCard />,
+    <UserInfoCard
+      key="userInfo"
+      userInfo={{
+        name: "John Doe",
+        email: "example@gmail.com",
+        congregation: "London, Uxbridge",
+      }}
+    />,
+    <MeetingDutiesCard key="meetingDuties" data={placeholderDuties} />,
+    <InformationCard key="information" data={placeholderInformationBoard} />,
+    <CongEventsCard key="congEvents" data={placeholderCongEvents} />,
+    <PublicWitnessingCard key="publicWitnessing" />,
   ];
 
   return (
@@ -61,11 +61,7 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button
-              onClick={() => {
-                router.replace("/register/weekly-meetings");
-              }}
-            >
+            <Button onClick={() => router.replace("/register/weekly-meetings")}>
               Register a congregation
             </Button>
           </CardContent>
@@ -74,7 +70,7 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
           {userDashboardItems.map((dashboardItem, i) => (
             <AnimateCard key={i} delay={i / 10}>
-              {dashboardItem()}
+              {dashboardItem}
             </AnimateCard>
           ))}
         </div>
