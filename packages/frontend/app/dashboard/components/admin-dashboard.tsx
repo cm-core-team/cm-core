@@ -34,18 +34,19 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
   const router = useRouter();
 
   const userDashboardItems: DashboardItem[] = [
-    <UserInfoCard
-      key="userInfo"
-      userInfo={{
-        name: "John Doe",
-        email: "example@gmail.com",
-        congregation: "London, Uxbridge",
-      }}
-    />,
-    <MeetingDutiesCard key="meetingDuties" data={placeholderDuties} />,
-    <InformationCard key="information" data={placeholderInformationBoard} />,
-    <CongEventsCard key="congEvents" data={placeholderCongEvents} />,
-    <PublicWitnessingCard key="publicWitnessing" />,
+    () => (
+      <UserInfoCard
+        userInfo={{
+          name: "John Doe",
+          email: "example@gmail.com",
+          congregation: "London, Uxbridge",
+        }}
+      />
+    ),
+    () => <MeetingDutiesCard data={placeholderDuties} />,
+    () => <InformationCard data={placeholderInformationBoard} />,
+    () => <CongEventsCard data={placeholderCongEvents} />,
+    () => <PublicWitnessingCard />,
   ];
 
   return (
@@ -70,7 +71,7 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
           {userDashboardItems.map((dashboardItem, i) => (
             <AnimateCard key={i} delay={i / 10}>
-              {dashboardItem}
+              {dashboardItem()}
             </AnimateCard>
           ))}
         </div>

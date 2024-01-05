@@ -21,6 +21,7 @@ export function UserDashboard({ currentUser }: DashboardComponentProps) {
   const userDashboardItems: DashboardItem[] = [
     () => (
       <UserInfoCard
+        key=""
         userInfo={{
           name: "John Doe",
           email: "example@gmail.com",

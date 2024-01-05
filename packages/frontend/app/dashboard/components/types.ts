@@ -4,4 +4,4 @@ export interface DashboardComponentProps {
   currentUser: User_WithCongregation;
 }
 
-export type DashboardItem = JSX.Element;
+export type DashboardItem = () => JSX.Element;
