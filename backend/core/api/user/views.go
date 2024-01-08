@@ -164,9 +164,9 @@ func GetCurrentUser(ctx *gin.Context) {
 
 	if queryResult.Error != nil {
 		ctx.JSON(
-			http.StatusInternalServerError,
+			http.StatusUnauthorized,
 			gin.H{
-				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
 			},
 		)
 		return
