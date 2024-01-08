@@ -1,18 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { loginUser } from "../auth/login-user";
-import { submitUser } from "../auth/submit-user";
-import { backendErrorHandle } from "../backend-error-handle";
-import {
-  LoginUserFormData,
-  RegisterUserFormData,
-} from "../types/auth/user-form";
+import { RegisterUserFormData } from "../types/auth/user-form";
 import { User } from "../types/user";
 
-import { handleThunkError } from "./errors";
-
-import { toast } from "@/components/ui/use-toast";
+import { createUserThunk } from "./thunks/create-user";
 
 export interface UserRegistrationState {
   formState: Partial<RegisterUserFormData>;
@@ -32,43 +23,6 @@ const initialState: UserRegistrationState = {
   },
   isLoading: false,
 };
-
-export const createUserThunk = createAsyncThunk<User, RegisterUserFormData>(
-  "userRegistration/submitUser",
-  async (formData, { rejectWithValue }) => {
-    try {
-      const user = await submitUser(formData);
-      toast({
-        title: "Success",
-        description: "Created user",
-        variant: "success",
-      });
-
-      return user;
-    } catch (error) {
-      return rejectWithValue(handleThunkError(error));
-    }
-  },
-);
-
-type LoginArgs = LoginUserFormData & { router: AppRouterInstance };
-
-export const loginUserThunk = createAsyncThunk<void, LoginArgs>(
-  "userRegistration/loginUser",
-  async ({ email, password, router }, { rejectWithValue }) => {
-    try {
-      await loginUser({ email, password });
-      toast({
-        title: "Success",
-        description: "Logged in!",
-        variant: "success",
-      });
-      router.replace("/dashboard");
-    } catch (error) {
-      return rejectWithValue(handleThunkError(error));
-    }
-  },
-);
 
 export const userRegistrationSlice = createSlice({
   name: "userRegistration",

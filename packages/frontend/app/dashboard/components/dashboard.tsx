@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DashboardComponentProps } from "./types";
 
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { getCurrentUserThunk } from "@/lib/stores/dashboard";
+import { getCurrentUserThunk } from "@/lib/stores/thunks/get-current-user";
 import { UserType } from "@/lib/types/user";
 
 const AdminDashboard = dynamic(() =>
