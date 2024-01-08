@@ -45,19 +45,14 @@ export function Dashboard() {
     return { ADMIN: AdminDashboard, REGULAR: UserDashboard };
   }, []);
 
-  const DashboardComponent = React.useMemo(() => {
-    return state.currentUser
-      ? userTypeMap[state.currentUser?.type]
-      : UserDashboard;
-  }, [state.currentUser, userTypeMap]);
+  const renderDashboard = () => {
+    if (state.isLoading || !state.currentUser) {
+      return <Spinner />;
+    }
 
-  return (
-    <div className="p-4 grid place-items-center">
-      {state.isLoading || !state.currentUser ? (
-        <Spinner />
-      ) : (
-        <DashboardComponent currentUser={state.currentUser} />
-      )}
-    </div>
-  );
+    const DashboardComponent = userTypeMap[state.currentUser.type];
+    return <DashboardComponent currentUser={state.currentUser} />;
+  };
+
+  return <div className="p-4 grid place-items-center">{renderDashboard()}</div>;
 }

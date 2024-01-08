@@ -60,7 +60,7 @@ export const loginUserThunk = createAsyncThunk<void, LoginArgs>(
       await loginUser({ email, password });
       toast({
         title: "Success",
-        description: "Loggined in!",
+        description: "Logged in!",
         variant: "success",
       });
       router.replace("/dashboard");
