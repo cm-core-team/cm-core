@@ -47,7 +47,11 @@ export function Dashboard() {
 
   const renderDashboard = () => {
     if (state.isLoading || !state.currentUser) {
-      return <Spinner />;
+      return (
+        <div className="h-screen grid place-items-center">
+          <Spinner size="lg" />
+        </div>
+      );
     }
 
     const DashboardComponent = userTypeMap[state.currentUser.type];
