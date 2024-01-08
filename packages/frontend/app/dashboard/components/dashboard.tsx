@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DashboardComponentProps } from "./types";
 
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { getCurrentUserThunk } from "@/lib/stores/dashboard";
+import { getCurrentUserThunk } from "@/lib/stores/thunks/get-current-user";
 import { UserType } from "@/lib/types/user";
 
 const AdminDashboard = dynamic(() =>
@@ -45,19 +45,18 @@ export function Dashboard() {
     return { ADMIN: AdminDashboard, REGULAR: UserDashboard };
   }, []);
 
-  const DashboardComponent = React.useMemo(() => {
-    return state.currentUser
-      ? userTypeMap[state.currentUser?.type]
-      : UserDashboard;
-  }, [state.currentUser, userTypeMap]);
+  const renderDashboard = () => {
+    if (state.isLoading || !state.currentUser) {
+      return (
+        <div className="h-screen grid place-items-center">
+          <Spinner size="lg" />
+        </div>
+      );
+    }
 
-  return (
-    <div className="p-4 grid place-items-center">
-      {state.isLoading || !state.currentUser ? (
-        <Spinner />
-      ) : (
-        <DashboardComponent currentUser={state.currentUser} />
-      )}
-    </div>
-  );
+    const DashboardComponent = userTypeMap[state.currentUser.type];
+    return <DashboardComponent currentUser={state.currentUser} />;
+  };
+
+  return <div className="p-4 grid place-items-center">{renderDashboard()}</div>;
 }

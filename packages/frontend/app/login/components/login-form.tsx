@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AppDispatch } from "@/lib/stores/app-store";
-import { loginUserThunk } from "@/lib/stores/register-user";
+import { loginUserThunk } from "@/lib/stores/thunks/login-user";
 import {
   LoginUserFormData,
   loginUserFormSchema,

@@ -1,10 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { getCurrentUser } from "../auth/get-current-user";
 import { User_WithCongregation } from "../types/compositions";
-import { User } from "../types/user";
 
-import { handleThunkError } from "./errors";
+import { getCurrentUserThunk } from "./thunks/get-current-user";
 
 interface InitialDashState {
   currentUser?: User_WithCongregation;
@@ -16,19 +14,6 @@ const initialState: InitialDashState = {
   isLoading: false,
   didError: false,
 };
-
-export const getCurrentUserThunk = createAsyncThunk<
-  User_WithCongregation,
-  void
->("user/getCurrentUser", async (_, { rejectWithValue }) => {
-  try {
-    return await getCurrentUser();
-  } catch (error) {
-    console.log("geki");
-    console.log(error);
-    return rejectWithValue(handleThunkError(error));
-  }
-});
 
 export const dashboardSlice = createSlice({
   name: "dashboard",

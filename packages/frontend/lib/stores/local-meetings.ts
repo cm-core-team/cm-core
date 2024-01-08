@@ -1,15 +1,13 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { backendErrorHandle } from "../backend-error-handle";
 import {
   CongregationGroups,
   groupByLocation,
 } from "../congregation/group-by-coords";
-import { fetchLocalMeetings } from "../find-meetings/fetch-meetings";
-import { getUserLocation } from "../find-meetings/get-user-location";
 import { Congregation } from "../types/congregation";
 
-import { toast } from "@/components/ui/use-toast";
+import { fetchLocalMeetingsThunk } from "./thunks/fetch-local-meetings";
+import { getUserCoordsThunk } from "./thunks/get-user-coords";
 
 export interface LocalMeetingsState {
   localCongregations: Congregation[];
@@ -36,38 +34,6 @@ const initialState: LocalMeetingsState = {
   displayCongregations: [],
   groupedCongregationsByLocation: {},
 };
-
-// Thunk for asynchronously fetching local meetings.
-// It dispatches actions representing the states of the API call:
-// (pending, fulfilled, rejected)
-// which are handled by reducers to update the state.
-export const fetchLocalMeetingsThunk = createAsyncThunk<
-  Congregation[],
-  FetchLocalMeetingsThunkArg
->("localMeetings/fetchLocalMeetings", async (arg, { rejectWithValue }) => {
-  try {
-    return await fetchLocalMeetings(arg.latitude, arg.longitude);
-  } catch (error) {
-    return rejectWithValue(backendErrorHandle(error));
-  }
-});
-
-export const getUserCoordsThunk = createAsyncThunk<GeolocationCoordinates>(
-  "localMeetings/getUserCoords",
-  async (arg, { rejectWithValue }) => {
-    try {
-      return await getUserLocation();
-    } catch (error) {
-      const errorMsg = backendErrorHandle(error);
-      toast({
-        title: "Error",
-        description: errorMsg,
-        variant: "destructive",
-      });
-      return rejectWithValue(errorMsg);
-    }
-  },
-);
 
 // A slice (or part) of our state (this is to do with our Local Meetings)
 export const localMeetingsSlice = createSlice({

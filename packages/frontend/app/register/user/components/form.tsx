@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AppDispatch } from "@/lib/stores/app-store";
-import { createUserThunk } from "@/lib/stores/register-user";
+import { createUserThunk } from "@/lib/stores/thunks/create-user";
 import {
   RegisterUserFormData,
   registerUserFormSchema,

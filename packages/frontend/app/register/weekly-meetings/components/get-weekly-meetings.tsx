@@ -12,11 +12,9 @@ import { WeeklyMeetingsList } from "./weekly-meetings-list";
 
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import {
-  fetchLocalMeetingsThunk,
-  getUserCoordsThunk,
-  localMeetingsSlice,
-} from "@/lib/stores/local-meetings";
+import { localMeetingsSlice } from "@/lib/stores/local-meetings";
+import { fetchLocalMeetingsThunk } from "@/lib/stores/thunks/fetch-local-meetings";
+import { getUserCoordsThunk } from "@/lib/stores/thunks/get-user-coords";
 
 const DynamicMapView = dynamic(
   () => import("./map-view").then((mod) => mod.MapView),
