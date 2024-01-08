@@ -14,6 +14,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  cn,
 } from "@nextui-org/react";
 import { Github } from "lucide-react";
 
@@ -89,13 +90,22 @@ function FeaturesDropdown() {
   ];
 
   return (
-    <Dropdown onOpenChange={setIsOpen}>
+    <Dropdown
+      onOpenChange={setIsOpen}
+      classNames={{
+        content: "bg-background border-secondary border-2",
+      }}
+    >
       <DropdownTrigger>
         <div>
           <DropdownToggle open={isOpen}>Features</DropdownToggle>
         </div>
       </DropdownTrigger>
-      <DropdownMenu>
+      <DropdownMenu
+        classNames={{
+          base: "bg-background",
+        }}
+      >
         {featuresMap.map((feature, i) => (
           <DropdownItem key={i}>
             <Link href={feature.path}>{feature.title}</Link>
