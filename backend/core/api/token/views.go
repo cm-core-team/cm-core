@@ -3,8 +3,10 @@ package token
 import (
 	"backend/core/common"
 	"backend/core/models"
+	"backend/core/services/security"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -16,14 +18,7 @@ import (
 
 func CreateToken(ctx *gin.Context) {
 	// Ensure the user is authenticated
-	// sessionTokenPayload := ctx.MustGet("sessionToken").(*security.SessionTokenPayload)
-	// if sessionTokenPayload == nil {
-	// 	fmt.Println("[CreateToken] sessionToken invalid")
-	// 	ctx.JSON(http.StatusUnauthorized, gin.H{
-	// 		common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
-	// 	})
-	// 	return
-	// }
+	jwtPayload := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
 
 	var dto CreateTokenDTO
 
@@ -37,14 +32,14 @@ func CreateToken(ctx *gin.Context) {
 	}
 
 	// Check that the sessionToken user ID matches the CreatedByUserId
-	// tokenMatches := sessionTokenPayload.UserID == strconv.FormatUint(uint64(dto.CreatedByUserId), 10)
-	// if !tokenMatches {
-	// 	fmt.Println("[CreateToken] token does not match created by user.")
-	// 	ctx.JSON(http.StatusUnauthorized, gin.H{
-	// 		common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
-	// 	})
-	// 	return
-	// }
+	tokenMatches := jwtPayload.UserID == strconv.FormatUint(uint64(dto.CreatedByUserId), 10)
+	if !tokenMatches {
+		fmt.Println("[CreateToken] token does not match created by user.")
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
+		})
+		return
+	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 

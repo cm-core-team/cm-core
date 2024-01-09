@@ -35,7 +35,7 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 	base.POST("/user/bind", middleware.Authenticate(), user.BindAdminToCongregation)
 
 	// Tokens
-	base.POST("/token/create", token.CreateToken)
+	base.POST("/token/create", middleware.Authenticate(), token.CreateToken)
 
 	return r
 }
