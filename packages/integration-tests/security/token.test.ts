@@ -8,6 +8,7 @@ import { userSchema } from "frontend/lib/types/user";
 import { z } from "zod";
 
 import { bindAdminToCongregation, loginUser } from "../auth";
+import { DBClient } from "../pool";
 
 const createUserSchema = z.object({
   user: userSchema,
@@ -18,7 +19,7 @@ const createTokenSchema = z.object({
 });
 
 describe("Join Token Security", () => {
-  it("should correctly identify correct tokens", async () => {
+  it("should correctly identify correct/incorrect tokens", async () => {
     const adminUser = ModelGenerator.instance.randomUser();
     const joinUser = ModelGenerator.instance.randomUser();
     const randomCongregation = ModelGenerator.instance.randomCongregation();
@@ -66,5 +67,23 @@ describe("Join Token Security", () => {
     expect(tokenPayload.token.congregationId).toBeNumber();
     expect(tokenPayload.token.createdByUserId).toBeNumber();
     expect(tokenPayload.token.id).toBeNumber();
+
+    const pool = await DBClient.shared.getClient();
+    const result = await pool.query("SELECT * FROM tokens WHERE user_id = $1", [
+      joinPayload.user.id,
+    ]);
+    expect(result.rows.length).toBe(1);
+
+    const tokenValue: string = result.rows[0].value;
+
+    const verifyToken = async (val: string) =>
+      await axios.post(backendRoutes.user.verifyToken, {
+        email: joinUser.email,
+        tokenValue: val,
+      });
+    verifyToken(tokenValue);
+
+    // Incorrect token
+    expect(async () => verifyToken(tokenValue + 1)).toThrow();
   });
 });

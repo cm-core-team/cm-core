@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AppDispatch } from "@/lib/stores/app-store";
+import { getCurrentUserThunk } from "@/lib/stores/thunks/get-current-user";
 import { loginUserThunk } from "@/lib/stores/thunks/login-user";
 import {
   LoginUserFormData,
@@ -34,6 +37,10 @@ export function LoginForm() {
   const onSubmit = async (data: LoginUserFormData) => {
     await dispatch(loginUserThunk({ ...data, router }));
   };
+
+  React.useEffect(() => {
+    dispatch(getCurrentUserThunk());
+  }, [dispatch]);
 
   return (
     <Form {...form}>

@@ -54,7 +54,7 @@ func CreateToken(ctx *gin.Context) {
 		return
 	}
 
-	// Session token is valid and meets requirements
+	// At this point session token is valid and meets requirements
 
 	// Find user
 	var adminUser models.User

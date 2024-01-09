@@ -33,7 +33,7 @@ func GenerateUserModel(dto CreateUserDTO, db *gorm.DB) (models.User, error) {
 
 func VerifyTokenMatch(dto JoinTokenMatchDTO, db *gorm.DB) error {
 	var user models.User
-	result := db.Where(&models.User{Email: dto.Email}).First(&user)
+	result := db.Preload("JoinToken").Where("email = ?", dto.Email).First(&user)
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			fmt.Println("[Error] User not found")

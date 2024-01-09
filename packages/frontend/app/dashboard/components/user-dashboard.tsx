@@ -75,7 +75,9 @@ export function UserDashboard({ currentUser }: DashboardComponentProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={() => router.replace("/register/weekly-meetings")}>
+            <Button
+              onClick={() => router.replace("/dashboard/link-congregation")}
+            >
               Link a congregation
             </Button>
           </CardContent>
