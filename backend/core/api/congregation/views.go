@@ -106,13 +106,13 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 		})
 		return
 	}
-
 	// TODO (Jude): need to connect to 3rd party OTP services
 	SendVerificationCode(verificationCode)
 
 	// Expire verification code
 	err = ScheduleVerificationCodeRemoval(verificationCode, db)
 	if err != nil {
+		fmt.Println("[SendCongregationVerificationCode] Couldn't schedule verification code removal.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})

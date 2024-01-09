@@ -78,7 +78,7 @@ export function PhoneNumberCheck() {
 
   React.useEffect(() => {
     if (selectedCongregation === undefined) {
-      router.replace("/register");
+      router.replace("/register/weekly-meetings");
     }
   }, [router, selectedCongregation]);
 

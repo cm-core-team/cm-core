@@ -115,6 +115,27 @@ func LoginUser(ctx *gin.Context) {
 	})
 }
 
+func LogoutUser(ctx *gin.Context) {
+	/**
+	 * Remove the session token from the client.
+	 */
+
+	cookie := &http.Cookie{
+		Name:     "sessionToken",
+		Value:    "",
+		Path:     "/",
+		Domain:   "",
+		HttpOnly: true,
+		MaxAge:   -1,
+		Secure:   true,
+		SameSite: http.SameSiteNoneMode,
+	}
+
+	http.SetCookie(ctx.Writer, cookie)
+
+	ctx.JSON(http.StatusOK, gin.H{})
+}
+
 func VerifyToken(ctx *gin.Context) {
 	/**
 	 * Verify that a user's token matches it's assigned token
@@ -164,9 +185,9 @@ func GetCurrentUser(ctx *gin.Context) {
 
 	if queryResult.Error != nil {
 		ctx.JSON(
-			http.StatusInternalServerError,
+			http.StatusUnauthorized,
 			gin.H{
-				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
 			},
 		)
 		return

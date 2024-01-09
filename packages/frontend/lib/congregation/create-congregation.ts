@@ -19,31 +19,21 @@ export async function createCongregation(
   // NOTE: No need to check if congregation exists as the
   // "Create" button is disabled when congregation is not selected
 
-  try {
-    const createCongregationResponse = await axios.post(
-      backendRoutes.congregation.create,
-      congregation,
-    );
-    const createdCongregation = congregationSchema.parse(
-      createCongregationResponse.data.congregation,
-    );
-    const bindUserResponse = await axios.post(
-      backendRoutes.user.bind,
-      {
-        congregationId: createdCongregation.id,
-      },
-      requestOptions(),
-    );
+  const createCongregationResponse = await axios.post(
+    backendRoutes.congregation.create,
+    congregation,
+  );
+  const createdCongregation = congregationSchema.parse(
+    createCongregationResponse.data.congregation,
+  );
+  const bindUserResponse = await axios.post(
+    backendRoutes.user.bind,
+    {
+      congregationId: createdCongregation.id,
+    },
+    requestOptions(),
+  );
 
-    // Bind user to their selected congregation
-    const bindedUser = userSchema.parse(bindUserResponse.data);
-    console.log("INDING");
-    console.log(bindedUser);
-  } catch (error) {
-    toast({
-      title: "Error",
-      description: backendErrorHandle(error),
-      variant: "destructive",
-    });
-  }
+  // Bind user to their selected congregation
+  const bindedUser = userSchema.parse(bindUserResponse.data);
 }

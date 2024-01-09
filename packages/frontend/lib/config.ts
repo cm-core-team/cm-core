@@ -6,13 +6,14 @@ export const backendRoutes = {
     sendVerificationCode:
       baseBackendUrl + "/congregation/send-verification-code",
     verifyPhone: baseBackendUrl + "/congregation/verify-phone",
-    verifyToken: baseBackendUrl + "/user/verify-token",
   },
   user: {
     create: baseBackendUrl + "/user/create",
     login: baseBackendUrl + "/user/login",
+    logout: baseBackendUrl + "/user/logout",
     me: baseBackendUrl + "/user/me",
     bind: baseBackendUrl + "/user/bind",
+    verifyToken: baseBackendUrl + "/user/verify-token",
   },
   token: {
     create: baseBackendUrl + "/token/create",

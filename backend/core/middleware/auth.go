@@ -18,6 +18,7 @@ func Authenticate() gin.HandlerFunc {
 
 		cookie, err := ctx.Request.Cookie("sessionToken")
 		if err != nil {
+			fmt.Println("[Authenticate] User is not authenticated")
 			// If no cookie, check the body for the session token
 			sessionToken = ctx.GetHeader("Authorization")
 
