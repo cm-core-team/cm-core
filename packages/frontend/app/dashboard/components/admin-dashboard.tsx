@@ -49,33 +49,41 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
     () => <PublicWitnessingCard />,
   ];
 
+  const renderLinkCongregation = () => {
+    return (
+      <Card className="flex flex-col items-center">
+        <CardHeader>
+          <CardTitle>
+            {currentUser.firstName}, you have not yet linked a congregation.{" "}
+          </CardTitle>
+          <CardDescription>Click below to link a congregation</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button onClick={() => router.replace("/register/weekly-meetings")}>
+            Register a congregation
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  const renderAnimatedDashboardSections = () => {
+    return (
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
+        {userDashboardItems.map((dashboardItem, i) => (
+          <AnimateCard key={i} delay={i / 10}>
+            {dashboardItem()}
+          </AnimateCard>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="w-full h-full flex justify-center items-center">
-      {!currentUser.congregation ? (
-        <Card className="flex flex-col items-center">
-          <CardHeader>
-            <CardTitle>
-              {currentUser.firstName}, you have not yet linked a congregation.{" "}
-            </CardTitle>
-            <CardDescription>
-              Click below to link a congregation
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => router.replace("/register/weekly-meetings")}>
-              Register a congregation
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
-          {userDashboardItems.map((dashboardItem, i) => (
-            <AnimateCard key={i} delay={i / 10}>
-              {dashboardItem()}
-            </AnimateCard>
-          ))}
-        </div>
-      )}
+      {!currentUser.congregation
+        ? renderLinkCongregation()
+        : renderAnimatedDashboardSections()}
     </div>
   );
 }
