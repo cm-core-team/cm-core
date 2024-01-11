@@ -3,10 +3,11 @@
 import React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -20,8 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { getCurrentUserThunk } from "@/lib/stores/thunks/get-current-user";
+import { backendRoutes } from "@/lib/config";
+import { RootState } from "@/lib/stores/app-store";
 
 const linkCongregationFormSchema = z.object({
   token: z.string().min(1, "Please enter the join token."),
@@ -30,25 +31,23 @@ type LinkCongregationFormData = z.infer<typeof linkCongregationFormSchema>;
 
 export function LinkCongregationForm() {
   const router = useRouter();
-  const dispatch: AppDispatch = useDispatch();
   const form = useForm<LinkCongregationFormData>({
     resolver: zodResolver(linkCongregationFormSchema),
   });
   const state = useSelector((state: RootState) => state.dashboard);
 
   React.useEffect(() => {
-    dispatch(getCurrentUserThunk());
-  }, [dispatch]);
-
-  const onSubmit = (data: LinkCongregationFormData) => {
-    console.log(data);
-  };
-
-  React.useEffect(() => {
     if (!state.currentUser) {
       router.replace("/dashboard");
     }
   }, [state.currentUser, router]);
+
+  const onSubmit = async (data: LinkCongregationFormData) => {
+    await axios.post(backendRoutes.user.verifyToken, {
+      email: state.currentUser?.email,
+      tokenValue: data.token,
+    });
+  };
 
   const renderForm = () => {
     return (
