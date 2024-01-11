@@ -1,9 +1,9 @@
 import { Separator } from "../../../components/ui/separator";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
+import { PlaceholderDashboardData } from "@/lib/types/placeholder-dashboard-data";
 
-const ItemCards = ({ data }: { data: PlaceholderDashData[] }) => {
+const ItemCards = ({ data }: { data: PlaceholderDashboardData[] }) => {
   return (
     <div className="flex flex-col gap-2">
       {data.map((item: any, i: number) => {

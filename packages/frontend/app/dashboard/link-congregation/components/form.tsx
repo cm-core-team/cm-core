@@ -21,6 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { backendErrorHandle } from "@/lib/backend-error-handle";
 import { backendRoutes } from "@/lib/config";
 import { RootState } from "@/lib/stores/app-store";
 
@@ -43,10 +45,24 @@ export function LinkCongregationForm() {
   }, [state.currentUser, router]);
 
   const onSubmit = async (data: LinkCongregationFormData) => {
-    await axios.post(backendRoutes.user.verifyToken, {
-      email: state.currentUser?.email,
-      tokenValue: data.token,
-    });
+    try {
+      await axios.post(backendRoutes.user.verifyToken, {
+        email: state.currentUser?.email,
+        tokenValue: data.token,
+      });
+
+      toast({
+        title: "Success",
+        description: "The token is correct. Welcome to your congregation!",
+        variant: "success",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: backendErrorHandle(error),
+        variant: "destructive",
+      });
+    }
   };
 
   const renderForm = () => {

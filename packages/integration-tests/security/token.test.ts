@@ -2,9 +2,9 @@ import axios from "axios";
 import { describe, expect, it } from "bun:test";
 import { backendRoutes } from "frontend/lib/config";
 import { ModelGenerator } from "frontend/lib/fixtures/generate";
-import { congregationSchema } from "frontend/lib/types/congregation";
-import { tokenSchema } from "frontend/lib/types/token";
-import { userSchema } from "frontend/lib/types/user";
+import { congregationSchema } from "frontend/lib/types/models/congregation";
+import { tokenSchema } from "frontend/lib/types/models/token";
+import { userSchema } from "frontend/lib/types/models/user";
 import { z } from "zod";
 
 import { bindAdminToCongregation, loginUser } from "../auth";
@@ -56,7 +56,7 @@ describe("Join Token Security", () => {
     const tokenResponse = await axios.post(
       backendRoutes.token.create,
       {
-        userId: joinPayload.user.id,
+        userEmail: joinPayload.user.email,
         createdByUserId: adminPayload.user.id,
       },
       { headers: { Authorization: sessionToken } },

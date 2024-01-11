@@ -5,7 +5,7 @@ import { handleThunkError } from "../errors";
 import { toast } from "@/components/ui/use-toast";
 import { submitUser } from "@/lib/auth/submit-user";
 import { RegisterUserFormData } from "@/lib/types/auth/user-form";
-import { User } from "@/lib/types/user";
+import { User } from "@/lib/types/models/user";
 
 export const createUserThunk = createAsyncThunk<User, RegisterUserFormData>(
   "userRegistration/submitUser",

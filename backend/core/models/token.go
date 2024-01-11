@@ -19,7 +19,8 @@ type Token struct {
 	Value string `json:"value"`
 
 	// Target user
-	UserID uint `json:"userId"`
+	UserID    uint   `json:"userId"`
+	UserEmail string `json:"userEmail"`
 	// Congregation to bind to
 	CongregationID uint `json:"congregationId"`
 	// The ID of the user who created this token

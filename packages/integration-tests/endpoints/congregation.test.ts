@@ -5,7 +5,7 @@ import { ModelGenerator } from "frontend/lib/fixtures/generate";
 import {
   congregationSchema,
   Congregation,
-} from "frontend/lib/types/congregation.ts";
+} from "frontend/lib/types/models/congregation.ts";
 
 describe("Congregation CRUD Actions", () => {
   it("should correctly create a congregation", async () => {

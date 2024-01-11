@@ -14,7 +14,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
-import { Congregation } from "@/lib/types/congregation";
+import { Congregation } from "@/lib/types/models/congregation";
 
 export interface WeeklyMeetingsListProps {
   localCongregations?: Congregation[];

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { handleThunkError } from "../errors";
 
 import { getCurrentUser } from "@/lib/auth/get-current-user";
-import { User_WithCongregation } from "@/lib/types/compositions";
+import { User_WithCongregation } from "@/lib/types/models/compositions";
 
 export const getCurrentUserThunk = createAsyncThunk<
   User_WithCongregation,

@@ -5,8 +5,8 @@ import { z } from "zod";
 import { backendErrorHandle } from "../backend-error-handle";
 import { backendRoutes, userErrors } from "../config";
 import { requestOptions } from "../request-options";
-import { Congregation, congregationSchema } from "../types/congregation";
-import { userSchema } from "../types/user";
+import { Congregation, congregationSchema } from "../types/models/congregation";
+import { userSchema } from "../types/models/user";
 
 import { toast } from "@/components/ui/use-toast";
 

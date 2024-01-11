@@ -9,12 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { PlaceholderDashData } from "@/lib/types/placeholder-dash-data";
+import { PlaceholderDashboardData } from "@/lib/types/placeholder-dashboard-data";
 
 const MeetingDutiesCard = ({
   data,
 }: {
-  data: PlaceholderDashData[] /* | DashData[] */;
+  data: PlaceholderDashboardData[] /* | DashData[] */;
 }) => {
   return (
     <Card>

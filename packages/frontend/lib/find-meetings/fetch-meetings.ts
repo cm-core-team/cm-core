@@ -2,7 +2,7 @@ import axios from "axios";
 import { z } from "zod";
 
 import { backendRoutes } from "../config";
-import { Congregation, congregationSchema } from "../types/congregation";
+import { Congregation, congregationSchema } from "../types/models/congregation";
 
 const fetchMeetingsSchema = z.array(congregationSchema.passthrough());
 

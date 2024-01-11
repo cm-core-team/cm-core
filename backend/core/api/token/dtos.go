@@ -1,6 +1,6 @@
 package token
 
 type CreateTokenDTO struct {
-	UserID          uint `json:"userId"`
-	CreatedByUserId uint `json:"createdByUserId"`
+	UserEmail       string `json:"userEmail"`
+	CreatedByUserId uint   `json:"createdByUserId"`
 }

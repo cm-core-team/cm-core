@@ -155,7 +155,7 @@ func VerifyToken(ctx *gin.Context) {
 	err = VerifyTokenMatch(dto, db)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.TokenInvalid,
 		})
 		return
 	}

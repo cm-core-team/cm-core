@@ -4,7 +4,7 @@ import {
   CongregationGroups,
   groupByLocation,
 } from "../congregation/group-by-coords";
-import { Congregation } from "../types/congregation";
+import { Congregation } from "../types/models/congregation";
 
 import { fetchLocalMeetingsThunk } from "./thunks/fetch-local-meetings";
 import { getUserCoordsThunk } from "./thunks/get-user-coords";

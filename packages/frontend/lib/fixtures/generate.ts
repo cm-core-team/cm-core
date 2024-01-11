@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 
-import { Congregation } from "../types/congregation";
-import { User, UserType, userTypeSchema } from "../types/user";
+import { Congregation } from "../types/models/congregation";
+import { User, UserType, userTypeSchema } from "../types/models/user";
 
 export class ModelGenerator {
   public static instance = new ModelGenerator();

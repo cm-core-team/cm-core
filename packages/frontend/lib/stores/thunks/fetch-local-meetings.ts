@@ -4,7 +4,7 @@ import { FetchLocalMeetingsThunkArg } from "../local-meetings";
 
 import { backendErrorHandle } from "@/lib/backend-error-handle";
 import { fetchLocalMeetings } from "@/lib/find-meetings/fetch-meetings";
-import { Congregation } from "@/lib/types/congregation";
+import { Congregation } from "@/lib/types/models/congregation";
 
 export const fetchLocalMeetingsThunk = createAsyncThunk<
   Congregation[],

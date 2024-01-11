@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { RegisterUserFormData } from "../types/auth/user-form";
-import { User } from "../types/user";
+import { User } from "../types/models/user";
 
 import { createUserThunk } from "./thunks/create-user";
 

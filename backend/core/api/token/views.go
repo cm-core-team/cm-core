@@ -45,7 +45,7 @@ func CreateToken(ctx *gin.Context) {
 
 	// Check that the targeted user actually exists
 	var targetUser models.User
-	queryResult := db.First(&targetUser, "id = ?", dto.UserID)
+	queryResult := db.First(&targetUser, "email = ?", dto.UserEmail)
 	if queryResult.Error != nil {
 		fmt.Println("[CreateToken] Can't find the target user.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -79,7 +79,8 @@ func CreateToken(ctx *gin.Context) {
 
 	// Create the actual join token
 	token := models.Token{
-		UserID:          dto.UserID,
+		UserID:          targetUser.ID,
+		UserEmail:       dto.UserEmail,
 		CreatedByUserId: dto.CreatedByUserId,
 		CongregationID:  *adminUser.CongregationID,
 	}

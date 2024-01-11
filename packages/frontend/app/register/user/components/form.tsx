@@ -33,7 +33,7 @@ import {
   RegisterUserFormData,
   registerUserFormSchema,
 } from "@/lib/types/auth/user-form";
-import { userTypeSchema } from "@/lib/types/user";
+import { userTypeSchema } from "@/lib/types/models/user";
 
 export function RegisterForm() {
   const router = useRouter();

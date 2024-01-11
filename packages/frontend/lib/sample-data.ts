@@ -1,7 +1,7 @@
-import { PlaceholderDashData } from "./types/placeholder-dash-data";
+import { PlaceholderDashboardData } from "./types/placeholder-dashboard-data";
 
 // Just gonna put these here to get them out of my way in the dashboard files
-export const placeholderCongEvents: PlaceholderDashData[] = [
+export const placeholderCongEvents: PlaceholderDashboardData[] = [
   {
     title: "CO Visit",
     content: "Our regular CO visit with brother xyz...",
@@ -19,7 +19,7 @@ export const placeholderCongEvents: PlaceholderDashData[] = [
   },
 ];
 
-export const placeholderInformationBoard: PlaceholderDashData[] = [
+export const placeholderInformationBoard: PlaceholderDashboardData[] = [
   {
     title: "Announcement",
     content: "This can be a file, link, or a short description",
@@ -37,7 +37,7 @@ export const placeholderInformationBoard: PlaceholderDashData[] = [
   },
 ];
 
-export const placeholderDuties: PlaceholderDashData[] = [
+export const placeholderDuties: PlaceholderDashboardData[] = [
   {
     title: "Microphone",
     content: "Left Microphone, Support back door in case of emergencies",

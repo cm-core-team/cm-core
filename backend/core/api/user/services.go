@@ -44,6 +44,11 @@ func VerifyTokenMatch(dto JoinTokenMatchDTO, db *gorm.DB) error {
 		}
 	}
 
+	if user.JoinToken == nil {
+		fmt.Println("[Error] Token is nil")
+		return errors.New("token doesn't exist")
+	}
+
 	tokenMatches := user.JoinToken.Value == dto.JoinTokenValue
 	if !tokenMatches {
 		fmt.Println("[Error] Token does not match")
