@@ -4,6 +4,7 @@ dashboards based on the user type
 */
 
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 import {
   placeholderCongEvents,
@@ -27,15 +28,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { RootState } from "@/lib/stores/app-store";
 
 export function UserDashboard({ currentUser }: DashboardComponentProps) {
   const router = useRouter();
+  const state = useSelector((state: RootState) => state.dashboard);
 
   const renderDashboard = () => {
     const renderDashboardItems: RenderDashboardItem[] = [
       () => (
         <UserInfoCard
-          key=""
           userInfo={{
             name: "John Doe",
             email: "example@gmail.com",
@@ -81,7 +83,8 @@ export function UserDashboard({ currentUser }: DashboardComponentProps) {
   };
 
   return (
-    <div>
+    <div className="space-y-8">
+      <h1>Congregation: {state.currentUser?.congregation?.name}</h1>
       {currentUser.congregation ? renderDashboard() : renderLinkCongregation()}
     </div>
   );
