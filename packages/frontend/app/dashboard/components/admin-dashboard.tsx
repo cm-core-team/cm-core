@@ -1,11 +1,11 @@
-import React from "react";
-
-import { useRouter } from "next/navigation";
-
 /*
 Just for now before I can figure out how to programatically generate these
 dashboards based on the user type
 */
+
+import React from "react";
+
+import { useRouter } from "next/navigation";
 
 import {
   placeholderCongEvents,
@@ -19,7 +19,7 @@ import InformationCard from "./sections/information-card";
 import MeetingDutiesCard from "./sections/meeting-duties-card";
 import PublicWitnessingCard from "./sections/public-witnessing-schedule-card";
 import UserInfoCard from "./sections/user-info-card";
-import { DashboardComponentProps, DashboardItem } from "./types";
+import { DashboardComponentProps, RenderDashboardItem } from "./types";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -33,21 +33,33 @@ import {
 export function AdminDashboard({ currentUser }: DashboardComponentProps) {
   const router = useRouter();
 
-  const userDashboardItems: DashboardItem[] = [
-    () => (
-      <UserInfoCard
-        userInfo={{
-          name: "John Doe",
-          email: "example@gmail.com",
-          congregation: "London, Uxbridge",
-        }}
-      />
-    ),
-    () => <MeetingDutiesCard data={placeholderDuties} />,
-    () => <InformationCard data={placeholderInformationBoard} />,
-    () => <CongEventsCard data={placeholderCongEvents} />,
-    () => <PublicWitnessingCard />,
-  ];
+  const renderDashboard = () => {
+    const renderDashboardItems: RenderDashboardItem[] = [
+      () => (
+        <UserInfoCard
+          userInfo={{
+            name: "John Doe",
+            email: "example@gmail.com",
+            congregation: "London, Uxbridge",
+          }}
+        />
+      ),
+      () => <MeetingDutiesCard data={placeholderDuties} />,
+      () => <InformationCard data={placeholderInformationBoard} />,
+      () => <CongEventsCard data={placeholderCongEvents} />,
+      () => <PublicWitnessingCard />,
+    ];
+
+    return (
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
+        {renderDashboardItems.map((renderDashboardItem, i) => (
+          <AnimateCard key={i} delay={i / 10}>
+            {renderDashboardItem()}
+          </AnimateCard>
+        ))}
+      </div>
+    );
+  };
 
   const renderLinkCongregation = () => {
     return (
@@ -67,23 +79,9 @@ export function AdminDashboard({ currentUser }: DashboardComponentProps) {
     );
   };
 
-  const renderAnimatedDashboardSections = () => {
-    return (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
-        {userDashboardItems.map((dashboardItem, i) => (
-          <AnimateCard key={i} delay={i / 10}>
-            {dashboardItem()}
-          </AnimateCard>
-        ))}
-      </div>
-    );
-  };
-
   return (
     <div className="w-full h-full flex justify-center items-center">
-      {!currentUser.congregation
-        ? renderLinkCongregation()
-        : renderAnimatedDashboardSections()}
+      {currentUser.congregation ? renderDashboard() : renderLinkCongregation()}
     </div>
   );
 }

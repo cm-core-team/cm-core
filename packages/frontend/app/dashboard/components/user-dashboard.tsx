@@ -17,7 +17,7 @@ import InformationCard from "./sections/information-card";
 import MeetingDutiesCard from "./sections/meeting-duties-card";
 import PublicWitnessingCard from "./sections/public-witnessing-schedule-card";
 import UserInfoCard from "./sections/user-info-card";
-import { DashboardComponentProps, DashboardItem } from "./types";
+import { DashboardComponentProps, RenderDashboardItem } from "./types";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -31,58 +31,58 @@ import {
 export function UserDashboard({ currentUser }: DashboardComponentProps) {
   const router = useRouter();
 
-  const userDashboardItems: DashboardItem[] = [
-    () => (
-      <UserInfoCard
-        key=""
-        userInfo={{
-          name: "John Doe",
-          email: "example@gmail.com",
-          congregation: "London, Uxbridge",
-        }}
-      />
-    ),
-    () => <MeetingDutiesCard data={placeholderDuties} />,
-    () => <InformationCard data={placeholderInformationBoard} />,
-    () => <CongEventsCard data={placeholderCongEvents} />,
-    () => <PublicWitnessingCard />,
-  ];
-
   const renderDashboard = () => {
+    const renderDashboardItems: RenderDashboardItem[] = [
+      () => (
+        <UserInfoCard
+          key=""
+          userInfo={{
+            name: "John Doe",
+            email: "example@gmail.com",
+            congregation: "London, Uxbridge",
+          }}
+        />
+      ),
+      () => <MeetingDutiesCard data={placeholderDuties} />,
+      () => <InformationCard data={placeholderInformationBoard} />,
+      () => <CongEventsCard data={placeholderCongEvents} />,
+      () => <PublicWitnessingCard />,
+    ];
+
     return (
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-4">
-        {userDashboardItems.map((dashboardItem, i) => (
+        {renderDashboardItems.map((renderDashboardItem, i) => (
           <AnimateCard key={i} delay={i / 10}>
-            {dashboardItem()}
+            {renderDashboardItem()}
           </AnimateCard>
         ))}
       </div>
     );
   };
 
+  const renderLinkCongregation = () => {
+    return (
+      <Card className="flex flex-col items-center">
+        <CardHeader>
+          <CardTitle>
+            {currentUser.firstName}, you have not yet linked a congregation.{" "}
+          </CardTitle>
+          <CardDescription>Click below to link a congregation</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button
+            onClick={() => router.replace("/dashboard/link-congregation")}
+          >
+            Link a congregation
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  };
+
   return (
     <div>
-      {currentUser.congregation ? (
-        renderDashboard()
-      ) : (
-        <Card className="flex flex-col items-center">
-          <CardHeader>
-            <CardTitle>
-              {currentUser.firstName}, you have not yet linked a congregation.{" "}
-            </CardTitle>
-            <CardDescription>
-              Click below to link a congregation
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              onClick={() => router.replace("/dashboard/link-congregation")}
-            >
-              Link a congregation
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+      {currentUser.congregation ? renderDashboard() : renderLinkCongregation()}
     </div>
   );
 }
