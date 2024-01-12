@@ -1,6 +1,6 @@
 package congregation
 
-import "backend/core/models"
+import "backend/core/db/models"
 
 type VerifyCongregationPhoneDTO struct {
 	UserCode     string              `json:"userCode"`

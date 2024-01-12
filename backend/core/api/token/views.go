@@ -2,7 +2,7 @@ package token
 
 import (
 	"backend/core/common"
-	"backend/core/models"
+	"backend/core/db/models"
 	"backend/core/services/security"
 	"fmt"
 	"net/http"

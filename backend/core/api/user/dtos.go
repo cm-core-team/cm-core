@@ -1,6 +1,6 @@
 package user
 
-import "backend/core/models"
+import "backend/core/db/models"
 
 type CreateUserDTO struct {
 	FirstName string `json:"firstName"`

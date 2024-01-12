@@ -29,6 +29,6 @@ type User struct {
 	JoinToken *Token `json:"joinToken" gorm:"foreignKey:UserID"`
 }
 
-func (user *User) Create(db *gorm.DB) {
-	db.Create(&user)
+func (user *User) WithCongregation(db *gorm.DB) {
+	db.Preload("Congregation").First(&user, user.ID)
 }

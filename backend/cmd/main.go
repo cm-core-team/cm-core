@@ -2,8 +2,8 @@ package main
 
 import (
 	"backend/core/common"
+	"backend/core/db/models"
 	"backend/core/middleware"
-	"backend/core/models"
 	"backend/core/routes"
 	"fmt"
 

@@ -2,7 +2,7 @@ package congregation
 
 import (
 	"backend/core/common"
-	"backend/core/models"
+	"backend/core/db/models"
 	"fmt"
 	"net/http"
 

@@ -2,7 +2,8 @@ package user
 
 import (
 	"backend/core/common"
-	"backend/core/models"
+	"backend/core/db"
+	"backend/core/db/models"
 	"backend/core/services/security"
 	"fmt"
 	"net/http"
@@ -150,9 +151,9 @@ func VerifyToken(ctx *gin.Context) {
 		return
 	}
 
-	db, _ := ctx.MustGet("db").(*gorm.DB)
+	dbInst, _ := ctx.MustGet("db").(*gorm.DB)
 
-	err = VerifyTokenMatch(dto, db)
+	err = VerifyTokenMatch(dto, dbInst)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.TokenInvalid,
@@ -160,13 +161,14 @@ func VerifyToken(ctx *gin.Context) {
 		return
 	}
 
-	err = BindUserToCongregation(dto, db)
+	user, err := BindUserToCongregation(dto, &db.OrmDatabaseOps{DB: dbInst})
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
 		return
 	}
+	user.WithCongregation(dbInst)
 
 	ctx.JSON(http.StatusAccepted, gin.H{"message": "Token matches"})
 }

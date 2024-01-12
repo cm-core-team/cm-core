@@ -1,7 +1,8 @@
 package user
 
 import (
-	"backend/core/models"
+	"backend/core/db"
+	"backend/core/db/models"
 	"errors"
 	"fmt"
 
@@ -58,28 +59,20 @@ func VerifyTokenMatch(dto JoinTokenMatchDTO, db *gorm.DB) error {
 	return nil
 }
 
-func BindUserToCongregation(dto JoinTokenMatchDTO, db *gorm.DB) error {
-	/**
-	 * With the CORRECT token, get the token's congregation and bind it to the user
-	 */
-
+func BindUserToCongregation(dto JoinTokenMatchDTO, dbOps db.DatabaseOps) (models.User, error) {
 	// Find the token object that matches the token value
-	var token models.Token
-	db.Where(&models.Token{Value: dto.JoinTokenValue}).First(&token)
-
-	// Update the user's congregation to the token's congregation
-	var user models.User
-	result := db.Where(&models.User{Email: dto.Email}).First(&user)
-	if result.Error != nil {
-		fmt.Println("[Error]", result.Error)
-		return result.Error
+	token, err := dbOps.FindToken(dto.JoinTokenValue)
+	if err != nil {
+		fmt.Println("[Error]", err)
+		return models.User{}, err
 	}
 
-	// Congregation update
-	user.CongregationID = &token.CongregationID
-	db.Save(&user)
-	// Update the Congregation based on CongregationID (preloading)
-	db.Preload("Congregation").First(&user, user.ID)
+	// Update the user's congregation to the token's congregation
+	user, err := dbOps.FindAndUpdateUser(dto.Email, token.CongregationID)
+	if err != nil {
+		fmt.Println("[Error]", err)
+		return models.User{}, err
+	}
 
-	return nil
+	return user, nil
 }

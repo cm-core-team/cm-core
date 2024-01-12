@@ -1,7 +1,7 @@
 package fixtures
 
 import (
-	"backend/core/models"
+	"backend/core/db/models"
 
 	"github.com/go-faker/faker/v4"
 )
