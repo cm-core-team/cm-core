@@ -9,6 +9,8 @@ import (
 type DatabaseOps interface {
 	FindToken(value string) (models.Token, error)
 	FindAndUpdateUser(email string, congregationID uint) (models.User, error)
+
+	FindUserByEmailWithToken(email string) (models.User, error)
 }
 
 type OrmDatabaseOps struct {
@@ -32,4 +34,14 @@ func (ormOps *OrmDatabaseOps) FindAndUpdateUser(email string, congregationID uin
 	result = ormOps.DB.Save(&user)
 
 	return user, result.Error
+}
+
+func (g *OrmDatabaseOps) FindUserByEmailWithToken(email string) (models.User, error) {
+	var user models.User
+	result := g.DB.Preload("JoinToken").Where("email = ?", email).First(&user)
+	if result.Error != nil {
+		return models.User{}, result.Error
+	}
+
+	return user, nil
 }

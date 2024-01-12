@@ -2,6 +2,10 @@ package common
 
 import (
 	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 type EnvSecrets struct {
@@ -20,4 +24,51 @@ func GetEnvSecrets() EnvSecrets {
 		Environment:             os.Getenv("ENVIRONMENT"),
 		GetWeeklyMeetings_JwAPI: os.Getenv("GET_WEEKLY_MEETINGS_JW_API"),
 	}
+}
+
+func FindAndLoadDotenv(name string) error {
+	currentDir, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	for {
+		found, err := findAndLoadInDir(name, currentDir)
+		if err != nil {
+			return err
+		}
+		if found {
+			break
+		}
+
+		// Move up one directory
+		currentDir = filepath.Dir(currentDir)
+
+		// Stop if we reach the root directory
+		if currentDir == "/" || currentDir == "." {
+			break
+		}
+	}
+
+	return nil
+}
+
+func findAndLoadInDir(name, dir string) (bool, error) {
+	var found bool
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if !info.IsDir() && strings.HasSuffix(filepath.Base(path), name) {
+			if err := godotenv.Load(path); err != nil {
+				return err
+			}
+			found = true
+		}
+
+		return nil
+	})
+
+	return found, err
 }

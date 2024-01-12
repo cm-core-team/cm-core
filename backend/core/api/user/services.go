@@ -32,16 +32,15 @@ func GenerateUserModel(dto CreateUserDTO, db *gorm.DB) (models.User, error) {
 	return user, err
 }
 
-func VerifyTokenMatch(dto JoinTokenMatchDTO, db *gorm.DB) error {
-	var user models.User
-	result := db.Preload("JoinToken").Where("email = ?", dto.Email).First(&user)
-	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+func VerifyTokenMatch(dto JoinTokenMatchDTO, dbOps db.DatabaseOps) error {
+	user, err := dbOps.FindUserByEmailWithToken(dto.Email)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			fmt.Println("[Error] User not found")
 			return errors.New("user not found")
 		} else {
-			fmt.Println("[Error]", result.Error)
-			return result.Error
+			fmt.Println("[Error]", err)
+			return err
 		}
 	}
 

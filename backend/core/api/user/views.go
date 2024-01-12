@@ -152,8 +152,9 @@ func VerifyToken(ctx *gin.Context) {
 	}
 
 	dbInst, _ := ctx.MustGet("db").(*gorm.DB)
+	dbOps := &db.OrmDatabaseOps{DB: dbInst}
 
-	err = VerifyTokenMatch(dto, dbInst)
+	err = VerifyTokenMatch(dto, dbOps)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.TokenInvalid,
@@ -161,7 +162,7 @@ func VerifyToken(ctx *gin.Context) {
 		return
 	}
 
-	user, err := BindUserToCongregation(dto, &db.OrmDatabaseOps{DB: dbInst})
+	user, err := BindUserToCongregation(dto, dbOps)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
