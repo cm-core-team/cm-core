@@ -81,9 +81,9 @@ describe("Join Token Security", () => {
         email: joinUser.email,
         tokenValue: val,
       });
-    verifyToken(tokenValue);
+    await verifyToken(tokenValue);
 
     // Incorrect token
-    expect(async () => verifyToken(tokenValue + 1)).toThrow();
+    expect(async () => await verifyToken(tokenValue + 1)).toThrow();
   });
 });
