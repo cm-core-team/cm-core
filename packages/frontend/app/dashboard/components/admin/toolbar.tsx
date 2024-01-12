@@ -31,10 +31,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import {
-  InitialToolbarState,
-  dashboardToolbarSlice,
-} from "@/lib/stores/dashboard/toolbar";
+import { dashboardToolbarSlice } from "@/lib/stores/dashboard/toolbar";
 import { generateTokenThunk } from "@/lib/stores/thunks/generate-token";
 import {
   GenerateTokenFormData,
@@ -44,16 +41,15 @@ import {
 const { clearGenerateTokenState } = dashboardToolbarSlice.actions;
 
 export function DashboardToolbar() {
-  const state = useSelector((state: RootState) => state.dashboardToolbar);
-
   return (
     <div className="flex gap-x-4 justify-end w-full">
-      <GenerateTokenForm state={state} />
+      <GenerateTokenForm />
     </div>
   );
 }
 
-function GenerateTokenForm({ state }: { state: InitialToolbarState }) {
+function GenerateTokenForm() {
+  const state = useSelector((state: RootState) => state.dashboardToolbar);
   const dispatch: AppDispatch = useDispatch();
   const form = useForm<GenerateTokenFormData>({
     resolver: zodResolver(generateTokenFormSchema),
@@ -64,8 +60,9 @@ function GenerateTokenForm({ state }: { state: InitialToolbarState }) {
   const [alertOpen, setAlertOpen] = React.useState(false);
 
   React.useEffect(() => {
+    form.reset();
     dispatch(clearGenerateTokenState());
-  }, [dispatch, alertOpen]);
+  }, [dispatch, alertOpen, form]);
 
   const isTokenGenerationSuccessful =
     state.generateToken.receivedToken !== undefined;

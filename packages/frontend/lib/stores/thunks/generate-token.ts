@@ -22,7 +22,6 @@ export const generateTokenThunk = createAsyncThunk<
       args,
       requestOptions(),
     );
-    console.log(response.data);
     const token = tokenSchema.parse(response.data.token);
 
     toast({
