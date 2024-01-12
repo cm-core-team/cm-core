@@ -28,7 +28,6 @@ export default function RootLayout({
           <RootNavMenu />
           {children}
           <Footer />
-          <Toaster />
         </Providers>
       </body>
     </html>

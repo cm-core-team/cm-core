@@ -4,34 +4,42 @@ import { generateTokenThunk } from "../thunks/generate-token";
 
 import { Token } from "@/lib/types/models/token";
 
-interface InitialToolbarState {
-  isLoading: boolean;
-  didError: boolean;
+export interface InitialToolbarState {
+  generateToken: {
+    isLoading: boolean;
+    didError: boolean;
 
-  receivedToken?: Token;
+    receivedToken?: Token;
+  };
 }
 
 const initialState: InitialToolbarState = {
-  isLoading: false,
-  didError: false,
+  generateToken: {
+    isLoading: false,
+    didError: false,
+  },
 };
 
 export const dashboardToolbarSlice = createSlice({
   name: "dashboard/toolbar",
   initialState,
-  reducers: {},
+  reducers: {
+    clearGenerateTokenState: (state) => {
+      state.generateToken = initialState.generateToken;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(generateTokenThunk.pending, (state, action) => {
-        state.isLoading = true;
+      .addCase(generateTokenThunk.pending, (state) => {
+        state.generateToken.isLoading = true;
       })
-      .addCase(generateTokenThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.didError = true;
+      .addCase(generateTokenThunk.rejected, (state) => {
+        state.generateToken.isLoading = false;
+        state.generateToken.didError = true;
       })
       .addCase(generateTokenThunk.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.receivedToken = action.payload;
+        state.generateToken.isLoading = false;
+        state.generateToken.receivedToken = action.payload;
       });
   },
 });

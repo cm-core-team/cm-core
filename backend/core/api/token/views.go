@@ -49,7 +49,7 @@ func CreateToken(ctx *gin.Context) {
 	if queryResult.Error != nil {
 		fmt.Println("[CreateToken] Can't find the target user.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserNotFound,
 		})
 		return
 	}
