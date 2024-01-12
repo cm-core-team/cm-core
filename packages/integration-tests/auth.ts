@@ -1,7 +1,7 @@
 import axios from "axios";
 import { backendRoutes } from "frontend/lib/config";
-import { Congregation } from "frontend/lib/types/congregation";
-import { User } from "frontend/lib/types/user";
+import { Congregation } from "frontend/lib/types/models/congregation";
+import { User } from "frontend/lib/types/models/user";
 
 export async function loginUser(user: User): Promise<string> {
   const res = await axios.post(
