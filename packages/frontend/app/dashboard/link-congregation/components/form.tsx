@@ -56,6 +56,7 @@ export function LinkCongregationForm() {
         description: "The token is correct. Welcome to your congregation!",
         variant: "success",
       });
+      router.push("/dashboard");
     } catch (error) {
       toast({
         title: "Error",

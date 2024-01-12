@@ -100,11 +100,14 @@ function GenerateTokenForm() {
           />
 
           {state.generateToken.receivedToken && (
-            <Snippet symbol="Invitee's token:" variant="bordered">
-              <span className="bg-red">
-                {state.generateToken.receivedToken.value}
-              </span>
-            </Snippet>
+            <div className="flex gap-x-8">
+              <text className="my-auto">Invitee&apos;s token:</text>
+              <Snippet symbol="" variant="bordered" size="sm">
+                <span className="bg-red">
+                  {state.generateToken.receivedToken.value}
+                </span>
+              </Snippet>
+            </div>
           )}
 
           <Button
