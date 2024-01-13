@@ -2,6 +2,7 @@ package congregation
 
 import (
 	"backend/core/common"
+	"backend/core/db"
 	"backend/core/db/models"
 	"errors"
 	"fmt"
@@ -44,21 +45,17 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 	return nil
 }
 
-func CheckVerificationCode(dto VerifyCongregationPhoneDTO, db *gorm.DB, ctx *gin.Context) error {
+func CheckVerificationCode(dto VerifyCongregationPhoneDTO, dbOps db.DatabaseOps, ctx *gin.Context) error {
 	// If we are testing locally, allow any input
 	if common.GetEnvSecrets().Environment == "local" {
 		return nil
 	}
 
 	// Find a verificationCode with a matching signature
-	var verificationCode models.CongregationVerificationCode
-	dbInst := db.Where(&models.CongregationVerificationCode{
-		CongregationSignature: dto.Congregation.Signature,
-	}).First(&verificationCode)
-
-	if dbInst.Error != nil {
+	verificationCode, err := dbOps.FindVerificationCodeWithSignature(dto.Congregation.Signature)
+	if err != nil {
 		fmt.Println("[VerifyCongregationPhone] congregation not found.")
-		if errors.Is(dbInst.Error, gorm.ErrRecordNotFound) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			fmt.Println("[VerifyCongregationPhone] Verification code was not found")
 		}
 

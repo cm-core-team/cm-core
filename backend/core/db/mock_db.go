@@ -24,3 +24,8 @@ func (m *MockDatabaseOps) FindUserByEmailWithToken(email string) (models.User, e
 	args := m.Called(email)
 	return args.Get(0).(models.User), args.Error(1)
 }
+
+func (m *MockDatabaseOps) FindVerificationCodeWithSignature(signature string) (models.CongregationVerificationCode, error) {
+	args := m.Called(signature)
+	return args.Get(0).(models.CongregationVerificationCode), args.Error(1)
+}

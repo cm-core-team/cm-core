@@ -11,6 +11,7 @@ type DatabaseOps interface {
 	FindAndUpdateUser(email string, congregationID uint) (models.User, error)
 
 	FindUserByEmailWithToken(email string) (models.User, error)
+	FindVerificationCodeWithSignature(signature string) (models.CongregationVerificationCode, error)
 }
 
 type OrmDatabaseOps struct {
@@ -36,12 +37,18 @@ func (ormOps *OrmDatabaseOps) FindAndUpdateUser(email string, congregationID uin
 	return user, result.Error
 }
 
-func (g *OrmDatabaseOps) FindUserByEmailWithToken(email string) (models.User, error) {
+func (ormOps *OrmDatabaseOps) FindUserByEmailWithToken(email string) (models.User, error) {
 	var user models.User
-	result := g.DB.Preload("JoinToken").Where("email = ?", email).First(&user)
-	if result.Error != nil {
-		return models.User{}, result.Error
-	}
+	result := ormOps.DB.Preload("JoinToken").Where("email = ?", email).First(&user)
 
-	return user, nil
+	return user, result.Error
+}
+
+func (ormOps *OrmDatabaseOps) FindVerificationCodeWithSignature(signature string) (models.CongregationVerificationCode, error) {
+	var verificationCode models.CongregationVerificationCode
+	dbInst := ormOps.DB.Where(&models.CongregationVerificationCode{
+		CongregationSignature: signature,
+	}).First(&verificationCode)
+
+	return verificationCode, dbInst.Error
 }
