@@ -16,5 +16,5 @@ export async function loginUser(data: LoginUserFormData) {
 
 export async function logoutUser() {
   sessionStorage.removeItem("sessionToken");
-  await axios.delete(backendRoutes.user.logout, requestOptions());
+  await axios.post(backendRoutes.user.logout, requestOptions());
 }
