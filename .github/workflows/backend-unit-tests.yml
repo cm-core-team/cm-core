@@ -26,4 +26,5 @@ jobs:
         working-directory: ./backend/
         run: |
           go mod download
+          go install github.com/rakyll/gotest
           gotest ./...
