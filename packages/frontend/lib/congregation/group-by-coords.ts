@@ -1,4 +1,4 @@
-import { Congregation } from "../types/congregation";
+import { Congregation } from "../types/models/congregation";
 
 export type CongregationGroups = Record<string, Congregation[]>;
 

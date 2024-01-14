@@ -4,7 +4,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
 
-import { Congregation } from "@/lib/types/congregation";
+import { Congregation } from "@/lib/types/models/congregation";
 
 export interface MeetingCardProps {
   congregation: Congregation;

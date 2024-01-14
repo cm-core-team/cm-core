@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { User_WithCongregation } from "../types/compositions";
-
-import { getCurrentUserThunk } from "./thunks/get-current-user";
+import { User_WithCongregation } from "../../types/models/compositions";
+import { getCurrentUserThunk } from "../thunks/get-current-user";
 
 interface InitialDashState {
   currentUser?: User_WithCongregation;

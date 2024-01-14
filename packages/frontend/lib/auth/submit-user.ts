@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { backendRoutes } from "../config";
 import { RegisterUserFormData } from "../types/auth/user-form";
-import { User, userSchema } from "../types/user";
+import { User, userSchema } from "../types/models/user";
 
 export async function submitUser(
   userFormData: RegisterUserFormData,

@@ -9,8 +9,8 @@ import (
 	"strconv"
 
 	"backend/core/common"
+	"backend/core/db/models"
 	"backend/core/integrations/meeting-finder/dtos"
-	"backend/core/models"
 
 	"github.com/mitchellh/mapstructure"
 )

@@ -11,13 +11,13 @@ import { DashboardComponentProps } from "./types";
 
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { getCurrentUserThunk } from "@/lib/stores/thunks/get-current-user";
-import { UserType } from "@/lib/types/user";
+import { UserType } from "@/lib/types/models/user";
 
 const AdminDashboard = dynamic(() =>
-  import("./admin-dashboard").then((mod) => mod.AdminDashboard),
+  import("./admin/dashboard").then((mod) => mod.AdminDashboard),
 );
 const UserDashboard = dynamic(() =>
-  import("./user-dashboard").then((mod) => mod.UserDashboard),
+  import("./regular/dashboard").then((mod) => mod.UserDashboard),
 );
 
 export function Dashboard() {

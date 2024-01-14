@@ -11,5 +11,10 @@ export async function loginUser(data: LoginUserFormData) {
     requestOptions(),
   );
 
-  localStorage.setItem("sessionToken", res.data.sessionToken);
+  sessionStorage.setItem("sessionToken", res.data.sessionToken);
+}
+
+export async function logoutUser() {
+  sessionStorage.removeItem("sessionToken");
+  await axios.post(backendRoutes.user.logout, requestOptions());
 }

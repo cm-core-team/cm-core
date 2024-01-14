@@ -2,7 +2,8 @@ package congregation
 
 import (
 	"backend/core/common"
-	"backend/core/models"
+	"backend/core/db"
+	"backend/core/db/models"
 	"fmt"
 	"net/http"
 
@@ -25,11 +26,11 @@ func CreateCongregation(ctx *gin.Context) {
 		return
 	}
 
-	db, _ := ctx.MustGet("db").(*gorm.DB)
+	ormDb, _ := ctx.MustGet("db").(*gorm.DB)
 
 	// Generate a signature and check if it exists
 	dto.GenerateSignature()
-	isUnique, err := HasUniqueSignature(dto, db)
+	isUnique, err := HasUniqueSignature(dto, ormDb)
 	if err != nil {
 		fmt.Println("[CreateCongregation] (signature check) Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -46,7 +47,7 @@ func CreateCongregation(ctx *gin.Context) {
 		return
 	}
 
-	err = CreateCongregationInDB(&dto, db)
+	err = CreateCongregationInDB(&dto, ormDb)
 	if err != nil {
 		fmt.Println("[CreateCongregation] Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -106,13 +107,13 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 		})
 		return
 	}
-
 	// TODO (Jude): need to connect to 3rd party OTP services
 	SendVerificationCode(verificationCode)
 
 	// Expire verification code
 	err = ScheduleVerificationCodeRemoval(verificationCode, db)
 	if err != nil {
+		fmt.Println("[SendCongregationVerificationCode] Couldn't schedule verification code removal.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})
@@ -134,9 +135,12 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 	}
 	dto.Congregation.GenerateSignature()
 
-	db, _ := ctx.MustGet("db").(*gorm.DB)
+	ormDb, _ := ctx.MustGet("db").(*gorm.DB)
+	dbOps := &db.OrmDatabaseOps{
+		DB: ormDb,
+	}
 
-	userErr := CheckVerificationCode(dto, db, ctx)
+	userErr := CheckVerificationCode(dto, dbOps, ctx)
 	if userErr != nil {
 		// CheckVerificationCode will handle the ctx response
 		ctx.JSON(http.StatusBadRequest, gin.H{

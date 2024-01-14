@@ -3,6 +3,7 @@
 import React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -25,23 +26,29 @@ import {
   SelectContent,
   SelectValue,
 } from "@/components/ui/select";
+import { logoutUser } from "@/lib/auth/login-user";
 import { AppDispatch } from "@/lib/stores/app-store";
 import { createUserThunk } from "@/lib/stores/thunks/create-user";
 import {
   RegisterUserFormData,
   registerUserFormSchema,
 } from "@/lib/types/auth/user-form";
-import { userTypeSchema } from "@/lib/types/user";
+import { userTypeSchema } from "@/lib/types/models/user";
 
 export function RegisterForm() {
+  const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-
   const form = useForm<RegisterUserFormData>({
     resolver: zodResolver(registerUserFormSchema),
   });
 
-  const onSubmit = (data: RegisterUserFormData) => {
-    dispatch(createUserThunk(data));
+  const onSubmit = async (data: RegisterUserFormData) => {
+    logoutUser();
+    const result = await dispatch(createUserThunk(data));
+
+    if (createUserThunk.fulfilled.match(result)) {
+      router.push("/login");
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { userTypeSchema } from "../user";
+import { userTypeSchema } from "../models/user";
 
 export const registerUserFormSchema = z
   .object({

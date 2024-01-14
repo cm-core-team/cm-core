@@ -2,7 +2,8 @@ package user
 
 import (
 	"backend/core/common"
-	"backend/core/models"
+	"backend/core/db"
+	"backend/core/db/models"
 	"backend/core/services/security"
 	"fmt"
 	"net/http"
@@ -115,6 +116,27 @@ func LoginUser(ctx *gin.Context) {
 	})
 }
 
+func LogoutUser(ctx *gin.Context) {
+	/**
+	 * Remove the session token from the client.
+	 */
+
+	cookie := &http.Cookie{
+		Name:     "sessionToken",
+		Value:    "",
+		Path:     "/",
+		Domain:   "",
+		HttpOnly: true,
+		MaxAge:   -1,
+		Secure:   true,
+		SameSite: http.SameSiteNoneMode,
+	}
+
+	http.SetCookie(ctx.Writer, cookie)
+
+	ctx.JSON(http.StatusOK, gin.H{})
+}
+
 func VerifyToken(ctx *gin.Context) {
 	/**
 	 * Verify that a user's token matches it's assigned token
@@ -129,23 +151,25 @@ func VerifyToken(ctx *gin.Context) {
 		return
 	}
 
-	db, _ := ctx.MustGet("db").(*gorm.DB)
+	dbInst, _ := ctx.MustGet("db").(*gorm.DB)
+	dbOps := &db.OrmDatabaseOps{DB: dbInst}
 
-	err = VerifyTokenMatch(dto, db)
+	err = VerifyTokenMatch(dto, dbOps)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.TokenInvalid,
+		})
+		return
+	}
+
+	user, err := BindUserToCongregation(dto, dbOps)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
 		return
 	}
-
-	err = BindUserToCongregation(dto, db)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
-		})
-		return
-	}
+	user.WithCongregation(dbInst)
 
 	ctx.JSON(http.StatusAccepted, gin.H{"message": "Token matches"})
 }
@@ -164,9 +188,9 @@ func GetCurrentUser(ctx *gin.Context) {
 
 	if queryResult.Error != nil {
 		ctx.JSON(
-			http.StatusInternalServerError,
+			http.StatusUnauthorized,
 			gin.H{
-				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
 			},
 		)
 		return

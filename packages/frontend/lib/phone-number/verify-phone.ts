@@ -4,7 +4,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { backendErrorHandle } from "../backend-error-handle";
 import { backendRoutes } from "../config";
 import { createCongregation } from "../congregation/create-congregation";
-import { Congregation } from "../types/congregation";
+import { Congregation } from "../types/models/congregation";
 
 import { toast } from "@/components/ui/use-toast";
 

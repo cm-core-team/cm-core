@@ -2,20 +2,19 @@ package main
 
 import (
 	"backend/core/common"
+	"backend/core/db/models"
 	"backend/core/middleware"
-	"backend/core/models"
 	"backend/core/routes"
 	"fmt"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func main() {
-	godotenv.Load(".env.secret")
+	common.FindAndLoadDotenv(".env.secret")
 
 	envSecrets := common.GetEnvSecrets()
 	DB_URL := envSecrets.DbUrl

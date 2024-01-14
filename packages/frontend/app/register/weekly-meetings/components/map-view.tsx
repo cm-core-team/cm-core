@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { generateKey } from "@/lib/congregation/group-by-coords";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
-import { Congregation } from "@/lib/types/congregation";
+import { Congregation } from "@/lib/types/models/congregation";
 
 delete (L.Icon.Default as any).prototype._getIconUrl;
 L.Icon.Default.mergeOptions({

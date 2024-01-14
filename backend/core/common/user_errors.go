@@ -16,6 +16,8 @@ type UserErrors struct {
 	UserAlreadyExists   string
 	UserPasswordInvalid string
 
+	TokenInvalid string
+
 	Unknown string
 }
 
@@ -33,6 +35,8 @@ var UserErrorInstance = UserErrors{
 	UserNotFound:        "Cannot find user. Please check your information and try again.",
 	UserAlreadyExists:   "User already exists. Please login using that email or enter a different one.",
 	UserPasswordInvalid: "Your password is incorrect. Please check and try again.",
+
+	TokenInvalid: "Invalid token provided. Please try again.",
 
 	Unknown: "Unknown error. Please report this if the error persists.",
 }

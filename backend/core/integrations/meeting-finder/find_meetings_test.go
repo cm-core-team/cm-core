@@ -1,11 +1,13 @@
 package meetingfinder_test
 
 import (
+	"backend/core/common"
 	meetingfinder "backend/core/integrations/meeting-finder"
 	"testing"
 )
 
 func TestFindLocalMeetings(t *testing.T) {
+	common.FindAndLoadDotenv(".env.secret")
 	meetings, err := meetingfinder.FindLocalMeetings(meetingfinder.UserLocation{
 		Latitude:  "51.5152544",
 		Longitude: "-0.6365793",

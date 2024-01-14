@@ -2,9 +2,11 @@ package token
 
 import (
 	"backend/core/common"
-	"backend/core/models"
+	"backend/core/db/models"
+	"backend/core/services/security"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -16,14 +18,7 @@ import (
 
 func CreateToken(ctx *gin.Context) {
 	// Ensure the user is authenticated
-	// sessionTokenPayload := ctx.MustGet("sessionToken").(*security.SessionTokenPayload)
-	// if sessionTokenPayload == nil {
-	// 	fmt.Println("[CreateToken] sessionToken invalid")
-	// 	ctx.JSON(http.StatusUnauthorized, gin.H{
-	// 		common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
-	// 	})
-	// 	return
-	// }
+	jwtPayload := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
 
 	var dto CreateTokenDTO
 
@@ -37,29 +32,29 @@ func CreateToken(ctx *gin.Context) {
 	}
 
 	// Check that the sessionToken user ID matches the CreatedByUserId
-	// tokenMatches := sessionTokenPayload.UserID == strconv.FormatUint(uint64(dto.CreatedByUserId), 10)
-	// if !tokenMatches {
-	// 	fmt.Println("[CreateToken] token does not match created by user.")
-	// 	ctx.JSON(http.StatusUnauthorized, gin.H{
-	// 		common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
-	// 	})
-	// 	return
-	// }
+	tokenMatches := jwtPayload.UserID == strconv.FormatUint(uint64(dto.CreatedByUserId), 10)
+	if !tokenMatches {
+		fmt.Println("[CreateToken] token does not match created by user.")
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
+		})
+		return
+	}
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 
 	// Check that the targeted user actually exists
 	var targetUser models.User
-	queryResult := db.First(&targetUser, "id = ?", dto.UserID)
+	queryResult := db.First(&targetUser, "email = ?", dto.UserEmail)
 	if queryResult.Error != nil {
 		fmt.Println("[CreateToken] Can't find the target user.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserNotFound,
 		})
 		return
 	}
 
-	// Session token is valid and meets requirements
+	// At this point session token is valid and meets requirements
 
 	// Find user
 	var adminUser models.User
@@ -84,7 +79,8 @@ func CreateToken(ctx *gin.Context) {
 
 	// Create the actual join token
 	token := models.Token{
-		UserID:          dto.UserID,
+		UserID:          targetUser.ID,
+		UserEmail:       dto.UserEmail,
 		CreatedByUserId: dto.CreatedByUserId,
 		CongregationID:  *adminUser.CongregationID,
 	}
