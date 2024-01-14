@@ -31,7 +31,9 @@ func TestCheckVerificationCode(t *testing.T) {
 			Code: correctCode,
 		}
 
-		mockDBOps.On("FindVerificationCodeWithSignature", dto.Congregation.Signature).Return(verificationCode, nil)
+		mockDBOps.
+			On("FindVerificationCodeWithSignature", dto.Congregation.Signature).
+			Return(verificationCode, nil)
 
 		// Mock Gin context if needed
 		ctx := &gin.Context{}
@@ -56,7 +58,9 @@ func TestCheckVerificationCode(t *testing.T) {
 			Code: correctCode,
 		}
 
-		mockDBOps.On("FindVerificationCodeWithSignature", dto.Congregation.Signature).Return(verificationCode, nil)
+		mockDBOps.
+			On("FindVerificationCodeWithSignature", dto.Congregation.Signature).
+			Return(verificationCode, nil)
 
 		// Also mock Gin context if needed
 		ctx := &gin.Context{}
@@ -68,5 +72,4 @@ func TestCheckVerificationCode(t *testing.T) {
 
 		mockDBOps.AssertExpectations(t)
 	})
-
 }
