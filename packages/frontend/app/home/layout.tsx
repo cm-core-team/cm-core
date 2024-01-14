@@ -1,4 +1,4 @@
-import { DashboardNavMenu } from "@/components/nav/dashboard";
+import { RootNavMenu } from "@/components/nav/root";
 
 export default function LoginLayout({
   children,
@@ -7,7 +7,7 @@ export default function LoginLayout({
 }) {
   return (
     <section>
-      <DashboardNavMenu />
+      <RootNavMenu />
       {children}
     </section>
   );
