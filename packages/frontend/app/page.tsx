@@ -10,6 +10,4 @@ export default function Page() {
   React.useEffect(() => {
     router.push("/home");
   }, [router]);
-
-  return <></>;
 }
