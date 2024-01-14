@@ -6,22 +6,22 @@ export function Home() {
   const features = [
     {
       label: "Display media for the meeting",
-      img_url:
+      imgUrl:
         "https://assetsnffrgf-a.akamaihd.net/assets/m/2023562/univ/art/2023562_univ_lsr_lg.jpg",
     },
     {
       label: "Manage meeting duties swiftly",
-      img_url:
+      imgUrl:
         "https://assetsnffrgf-a.akamaihd.net/assets/m/2023562/univ/art/2023562_univ_lsr_lg.jpg",
     },
     {
       label: "Arrange and distribute territory",
-      img_url:
+      imgUrl:
         "https://assetsnffrgf-a.akamaihd.net/assets/m/2023562/univ/art/2023562_univ_lsr_lg.jpg",
     },
     {
       label: "Co-ordinate public witnessing schedules",
-      img_url:
+      imgUrl:
         "https://assetsnffrgf-a.akamaihd.net/assets/m/2023562/univ/art/2023562_univ_lsr_lg.jpg",
     },
   ];
