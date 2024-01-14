@@ -14,11 +14,10 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  cn,
 } from "@nextui-org/react";
 import { Github } from "lucide-react";
 
-import { ModeToggle } from "../components/theme-mode-toggle";
+import { ModeToggle } from "../theme-mode-toggle";
 
 import { DropdownToggle } from "@/components/dropdown-toggle";
 
