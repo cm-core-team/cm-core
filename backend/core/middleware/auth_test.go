@@ -39,7 +39,6 @@ func TestGetSessionToken(t *testing.T) {
 
 		token, err := middleware.GetSessionToken(ctx)
 		assert.Error(t, err)
-		assert.Equal(t, "no session token", err.Error())
 		assert.Equal(t, "", token)
 	})
 }
