@@ -22,7 +22,7 @@ func CreateToken(ctx *gin.Context) {
 
 	var dto CreateTokenDTO
 
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		fmt.Println("[CreateToken] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{

@@ -21,7 +21,7 @@ func CreateUser(ctx *gin.Context) {
 	 */
 
 	var dto CreateUserDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -58,7 +58,7 @@ func LoginUser(ctx *gin.Context) {
 	 */
 
 	var dto LoginUserDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -143,7 +143,7 @@ func VerifyToken(ctx *gin.Context) {
 	 */
 
 	var dto JoinTokenMatchDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -202,7 +202,7 @@ func GetCurrentUser(ctx *gin.Context) {
  */
 func BindAdminToCongregation(ctx *gin.Context) {
 	var dto BindAdminToCongregationDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,

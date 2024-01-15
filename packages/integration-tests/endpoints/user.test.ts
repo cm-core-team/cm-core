@@ -10,7 +10,10 @@ describe("User CRUD", () => {
   it("should correctly create a user", async () => {
     const client = await DBClient.shared.getClient();
     const user = ModelGenerator.instance.randomUser();
-    const response = await axios.post(backendRoutes.user.create, user);
+    const response = await axios.post(backendRoutes.user.create, {
+      ...user,
+      password: "hello world",
+    });
 
     expect(response.data.user).not.toBe(undefined);
 
