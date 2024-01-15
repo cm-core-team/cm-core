@@ -187,12 +187,9 @@ func GetCurrentUser(ctx *gin.Context) {
 		First(&foundUser, "id = ?", tokenPayload.UserID)
 
 	if queryResult.Error != nil {
-		ctx.JSON(
-			http.StatusUnauthorized,
-			gin.H{
-				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
-			},
-		)
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
+		})
 		return
 	}
 
@@ -212,14 +209,6 @@ func BindAdminToCongregation(ctx *gin.Context) {
 		})
 		return
 	}
-
-	/**
-	 * TODO (Jude): After you bind the request body to our request DTO, we need to
-	 * check that the user ID (Admin) matches the session token payload and is in fact an admin.
-	 *
-	 * Use: ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
-	 * to retrieve the current user ID (sessionTokenPayload.UserID) it will be saved in the session.
-	 */
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 	tokenPayload, _ := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
