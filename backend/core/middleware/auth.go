@@ -3,6 +3,7 @@ package middleware
 import (
 	"backend/core/common"
 	"backend/core/services/security"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -15,23 +16,10 @@ type AuthenticatePayload struct {
 
 func Authenticate() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var sessionToken string
-
-		cookie, err := ctx.Request.Cookie("sessionToken")
+		sessionToken, err := GetSessionToken(ctx)
 		if err != nil {
-			fmt.Println("[Authenticate] User is not authenticated")
-			// If no cookie, check the body for the session token
-			sessionToken = ctx.GetHeader("Authorization")
-
-			if sessionToken == "" {
-				// There was no cookie, nor sessionToken in the body
-				fmt.Println("[-] No cookie, no sessionToken, or invalid request.")
-				fmt.Println(err)
-				jsonUnauthorized(ctx)
-				return
-			}
-		} else {
-			sessionToken = cookie.Value
+			jsonUnauthorized(ctx)
+			return
 		}
 
 		payload, err := security.VerifyJWT(sessionToken)
@@ -48,6 +36,22 @@ func Authenticate() gin.HandlerFunc {
 		// We don't want to run ctx.Next() if there's an auth error
 		ctx.Next()
 	}
+}
+
+// Get session token from the Gin context header
+func GetSessionToken(ctx *gin.Context) (string, error) {
+	if cookie, err := ctx.Request.Cookie("sessionToken"); err == nil {
+		return cookie.Value, nil
+	}
+
+	// If no cookie, check the body for the session token
+	sessionToken := ctx.GetHeader("Authorization")
+	if sessionToken == "" {
+		fmt.Println("[-] No session token in cookie or Authorization header.")
+		return "", errors.New("no session token")
+	}
+
+	return sessionToken, nil
 }
 
 func jsonUnauthorized(ctx *gin.Context) {
