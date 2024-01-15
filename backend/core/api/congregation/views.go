@@ -17,7 +17,7 @@ func CreateCongregation(ctx *gin.Context) {
 	 */
 
 	var dto models.Congregation
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		fmt.Println("[CreateCongregation] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -62,7 +62,7 @@ func CreateCongregation(ctx *gin.Context) {
 
 func DeleteCongregation(ctx *gin.Context) {
 	var dto DeleteCongregationDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		fmt.Println("[DeleteCongregation] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -86,7 +86,7 @@ func DeleteCongregation(ctx *gin.Context) {
 
 func SendCongregationVerificationCode(ctx *gin.Context) {
 	var dto SendCongregationVerificationCodeDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -125,7 +125,7 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 
 func VerifyCongregationPhone(ctx *gin.Context) {
 	var dto VerifyCongregationPhoneDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		fmt.Println("[VerifyCongregationPhone] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{

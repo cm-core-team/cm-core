@@ -70,6 +70,7 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="lastName"
@@ -85,6 +86,7 @@ export function RegisterForm() {
               )}
             />
           </div>
+
           <div className="flex gap-x-4">
             <FormField
               control={form.control}
@@ -102,6 +104,7 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="type"

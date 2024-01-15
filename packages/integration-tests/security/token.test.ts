@@ -36,12 +36,16 @@ describe("Join Token Security", () => {
       .parse(congregationResponse.data).congregation;
 
     // Create the users
-    const adminResponse = await axios.post(
-      backendRoutes.user.create,
-      adminUser,
-    );
+    const adminPassword = "hello! worldQ!";
+    const adminResponse = await axios.post(backendRoutes.user.create, {
+      ...adminUser,
+      password: adminPassword,
+    });
 
-    const joinResponse = await axios.post(backendRoutes.user.create, joinUser);
+    const joinResponse = await axios.post(backendRoutes.user.create, {
+      ...joinUser,
+      password: "hello,. world/!",
+    });
     // Check the response
     const adminPayload = createUserSchema.parse(adminResponse.data);
     const joinPayload = createUserSchema.parse(joinResponse.data);
@@ -49,7 +53,7 @@ describe("Join Token Security", () => {
     expect(joinPayload.user.id).toBeNumber();
 
     // Login the admin
-    const sessionToken = await loginUser(adminPayload.user);
+    const sessionToken = await loginUser(adminPayload.user, adminPassword);
     await bindAdminToCongregation(congregation, sessionToken);
 
     // Make the admin create the session token

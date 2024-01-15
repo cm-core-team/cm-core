@@ -21,7 +21,7 @@ func CreateUser(ctx *gin.Context) {
 	 */
 
 	var dto CreateUserDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -58,7 +58,7 @@ func LoginUser(ctx *gin.Context) {
 	 */
 
 	var dto LoginUserDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -143,7 +143,7 @@ func VerifyToken(ctx *gin.Context) {
 	 */
 
 	var dto JoinTokenMatchDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
@@ -187,12 +187,9 @@ func GetCurrentUser(ctx *gin.Context) {
 		First(&foundUser, "id = ?", tokenPayload.UserID)
 
 	if queryResult.Error != nil {
-		ctx.JSON(
-			http.StatusUnauthorized,
-			gin.H{
-				common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
-			},
-		)
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
+		})
 		return
 	}
 
@@ -205,21 +202,13 @@ func GetCurrentUser(ctx *gin.Context) {
  */
 func BindAdminToCongregation(ctx *gin.Context) {
 	var dto BindAdminToCongregationDTO
-	err := ctx.BindJSON(&dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
 		return
 	}
-
-	/**
-	 * TODO (Jude): After you bind the request body to our request DTO, we need to
-	 * check that the user ID (Admin) matches the session token payload and is in fact an admin.
-	 *
-	 * Use: ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
-	 * to retrieve the current user ID (sessionTokenPayload.UserID) it will be saved in the session.
-	 */
 
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 	tokenPayload, _ := ctx.MustGet("jwtPayload").(*security.SessionTokenPayload)
