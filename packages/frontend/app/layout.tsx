@@ -3,8 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { RootNavMenu } from "../components/nav/root";
-
 import { Footer } from "./footer";
 import { Providers } from "./providers";
 

@@ -10,12 +10,17 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarBrand,
+  Button,
 } from "@nextui-org/react";
 import { Github } from "lucide-react";
 
 import { ModeToggle } from "../theme-mode-toggle";
 
+import { logoutUser } from "@/lib/auth/login-user";
+
 export function DashboardNavMenu(): JSX.Element {
+  const renderSpacer = () => <div className="flex justify-between w-16" />;
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const mainItems = (
     <>
@@ -27,7 +32,7 @@ export function DashboardNavMenu(): JSX.Element {
         <Link>Members</Link>
       </NavbarItem>
 
-      <div className="flex justify-between w-16"></div>
+      {renderSpacer()}
 
       <NavbarItem>
         <Link href="https://github.com/cm-core-team/cm-core" target="_blank">
@@ -36,6 +41,21 @@ export function DashboardNavMenu(): JSX.Element {
       </NavbarItem>
       <NavbarItem>
         <ModeToggle />
+      </NavbarItem>
+
+      {renderSpacer()}
+
+      <NavbarItem>
+        <Button
+          color="danger"
+          variant="ghost"
+          onClick={async () => {
+            await logoutUser();
+            window.location.href = "/login";
+          }}
+        >
+          Log Out
+        </Button>
       </NavbarItem>
     </>
   );
