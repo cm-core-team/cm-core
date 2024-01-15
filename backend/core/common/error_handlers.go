@@ -1,23 +1,20 @@
-/* TODO */
-
 package common
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
-type ContextErrorHandle struct {
-	Context *gin.Context
-	Tag     string
-}
-
-func (handle ContextErrorHandle) RequestValidation(err error) {
-	if err != nil {
-		handle.Context.JSON(http.StatusBadRequest, gin.H{
-			UserErrorInstance.UserErrKey: UserErrorInstance.BadRequestOrData,
-		})
-		return
+// Validate DTOs by Binding JSON body and validating with validator
+func BindAndValidate(ctx *gin.Context, dto interface{}) error {
+	if err := ctx.BindJSON(dto); err != nil {
+		return err
 	}
+
+	validate := validator.New()
+	if err := validate.Struct(dto); err != nil {
+		return err
+	}
+
+	return nil
 }
