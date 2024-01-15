@@ -1,6 +1,8 @@
 import { Bug } from "lucide-react";
 import Image from "next/image";
 
+import { TeamMemberCard } from "./team-member-card";
+
 import {
   Card,
   CardContent,
@@ -9,8 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import { TeamMemberCard } from "./team-member-card";
 
 export function AboutUs() {
   return (
