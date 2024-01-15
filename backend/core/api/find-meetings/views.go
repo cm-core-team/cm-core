@@ -12,7 +12,7 @@ import (
 func FindLocalMeetings(ctx *gin.Context) {
 	var dto FindLocalMeetingsRequestDTO
 
-	err := common.BindAndValidate(ctx, dto)
+	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
 		fmt.Println(err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
