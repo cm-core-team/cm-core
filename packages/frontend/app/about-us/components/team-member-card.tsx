@@ -10,12 +10,14 @@ import {
 export function TeamMemberCard({
   teamMember,
   memberDesc,
+  memberImg,
 }: {
   teamMember: string;
   memberDesc: string;
+  memberImg?: string;
 }) {
   return (
-    <Card className="w-1/2">
+    <Card className="w-1/4">
       <CardHeader>
         <CardTitle>
           <h3>{teamMember}</h3>
