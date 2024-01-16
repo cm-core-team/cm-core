@@ -1,10 +1,9 @@
 import { Bug, Mails, Phone } from "lucide-react";
 import Image from "next/image";
 
-import { ArticleSection } from "./article-section";
-import { TeamMemberCard } from "./team-member-card";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { ArticleSection } from "./article-section";
 
 export function AboutUs() {
   return (
