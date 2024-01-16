@@ -22,21 +22,6 @@ export function AboutUs() {
         </h1>
       </header>
       <main>
-        <section>
-          <h2 className="font-bold text-4xl mt-4">Who we are</h2>
-          <div className="w-full flex justify-center gap-x-8 mt-4">
-            <TeamMemberCard
-              teamMember="Jude Davis"
-              memberDesc="
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus mauris a sapien commodo, quis rutrum magna tincidunt. Suspendisse tempus ut orci a efficitur. Proin vitae ante at ex sagittis gravida. Nullam semper nisl vel blandit fringilla."
-            />
-            <TeamMemberCard
-              teamMember="Jonathan Koziel"
-              memberDesc="
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus mauris a sapien commodo, quis rutrum magna tincidunt. Suspendisse tempus ut orci a efficitur. Proin vitae ante at ex sagittis gravida. Nullam semper nisl vel blandit fringilla."
-            />
-          </div>
-        </section>
         {/* Need to have a think about what to write in these sections */}
         {/* I just put lorem ipsum in here for now for proof of concept */}
         <ArticleSection
