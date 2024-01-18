@@ -6,10 +6,12 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { cn } from "@/lib/utils";
+import { NumberLabel } from "@/components/number-label";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 
 type FeatureItem = {
   title: string;
+  subtitle: string;
   description: string;
   color: string;
   href: string;
@@ -23,16 +25,21 @@ export function Home() {
   const renderFeature = (item: FeatureItem) => {
     return (
       <motion.div
-        key={item.title}
-        className="w-full place-items-center rounded-xl p-4 md:px-16 grid md:grid-cols-2 md:grid-rows-1 grid-cols-1 grid-rows-2 md:py-24 cursor-pointer"
-        style={{ backgroundColor: item.color }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         onClick={() => router.push(item.href)}
+        className="grid place-items-center"
       >
-        <h1>{item.title}</h1>
-        <text>{item.description}</text>
+        <Card
+          style={{ backgroundColor: item.color }}
+          className="w-2/3 place-items-center rounded-xl p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-2 md:py-16 cursor-pointer shadow-xl shadow-gray-800"
+        >
+          <CardHeader>
+            <CardTitle>{item.title}</CardTitle>
+          </CardHeader>
+          <CardContent>{item.description}</CardContent>
+        </Card>
       </motion.div>
     );
   };
@@ -40,18 +47,21 @@ export function Home() {
   const featureData: FeatureItem[] = [
     {
       title: "Feature 1",
+      subtitle: "Manage at light speed.",
       description: loremIpsum,
       color: "#1E1762",
       href: "#",
     },
     {
       title: "Feature 2",
+      subtitle: "Seamless event and member coordination.",
       description: loremIpsum,
       color: "#0F222F",
       href: "#",
     },
     {
       title: "Feature 3",
+      subtitle: "Empower collaboration and communication.",
       description: loremIpsum,
       color: "#301236",
       href: "#",
@@ -60,12 +70,7 @@ export function Home() {
 
   const renderIntroHeader = () => {
     return (
-      <motion.div
-        className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 space-x-24"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-      >
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 space-x-24 place-items-center h-[70vh]">
         <motion.div
           className="flex flex-col justify-center space-y-10"
           initial={{ x: -100 }}
@@ -75,6 +80,7 @@ export function Home() {
           <h1 className="sm:text-5xl text-4xl font-bold">
             Manage a congregation with ease.
           </h1>
+
           <p className="text-muted-foreground">
             Congregation Manager simplifies organizational tasks with advanced
             digital solutions.
@@ -98,14 +104,35 @@ export function Home() {
           alt="Inspirational Visual"
           className="hidden ml-auto md:flex"
         />
-      </motion.div>
+      </div>
     );
   };
 
   return (
-    <div className="grid sm:p-4 text-primary space-y-32">
-      {renderIntroHeader()}
-      {featureData.map((item) => renderFeature(item))}
+    <div className="grid sm:p-4 text-primary space-y-8">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+        style={{
+          backgroundImage:
+            "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
+        }}
+      >
+        {renderIntroHeader()}
+
+        <div className="space-y-32">
+          {featureData.map((item, i) => (
+            <div key={item.description}>
+              <center>
+                <NumberLabel i={i + 1} />
+              </center>
+
+              {renderFeature(item)}
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 }
