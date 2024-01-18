@@ -58,8 +58,8 @@ export function Home() {
     },
   ];
 
-  return (
-    <div className="grid sm:p-4 text-primary space-y-16">
+  const renderIntroHeader = () => {
+    return (
       <motion.div
         className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 space-x-24"
         initial={{ opacity: 0 }}
@@ -99,7 +99,12 @@ export function Home() {
           className="hidden ml-auto md:flex"
         />
       </motion.div>
+    );
+  };
 
+  return (
+    <div className="grid sm:p-4 text-primary space-y-32">
+      {renderIntroHeader()}
       {featureData.map((item) => renderFeature(item))}
     </div>
   );
