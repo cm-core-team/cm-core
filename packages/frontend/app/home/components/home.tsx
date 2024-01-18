@@ -100,7 +100,7 @@ export function Home() {
         <Image
           width={3000}
           height={3000}
-          src="/home-logo.avif"
+          src="/home-logo.png"
           alt="Inspirational Visual"
           className="hidden ml-auto md:flex"
         />
