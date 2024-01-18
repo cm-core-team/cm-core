@@ -26,7 +26,7 @@ export function Home() {
         key={item.title}
         className="w-full place-items-center rounded-xl p-4 md:px-16 grid md:grid-cols-2 md:grid-rows-1 grid-cols-1 grid-rows-2 md:py-24 cursor-pointer"
         style={{ backgroundColor: item.color }}
-        initial={{ opacity: 0.5 }}
+        initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
         onClick={() => router.push(item.href)}
