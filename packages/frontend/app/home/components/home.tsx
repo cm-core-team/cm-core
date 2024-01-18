@@ -4,15 +4,22 @@ import { Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-type FeatureItem = { title: string; description: string; color: string };
+type FeatureItem = {
+  title: string;
+  description: string;
+  color: string;
+  href: string;
+};
 
 const loremIpsum =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus mauris a sapien commodo, quis rutrum magna tincidunt. Suspendisse tempus ut orci a efficitur. Proin vitae ante at ex sagittis gravida. Nullam semper nisl vel blandit fringilla. Donec suscipit enim tellus, ac dignissim lorem porttitor nec. Vestibulum convallis ut metus sed scelerisque. Cras id lacinia nibh, et tempus tortor. Integer porttitor lectus augue, ac eleifend metus luctus in. Morbi massa nisl, tristique eu consectetur a, blandit id augue. Nullam euismod tempor dui, vel faucibus massa. Donec iaculis semper felis vitae rhoncus. Donec rutrum ex vitae massa rhoncus congue. Quisque sem est, mattis eu massa at, malesuada commodo justo. Aliquam eget leo ut lorem posuere luctus tristique eu tortor.";
 
 export function Home() {
+  const router = useRouter();
   const renderFeature = (item: FeatureItem) => {
     return (
       <motion.div
@@ -22,6 +29,7 @@ export function Home() {
         initial={{ opacity: 0.5 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1 }}
+        onClick={() => router.push(item.href)}
       >
         <h1>{item.title}</h1>
         <text>{item.description}</text>
@@ -34,16 +42,19 @@ export function Home() {
       title: "Feature 1",
       description: loremIpsum,
       color: "#1E1762",
+      href: "#",
     },
     {
       title: "Feature 2",
       description: loremIpsum,
       color: "#0F222F",
+      href: "#",
     },
     {
       title: "Feature 3",
       description: loremIpsum,
       color: "#301236",
+      href: "#",
     },
   ];
 
