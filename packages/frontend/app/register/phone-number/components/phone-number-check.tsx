@@ -43,14 +43,9 @@ export function PhoneNumberCheck() {
     resolver: zodResolver(formSchema),
   });
   const router = useRouter();
-  const selectedCongregation = useSelector((state: RootState) => {
-    if (state.localMeetings.selectedCongregation === undefined) {
-      router.replace("/register/weekly-meetings");
-      return;
-    }
-
-    return state.localMeetings.selectedCongregation;
-  });
+  const selectedCongregation = useSelector(
+    (state: RootState) => state.localMeetings.selectedCongregation,
+  );
 
   const startCountdown = React.useCallback((duration: number) => {
     setCountdown(duration);
