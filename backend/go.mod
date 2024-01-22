@@ -11,6 +11,7 @@ require (
 )
 
 require (
+	github.com/alexliesenfeld/opencage v0.2.2 // indirect
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect

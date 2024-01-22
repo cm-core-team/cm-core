@@ -10,8 +10,10 @@ import (
 	"strconv"
 	"time"
 
+	opencage "github.com/alexliesenfeld/opencage"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/net/context"
 	"gorm.io/gorm"
 )
 
@@ -236,4 +238,33 @@ func BindAdminToCongregation(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, adminUser)
+}
+
+func FindLocation(ctx *gin.Context) {
+	locationQuery := ctx.Request.URL.Query().Get("q")
+
+	if locationQuery == "" {
+		fmt.Println("[FindLocation] No query")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	client := opencage.New(common.GetEnvSecrets().GeocodingAPIKey)
+
+	ocCtx := context.Background()
+	response, err := client.Geocode(ocCtx, locationQuery, nil)
+
+	if err != nil {
+		fmt.Println("[FindLocation] Location could not be found")
+		ctx.JSON(http.StatusNotFound, gin.H{
+			common.UserErrorInstance.UserErrKey: "The location could not be found",
+		})
+		return
+	}
+
+	locationData := gin.H{"lat": response.Results[0].Geometry.Lat, "lon": response.Results[0].Geometry.Lng}
+
+	ctx.JSON(http.StatusOK, locationData)
 }
