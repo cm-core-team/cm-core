@@ -18,7 +18,7 @@ export function Footer(): JSX.Element {
   ];
 
   return (
-    <footer className="w-full h-[10vh] flex flex-col">
+    <footer className="w-full h-[10vh] flex flex-col z-[9999]">
       <Separator />
       <div className="w-full h-full flex items-center justify-evenly">
         {links.map((footerLink: FooterLink, i: number) => {
