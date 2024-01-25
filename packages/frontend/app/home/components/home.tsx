@@ -107,7 +107,7 @@ export function Home() {
   };
 
   return (
-    <div className="grid sm:p-4 text-primary space-y-8">
+    <div className="grid sm:p-4 text-primary space-y-8 h-[80vh]">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -117,27 +117,19 @@ export function Home() {
             "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
         }}
       >
-        <div className="min-h-screen">
-          <Parallax pages={featureData.length + 1}>
-            <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
-            <ParallaxLayer>
-              {/* Map featureData to create ParallaxLayer for each item */}
-              {featureData.map((item, i) => (
-                <ParallaxLayer
-                  key={item.description}
-                  offset={i + 1}
-                  speed={0.5}
-                >
-                  <center>
-                    <NumberLabel i={i + 1} />
-                  </center>
+        <Parallax pages={featureData.length + 1}>
+          <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
+          {/* Map featureData to create ParallaxLayer for each item */}
+          {featureData.map((item, i) => (
+            <ParallaxLayer key={item.description} offset={i + 1} speed={0.5}>
+              <center>
+                <NumberLabel i={i + 1} />
+              </center>
 
-                  {renderFeature(item)}
-                </ParallaxLayer>
-              ))}
+              {renderFeature(item)}
             </ParallaxLayer>
-          </Parallax>
-        </div>
+          ))}
+        </Parallax>
       </motion.div>
     </div>
   );
