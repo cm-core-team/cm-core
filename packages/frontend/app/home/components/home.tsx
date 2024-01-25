@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@nextui-org/react";
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { NumberLabel } from "@/components/number-label";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type FeatureItem = {
   title: string;
@@ -24,23 +25,20 @@ export function Home() {
   const router = useRouter();
   const renderFeature = (item: FeatureItem) => {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      <div
         onClick={() => router.push(item.href)}
         className="grid place-items-center"
       >
         <Card
           style={{ backgroundColor: item.color }}
-          className="w-2/3 place-items-center rounded-xl p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-2 md:py-16 cursor-pointer shadow-xl shadow-gray-800"
+          className="w-2/3 place-items-center rounded-xl p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-2 cursor-pointer shadow-xl shadow-gray-800"
         >
           <CardHeader>
             <CardTitle>{item.title}</CardTitle>
           </CardHeader>
           <CardContent>{item.description}</CardContent>
         </Card>
-      </motion.div>
+      </div>
     );
   };
 
@@ -119,18 +117,26 @@ export function Home() {
             "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
         }}
       >
-        {renderIntroHeader()}
+        <div className="min-h-screen">
+          <Parallax pages={featureData.length + 1}>
+            <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
+            <ParallaxLayer>
+              {/* Map featureData to create ParallaxLayer for each item */}
+              {featureData.map((item, i) => (
+                <ParallaxLayer
+                  key={item.description}
+                  offset={i + 1}
+                  speed={0.5}
+                >
+                  <center>
+                    <NumberLabel i={i + 1} />
+                  </center>
 
-        <div className="space-y-32">
-          {featureData.map((item, i) => (
-            <div key={item.description}>
-              <center>
-                <NumberLabel i={i + 1} />
-              </center>
-
-              {renderFeature(item)}
-            </div>
-          ))}
+                  {renderFeature(item)}
+                </ParallaxLayer>
+              ))}
+            </ParallaxLayer>
+          </Parallax>
         </div>
       </motion.div>
     </div>
