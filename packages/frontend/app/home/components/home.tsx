@@ -66,10 +66,6 @@ export function Home() {
     },
   ];
 
-  const footerHeight = 100; // Adjust according to your footer height
-  const parallaxPages =
-    featureData.length + 1 - footerHeight / window.innerHeight;
-
   const renderIntroHeader = () => {
     return (
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 space-x-24 place-items-center h-[70vh]">
@@ -110,6 +106,8 @@ export function Home() {
     );
   };
 
+  const footerHeight = 100;
+
   return (
     <div className="grid sm:p-4 text-primary space-y-8 min-h-screen">
       <motion.div
@@ -121,7 +119,9 @@ export function Home() {
             "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
         }}
       >
-        <Parallax pages={parallaxPages}>
+        <Parallax
+          pages={featureData.length + 1 - footerHeight / window.innerHeight}
+        >
           <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
           {featureData.map((item, i) => (
             <ParallaxLayer key={item.description} offset={i + 1} speed={0.5}>
