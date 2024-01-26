@@ -1,21 +1,15 @@
 "use client";
 
-import React from "react";
-
 import { Button } from "@nextui-org/react";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { motion } from "framer-motion";
 import { ArrowRight, Cpu, Headphones, Palette } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FeatureItem, featureData } from "@/lib/config";
 
 export function Home() {
-  const router = useRouter();
-  const [parallaxPages, setParallaxPages] = React.useState(3);
-
   const renderFeature = (item: FeatureItem, i: number) => {
     return (
       <motion.div
@@ -107,28 +101,19 @@ export function Home() {
     );
   };
 
-  React.useEffect(() => {
-    const footerHeight = 50;
-    setParallaxPages(
-      featureData.length + 2 + footerHeight / window.innerHeight,
-    );
-  }, []);
-
   return (
     <div className="grid sm:p-4 text-primary space-y-8 h-[80vh]">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
+        transition={{ duration: 1, ease: "easeIn" }}
         style={{
           backgroundImage:
             "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
         }}
       >
-        <Parallax pages={parallaxPages} key={`Parallax-${parallaxPages}`}>
-          <ParallaxLayer offset={0} speed={0.5}>
-            {renderIntroHeader()}
-          </ParallaxLayer>
+        <Parallax pages={featureData.length + 2}>
+          <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
           <ParallaxLayer offset={1} speed={0.5}>
             {renderOurApproachSection()}
           </ParallaxLayer>
