@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FeatureItem, featureData } from "@/lib/config";
+import { cn } from "@/lib/utils";
 
 export function Home() {
   const renderFeature = (item: FeatureItem, i: number) => {
@@ -16,11 +17,13 @@ export function Home() {
         initial={{ y: 30 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className="grid place-items-center my-8"
+        className="grid place-items-center my-8 text-primary"
       >
         <Card
-          style={{ backgroundColor: item.color }}
-          className="w-2/3 place-items-center rounded-xl p-0 sm:p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-1 cursor-pointer shadow-xl shadow-gray-800 sm:text-sm text-xs"
+          className={cn(
+            "w-2/3 place-items-center rounded-xl p-0 sm:p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-1 cursor-pointer shadow-xl shadow-gray-800 sm:text-sm text-xs",
+            `bg-${item.color}`,
+          )}
         >
           <CardHeader>
             <CardTitle>{item.title}</CardTitle>
