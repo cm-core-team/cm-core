@@ -16,6 +16,7 @@ import { FeatureItem, featureData } from "@/lib/config";
 export function Home() {
   const router = useRouter();
   const [parallaxPages, setParallaxPages] = React.useState(3);
+
   const renderFeature = (item: FeatureItem) => {
     return (
       <div
@@ -93,7 +94,7 @@ export function Home() {
             "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
         }}
       >
-        <Parallax pages={parallaxPages}>
+        <Parallax pages={parallaxPages} key={`Parallax-${parallaxPages}`}>
           <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
           {featureData.map((item, i) => (
             <ParallaxLayer key={item.description} offset={i + 1} speed={0.5}>
