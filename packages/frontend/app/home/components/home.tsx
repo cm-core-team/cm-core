@@ -5,11 +5,10 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Cpu, Headphones, Palette } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { NumberLabel } from "@/components/number-label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FeatureItem, featureData } from "@/lib/config";
 
@@ -17,22 +16,24 @@ export function Home() {
   const router = useRouter();
   const [parallaxPages, setParallaxPages] = React.useState(3);
 
-  const renderFeature = (item: FeatureItem) => {
+  const renderFeature = (item: FeatureItem, i: number) => {
     return (
-      <div
-        onClick={() => router.push(item.href)}
-        className="grid place-items-center"
+      <motion.div
+        initial={{ y: 30 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid place-items-center my-8"
       >
         <Card
           style={{ backgroundColor: item.color }}
-          className="w-2/3 place-items-center rounded-xl p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-2 cursor-pointer shadow-xl shadow-gray-800"
+          className="w-2/3 place-items-center rounded-xl p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-1 cursor-pointer shadow-xl shadow-gray-800 sm:text-sm text-xs"
         >
           <CardHeader>
             <CardTitle>{item.title}</CardTitle>
           </CardHeader>
           <CardContent>{item.description}</CardContent>
         </Card>
-      </div>
+      </motion.div>
     );
   };
 
@@ -76,15 +77,45 @@ export function Home() {
     );
   };
 
+  const renderOurApproachSection = () => {
+    return (
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 p-8 select-none scroll-smooth">
+        <div className="flex flex-col items-center justify-center">
+          <Palette className="h-12 w-12 mb-4" />
+          <h3 className="text-lg font-semibold">Innovative Design</h3>
+          <p className="text-center">
+            We focus on intuitive and user-friendly design to enhance user
+            experience.
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Cpu className="h-12 w-12 mb-4" />
+          <h3 className="text-lg font-semibold">Cutting-Edge Technology</h3>
+          <p className="text-center">
+            Utilizing the latest technologies to deliver high-quality solutions.
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Headphones className="h-12 w-12 mb-4" />
+          <h3 className="text-lg font-semibold">Exceptional Support</h3>
+          <p className="text-center">
+            Dedicated support team to ensure seamless operation and user
+            satisfaction.
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   React.useEffect(() => {
-    const footerHeight = 100;
+    const footerHeight = 50;
     setParallaxPages(
-      featureData.length + 1 - footerHeight / window.innerHeight,
+      featureData.length + 2 + footerHeight / window.innerHeight,
     );
   }, []);
 
   return (
-    <div className="grid sm:p-4 text-primary space-y-8 min-h-screen">
+    <div className="grid sm:p-4 text-primary space-y-8 h-[80vh]">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -95,14 +126,15 @@ export function Home() {
         }}
       >
         <Parallax pages={parallaxPages} key={`Parallax-${parallaxPages}`}>
-          <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
+          <ParallaxLayer offset={0} speed={0.5}>
+            {renderIntroHeader()}
+          </ParallaxLayer>
+          <ParallaxLayer offset={1} speed={0.5}>
+            {renderOurApproachSection()}
+          </ParallaxLayer>
           {featureData.map((item, i) => (
-            <ParallaxLayer key={item.description} offset={i + 1} speed={0.5}>
-              <center>
-                <NumberLabel i={i + 1} />
-              </center>
-
-              {renderFeature(item)}
+            <ParallaxLayer key={item.description} offset={i + 2} speed={0.5}>
+              {renderFeature(item, i)}
             </ParallaxLayer>
           ))}
         </Parallax>
