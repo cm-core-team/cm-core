@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import { Button } from "@nextui-org/react";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { motion } from "framer-motion";
@@ -9,20 +11,11 @@ import { useRouter } from "next/navigation";
 
 import { NumberLabel } from "@/components/number-label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-type FeatureItem = {
-  title: string;
-  subtitle: string;
-  description: string;
-  color: string;
-  href: string;
-};
-
-const loremIpsum =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus mauris a sapien commodo, quis rutrum magna tincidunt. Suspendisse tempus ut orci a efficitur. Proin vitae ante at ex sagittis gravida. Nullam semper nisl vel blandit fringilla. Donec suscipit enim tellus, ac dignissim lorem porttitor nec. Vestibulum convallis ut metus sed scelerisque. Cras id lacinia nibh, et tempus tortor. Integer porttitor lectus augue, ac eleifend metus luctus in. Morbi massa nisl, tristique eu consectetur a, blandit id augue. Nullam euismod tempor dui, vel faucibus massa. Donec iaculis semper felis vitae rhoncus. Donec rutrum ex vitae massa rhoncus congue. Quisque sem est, mattis eu massa at, malesuada commodo justo. Aliquam eget leo ut lorem posuere luctus tristique eu tortor.";
+import { FeatureItem, featureData } from "@/lib/config";
 
 export function Home() {
   const router = useRouter();
+  const [parallaxPages, setParallaxPages] = React.useState(3);
   const renderFeature = (item: FeatureItem) => {
     return (
       <div
@@ -41,30 +34,6 @@ export function Home() {
       </div>
     );
   };
-
-  const featureData: FeatureItem[] = [
-    {
-      title: "Feature 1",
-      subtitle: "Manage at light speed.",
-      description: loremIpsum,
-      color: "#1E1762",
-      href: "#",
-    },
-    {
-      title: "Feature 2",
-      subtitle: "Seamless event and member coordination.",
-      description: loremIpsum,
-      color: "#0F222F",
-      href: "#",
-    },
-    {
-      title: "Feature 3",
-      subtitle: "Empower collaboration and communication.",
-      description: loremIpsum,
-      color: "#301236",
-      href: "#",
-    },
-  ];
 
   const renderIntroHeader = () => {
     return (
@@ -106,7 +75,12 @@ export function Home() {
     );
   };
 
-  const footerHeight = 100;
+  React.useEffect(() => {
+    const footerHeight = 100;
+    setParallaxPages(
+      featureData.length + 1 - footerHeight / window.innerHeight,
+    );
+  }, []);
 
   return (
     <div className="grid sm:p-4 text-primary space-y-8 min-h-screen">
@@ -119,9 +93,7 @@ export function Home() {
             "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
         }}
       >
-        <Parallax
-          pages={featureData.length + 1 - footerHeight / window.innerHeight}
-        >
+        <Parallax pages={parallaxPages}>
           <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
           {featureData.map((item, i) => (
             <ParallaxLayer key={item.description} offset={i + 1} speed={0.5}>

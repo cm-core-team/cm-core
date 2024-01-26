@@ -1,14 +1,10 @@
 import axios from "axios";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { z } from "zod";
 
-import { backendErrorHandle } from "../backend-error-handle";
-import { backendRoutes, userErrors } from "../config";
+import { backendRoutes } from "../config";
 import { requestOptions } from "../request-options";
 import { Congregation, congregationSchema } from "../types/models/congregation";
 import { userSchema } from "../types/models/user";
-
-import { toast } from "@/components/ui/use-toast";
 
 export async function createCongregation(
   congregation: Congregation,
@@ -26,6 +22,8 @@ export async function createCongregation(
   const createdCongregation = congregationSchema.parse(
     createCongregationResponse.data.congregation,
   );
+
+  // Bind user to their selected congregation
   const bindUserResponse = await axios.post(
     backendRoutes.user.bind,
     {
@@ -34,6 +32,5 @@ export async function createCongregation(
     requestOptions(),
   );
 
-  // Bind user to their selected congregation
-  const bindedUser = userSchema.parse(bindUserResponse.data);
+  userSchema.parse(bindUserResponse.data);
 }
