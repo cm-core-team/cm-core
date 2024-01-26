@@ -20,7 +20,7 @@ export function Home() {
       >
         <Card
           style={{ backgroundColor: item.color }}
-          className="w-2/3 place-items-center rounded-xl p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-1 cursor-pointer shadow-xl shadow-gray-800 sm:text-sm text-xs"
+          className="w-2/3 place-items-center rounded-xl p-0 sm:p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-1 cursor-pointer shadow-xl shadow-gray-800 sm:text-sm text-xs"
         >
           <CardHeader>
             <CardTitle>{item.title}</CardTitle>
@@ -73,9 +73,9 @@ export function Home() {
 
   const renderOurApproachSection = () => {
     return (
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 p-8 select-none scroll-smooth">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 p-8 select-none sm:text-md text-sm">
         <div className="flex flex-col items-center justify-center">
-          <Palette className="h-12 w-12 mb-4" />
+          <Palette className="h-12 w-10 mb-4" />
           <h3 className="text-lg font-semibold">Innovative Design</h3>
           <p className="text-center">
             We focus on intuitive and user-friendly design to enhance user
@@ -83,14 +83,14 @@ export function Home() {
           </p>
         </div>
         <div className="flex flex-col items-center justify-center">
-          <Cpu className="h-12 w-12 mb-4" />
+          <Cpu className="h-12 w-10 mb-4" />
           <h3 className="text-lg font-semibold">Cutting-Edge Technology</h3>
           <p className="text-center">
             Utilizing the latest technologies to deliver high-quality solutions.
           </p>
         </div>
         <div className="flex flex-col items-center justify-center">
-          <Headphones className="h-12 w-12 mb-4" />
+          <Headphones className="h-12 w-10 mb-4" />
           <h3 className="text-lg font-semibold">Exceptional Support</h3>
           <p className="text-center">
             Dedicated support team to ensure seamless operation and user
@@ -102,7 +102,7 @@ export function Home() {
   };
 
   return (
-    <div className="grid sm:p-4 text-primary space-y-8 h-[80vh]">
+    <div className="grid sm:p-4 text-primary space-y-8 h-[80vh] scroll-smooth">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
