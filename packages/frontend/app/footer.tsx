@@ -1,7 +1,7 @@
 import { Github } from "lucide-react";
 import Link from "next/link";
 
-import { FooterLinks, FooterLink } from "../lib/types/footer-link";
+import { FooterLink, FooterLinks } from "../lib/types/footer-link";
 
 import { Separator } from "@/components/ui/separator";
 
@@ -18,7 +18,7 @@ export function Footer(): JSX.Element {
   ];
 
   return (
-    <div className="w-full h-[10vh] flex flex-col">
+    <footer className="w-full h-[10vh] flex flex-col z-[9999]">
       <Separator />
       <div className="w-full h-full flex items-center justify-evenly">
         {links.map((footerLink: FooterLink, i: number) => {
@@ -34,6 +34,6 @@ export function Footer(): JSX.Element {
           );
         })}
       </div>
-    </div>
+    </footer>
   );
 }

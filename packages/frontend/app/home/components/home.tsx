@@ -1,39 +1,29 @@
 "use client";
 
 import { Button } from "@nextui-org/react";
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Cpu, Headphones, Palette } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
-import { NumberLabel } from "@/components/number-label";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-
-type FeatureItem = {
-  title: string;
-  subtitle: string;
-  description: string;
-  color: string;
-  href: string;
-};
-
-const loremIpsum =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus mauris a sapien commodo, quis rutrum magna tincidunt. Suspendisse tempus ut orci a efficitur. Proin vitae ante at ex sagittis gravida. Nullam semper nisl vel blandit fringilla. Donec suscipit enim tellus, ac dignissim lorem porttitor nec. Vestibulum convallis ut metus sed scelerisque. Cras id lacinia nibh, et tempus tortor. Integer porttitor lectus augue, ac eleifend metus luctus in. Morbi massa nisl, tristique eu consectetur a, blandit id augue. Nullam euismod tempor dui, vel faucibus massa. Donec iaculis semper felis vitae rhoncus. Donec rutrum ex vitae massa rhoncus congue. Quisque sem est, mattis eu massa at, malesuada commodo justo. Aliquam eget leo ut lorem posuere luctus tristique eu tortor.";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FeatureItem, featureData } from "@/lib/config";
+import { cn } from "@/lib/utils";
 
 export function Home() {
-  const router = useRouter();
-  const renderFeature = (item: FeatureItem) => {
+  const renderFeature = (item: FeatureItem, i: number) => {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ y: 30 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        onClick={() => router.push(item.href)}
-        className="grid place-items-center"
+        className="grid place-items-center my-8 text-primary"
       >
         <Card
-          style={{ backgroundColor: item.color }}
-          className="w-2/3 place-items-center rounded-xl p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-2 md:py-16 cursor-pointer shadow-xl shadow-gray-800"
+          className={cn(
+            "w-2/3 place-items-center rounded-xl p-0 sm:p-4 md:px-16 grid md:grid-rows-1 grid-cols-1 grid-rows-1 cursor-pointer shadow-xl shadow-gray-800 sm:text-sm text-xs",
+            `bg-${item.color}`,
+          )}
         >
           <CardHeader>
             <CardTitle>{item.title}</CardTitle>
@@ -43,30 +33,6 @@ export function Home() {
       </motion.div>
     );
   };
-
-  const featureData: FeatureItem[] = [
-    {
-      title: "Feature 1",
-      subtitle: "Manage at light speed.",
-      description: loremIpsum,
-      color: "#1E1762",
-      href: "#",
-    },
-    {
-      title: "Feature 2",
-      subtitle: "Seamless event and member coordination.",
-      description: loremIpsum,
-      color: "#0F222F",
-      href: "#",
-    },
-    {
-      title: "Feature 3",
-      subtitle: "Empower collaboration and communication.",
-      description: loremIpsum,
-      color: "#301236",
-      href: "#",
-    },
-  ];
 
   const renderIntroHeader = () => {
     return (
@@ -108,30 +74,58 @@ export function Home() {
     );
   };
 
+  const renderOurApproachSection = () => {
+    return (
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 p-8 select-none sm:text-md text-sm">
+        <div className="flex flex-col items-center justify-center">
+          <Palette className="h-12 w-10 mb-4" />
+          <h3 className="text-lg font-semibold">Innovative Design</h3>
+          <p className="text-center">
+            We focus on intuitive and user-friendly design to enhance user
+            experience.
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Cpu className="h-12 w-10 mb-4" />
+          <h3 className="text-lg font-semibold">Cutting-Edge Technology</h3>
+          <p className="text-center">
+            Utilizing the latest technologies to deliver high-quality solutions.
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <Headphones className="h-12 w-10 mb-4" />
+          <h3 className="text-lg font-semibold">Exceptional Support</h3>
+          <p className="text-center">
+            Dedicated support team to ensure seamless operation and user
+            satisfaction.
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="grid sm:p-4 text-primary space-y-8">
+    <div className="grid sm:p-4 text-primary space-y-8 h-[80vh] scroll-smooth">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
+        transition={{ duration: 1, ease: "easeIn" }}
         style={{
           backgroundImage:
             "url(https://railway.app/illustrations/computer-city-lines--dark.svg)",
         }}
       >
-        {renderIntroHeader()}
-
-        <div className="space-y-32">
+        <Parallax pages={featureData.length + 2}>
+          <ParallaxLayer offset={0}>{renderIntroHeader()}</ParallaxLayer>
+          <ParallaxLayer offset={1} speed={0.5}>
+            {renderOurApproachSection()}
+          </ParallaxLayer>
           {featureData.map((item, i) => (
-            <div key={item.description}>
-              <center>
-                <NumberLabel i={i + 1} />
-              </center>
-
-              {renderFeature(item)}
-            </div>
+            <ParallaxLayer key={item.description} offset={i + 2} speed={0.5}>
+              {renderFeature(item, i)}
+            </ParallaxLayer>
           ))}
-        </div>
+        </Parallax>
       </motion.div>
     </div>
   );
