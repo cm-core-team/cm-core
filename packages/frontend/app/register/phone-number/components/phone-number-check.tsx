@@ -76,12 +76,6 @@ export function PhoneNumberCheck() {
     startCountdown(30);
   }, [countdown, form, selectedCongregation, startCountdown]);
 
-  React.useEffect(() => {
-    if (selectedCongregation === undefined) {
-      router.replace("/register/weekly-meetings");
-    }
-  }, [router, selectedCongregation]);
-
   const onSubmit = async () => {
     if (!selectedCongregation) {
       return;
