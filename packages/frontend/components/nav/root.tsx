@@ -23,6 +23,7 @@ import { DropdownToggle } from "@/components/dropdown-toggle";
 
 export function RootNavMenu(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   const mainItems = (
     <>
       <NavbarItem>
