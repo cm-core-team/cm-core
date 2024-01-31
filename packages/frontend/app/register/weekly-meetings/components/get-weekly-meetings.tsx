@@ -8,8 +8,8 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
-import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { LocationSearch } from "./location-search";
+import { WeeklyMeetingsList } from "./weekly-meetings-list";
 
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
