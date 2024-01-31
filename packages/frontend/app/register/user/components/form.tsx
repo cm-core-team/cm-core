@@ -51,9 +51,6 @@ export function RegisterForm() {
     }
   };
 
-  if (sessionStorage.getItem("sessionToken"))
-    return router.replace("/dashboard");
-
   return (
     <div className="p-4 mx-auto lg:w-1/3 w-full sm:w-2/3">
       <Form {...form}>

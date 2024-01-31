@@ -38,13 +38,7 @@ export function LoginForm() {
     await dispatch(loginUserThunk({ ...data, router }));
   };
 
-  // I wanted to use this since it would be more reliable
-  // if (await isAuthorized()) {
-  //   router.push("/dashboard");
-  //   return;
-  // }
-
-  if (sessionStorage.getItem("sessionToken"))
+  if (sessionStorage?.getItem("sessionToken"))
     return router.replace("/dashboard");
 
   return (

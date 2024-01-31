@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 import { WeeklyMeetingsList } from "./weekly-meetings-list";
+import { LocationSearch } from "./location-search";
 
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
@@ -68,7 +69,11 @@ export function GetWeeklyMeetings() {
       <h2 className="text-2xl">Register a Congregation</h2>
 
       <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
-        <WeeklyMeetingsList />
+        {!(state.userCoords?.latitude && state.userCoords.longitude) ? (
+          <LocationSearch />
+        ) : null}
+
+        {state.displayCongregations.length && <WeeklyMeetingsList />}
 
         <div className="md:grid-rows-2 space-y-16 w-full">
           {!isSmall && <DynamicMapView />}
