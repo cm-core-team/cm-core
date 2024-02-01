@@ -6,11 +6,11 @@ import { Congregation, congregationSchema } from "../types/models/congregation";
 
 const fetchMeetingsSchema = z.array(congregationSchema.passthrough());
 
-export async function fetchLocalMeetings(
+export async function fetchMeetings(
   latitude: string,
   longitude: string,
 ): Promise<Congregation[]> {
-  const response = await axios.post(backendRoutes.getLocalMeetings, {
+  const response = await axios.post(backendRoutes.getMeetings, {
     latitude: latitude,
     longitude: longitude,
   });

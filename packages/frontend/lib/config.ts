@@ -14,11 +14,12 @@ export const backendRoutes = {
     me: baseBackendUrl + "/user/me",
     bind: baseBackendUrl + "/user/bind",
     verifyToken: baseBackendUrl + "/user/verify-token",
+    findLocation: baseBackendUrl + "/user/location",
   },
   token: {
     create: baseBackendUrl + "/token/create",
   },
-  getLocalMeetings: baseBackendUrl + "/meetings",
+  getMeetings: baseBackendUrl + "/meetings",
 };
 
 export const userErrors = {

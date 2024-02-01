@@ -1,6 +1,8 @@
 "use client";
 
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Form,
@@ -12,15 +14,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { backendRoutes } from "@/lib/config";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { LocationSearchFormData } from "@/lib/types/location-form";
 
 export function LocationSearch() {
   const form = useForm<LocationSearchFormData>();
+  const state = useSelector((state: RootState) => state.localMeetings);
+  const dispatch: AppDispatch = useDispatch();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
+    const res = await axios.get(
+      `${backendRoutes.user.findLocation}?q=${form.getValues().query}`,
+      { headers: { Authorization: sessionStorage.getItem("sessionToken") } },
+    );
 
-    console.log("Form submitted!!!");
+    console.log(res.data);
   };
 
   return (

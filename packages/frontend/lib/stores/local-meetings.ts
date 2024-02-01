@@ -6,7 +6,7 @@ import {
 } from "../congregation/group-by-coords";
 import { Congregation } from "../types/models/congregation";
 
-import { fetchLocalMeetingsThunk } from "./thunks/fetch-local-meetings";
+import { fetchMeetingsThunk } from "./thunks/fetch-local-meetings";
 import { getUserCoordsThunk } from "./thunks/get-user-coords";
 
 export interface LocalMeetingsState {
@@ -22,7 +22,7 @@ export interface LocalMeetingsState {
   displayCongregations: Congregation[];
 }
 
-export interface FetchLocalMeetingsThunkArg {
+export interface FetchMeetingsThunkArg {
   latitude: string;
   longitude: string;
 }
@@ -58,14 +58,14 @@ export const localMeetingsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLocalMeetingsThunk.pending, (state) => {
+      .addCase(fetchMeetingsThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchLocalMeetingsThunk.fulfilled, (state, action) => {
+      .addCase(fetchMeetingsThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.localCongregations = action.payload;
       })
-      .addCase(fetchLocalMeetingsThunk.rejected, (state, action) => {
+      .addCase(fetchMeetingsThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMsg = action.payload as string;
       })

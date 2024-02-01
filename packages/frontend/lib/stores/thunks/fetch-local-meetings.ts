@@ -1,17 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { FetchLocalMeetingsThunkArg } from "../local-meetings";
+import { FetchMeetingsThunkArg } from "../local-meetings";
 
 import { backendErrorHandle } from "@/lib/backend-error-handle";
-import { fetchLocalMeetings } from "@/lib/find-meetings/fetch-meetings";
+import { fetchMeetings } from "@/lib/find-meetings/fetch-meetings";
 import { Congregation } from "@/lib/types/models/congregation";
 
-export const fetchLocalMeetingsThunk = createAsyncThunk<
+export const fetchMeetingsThunk = createAsyncThunk<
   Congregation[],
-  FetchLocalMeetingsThunkArg
->("localMeetings/fetchLocalMeetings", async (arg, { rejectWithValue }) => {
+  FetchMeetingsThunkArg
+>("localMeetings/fetchMeetings", async (arg, { rejectWithValue }) => {
   try {
-    return await fetchLocalMeetings(arg.latitude, arg.longitude);
+    return await fetchMeetings(arg.latitude, arg.longitude);
   } catch (error) {
     return rejectWithValue(backendErrorHandle(error));
   }
