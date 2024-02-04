@@ -38,8 +38,10 @@ export function LoginForm() {
     await dispatch(loginUserThunk({ ...data, router }));
   };
 
-  if (sessionStorage?.getItem("sessionToken"))
-    return router.replace("/dashboard");
+  React.useEffect(() => {
+    if (sessionStorage?.getItem("sessionToken"))
+      return router.replace("/dashboard");
+  }, []);
 
   return (
     <Form {...form}>
