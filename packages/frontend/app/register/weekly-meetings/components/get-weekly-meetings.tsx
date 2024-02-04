@@ -14,7 +14,7 @@ import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
-import { fetchLocalMeetingsThunk } from "@/lib/stores/thunks/fetch-local-meetings";
+import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-local-meetings";
 import { getUserCoordsThunk } from "@/lib/stores/thunks/get-user-coords";
 
 const DynamicMapView = dynamic(
@@ -57,7 +57,7 @@ export function GetWeeklyMeetings() {
 
     // Fetch all local meetings at this location
     dispatch(
-      fetchLocalMeetingsThunk({
+      fetchMeetingsThunk({
         latitude: String(state.userCoords.latitude),
         longitude: String(state.userCoords.longitude),
       }),

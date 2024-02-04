@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { backendRoutes } from "@/lib/config";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-local-meetings";
 import { LocationSearchFormData } from "@/lib/types/location-form";
 
 export function LocationSearch() {
@@ -24,12 +25,19 @@ export function LocationSearch() {
   const dispatch: AppDispatch = useDispatch();
 
   const onSubmit = async () => {
-    const res = await axios.get(
+    const geoCodingRes = await axios.get(
       `${backendRoutes.user.findLocation}?q=${form.getValues().query}`,
       { headers: { Authorization: sessionStorage.getItem("sessionToken") } },
     );
 
-    console.log(res.data);
+    console.log(geoCodingRes.data.locations);
+
+    // dispatch(
+    //   fetchMeetingsThunk({
+    //     latitude: String(geoCodingRes.data.lat),
+    //     longitude: String(geoCodingRes.data.lon),
+    //   }),
+    // );
   };
 
   return (

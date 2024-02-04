@@ -264,7 +264,7 @@ func FindLocation(ctx *gin.Context) {
 		return
 	}
 
-	locationData := gin.H{"lat": response.Results[0].Geometry.Lat, "lon": response.Results[0].Geometry.Lng}
+	locationData := gin.H{"locations": response.Results}
 
 	ctx.JSON(http.StatusOK, locationData)
 }
