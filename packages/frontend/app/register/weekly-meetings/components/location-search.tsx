@@ -26,7 +26,6 @@ import { LocationSearchFormData } from "@/lib/types/location-form";
 export function LocationSearch() {
   const form = useForm<LocationSearchFormData>();
   const [locationData, setLocationData] = React.useState<any | never>([]);
-  const state = useSelector((state: RootState) => state.localMeetings);
   const dispatch: AppDispatch = useDispatch();
 
   const onSubmit = async () => {

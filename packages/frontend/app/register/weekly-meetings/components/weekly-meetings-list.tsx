@@ -13,7 +13,7 @@ import { DisabledButton } from "@/components/disabled-button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { localMeetingsSlice } from "@/lib/stores/local-meetings";
+import { meetingsSlice } from "@/lib/stores/local-meetings";
 import { Congregation } from "@/lib/types/models/congregation";
 
 export interface WeeklyMeetingsListProps {
@@ -21,14 +21,14 @@ export interface WeeklyMeetingsListProps {
 }
 
 const { setSelectedCongregation, setDisplayCongregations } =
-  localMeetingsSlice.actions;
+  meetingsSlice.actions;
 
 export function WeeklyMeetingsList() {
   // Selected congregation to create
   const [selectedId, setSelectedId] = React.useState<number>();
 
   const dispatch: AppDispatch = useDispatch();
-  const state = useSelector((state: RootState) => state.localMeetings);
+  const state = useSelector((state: RootState) => state.meetings);
 
   const isFiltered =
     state.displayCongregations.length !== state.localCongregations.length;
@@ -119,7 +119,7 @@ function MainWeeklyMeetingsHeader() {
 
 function FilteredResultsHeader() {
   const dispatch: AppDispatch = useDispatch();
-  const state = useSelector((state: RootState) => state.localMeetings);
+  const state = useSelector((state: RootState) => state.meetings);
 
   return (
     <>

@@ -13,7 +13,7 @@ import { WeeklyMeetingsList } from "./weekly-meetings-list";
 
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { localMeetingsSlice } from "@/lib/stores/local-meetings";
+import { meetingsSlice } from "@/lib/stores/local-meetings";
 import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-meetings";
 import { getUserCoordsThunk } from "@/lib/stores/thunks/get-user-coords";
 
@@ -22,14 +22,13 @@ const DynamicMapView = dynamic(
   { ssr: false },
 );
 
-const { regroupCongregations, setDisplayCongregations } =
-  localMeetingsSlice.actions;
+const { regroupCongregations, setDisplayCongregations } = meetingsSlice.actions;
 
 export function GetWeeklyMeetings() {
   const { isSmall } = useScreenWidth();
 
   const router = useRouter();
-  const state = useSelector((state: RootState) => state.localMeetings);
+  const state = useSelector((state: RootState) => state.meetings);
   // If you do not correctly type your dispatch, then TS may throw an error
   const dispatch: AppDispatch = useDispatch();
 
@@ -72,7 +71,7 @@ export function GetWeeklyMeetings() {
         {!(state.userCoords?.latitude && state.userCoords.longitude) &&
           !state.displayCongregations.length && <LocationSearch />}
 
-        {state.displayCongregations.length && <WeeklyMeetingsList />}
+        {state.displayCongregations.length ? <WeeklyMeetingsList /> : null}
 
         <div className="md:grid-rows-2 space-y-16 w-full">
           {!isSmall && <DynamicMapView />}
