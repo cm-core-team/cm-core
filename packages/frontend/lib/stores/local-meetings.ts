@@ -6,7 +6,7 @@ import {
 } from "../congregation/group-by-coords";
 import { Congregation } from "../types/models/congregation";
 
-import { fetchMeetingsThunk } from "./thunks/fetch-local-meetings";
+import { fetchMeetingsThunk } from "./thunks/fetch-meetings";
 import { getUserCoordsThunk } from "./thunks/get-user-coords";
 
 export interface LocalMeetingsState {

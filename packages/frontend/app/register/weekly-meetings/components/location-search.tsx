@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { backendRoutes } from "@/lib/config";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-local-meetings";
+import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-meetings";
 import { LocationSearchFormData } from "@/lib/types/location-form";
 
 export function LocationSearch() {
@@ -35,16 +35,7 @@ export function LocationSearch() {
       { headers: { Authorization: sessionStorage.getItem("sessionToken") } },
     );
 
-    console.log(geoCodingRes.data.locations);
-
     setLocationData([...geoCodingRes.data.locations]);
-
-    // dispatch(
-    //   fetchMeetingsThunk({
-    //     latitude: String(geoCodingRes.data.lat),
-    //     longitude: String(geoCodingRes.data.lon),
-    //   }),
-    // );
   };
 
   return (
@@ -71,7 +62,7 @@ export function LocationSearch() {
         </form>
       </Form>
       {locationData && (
-        <div className="w-full h-1/2 overflow-scroll">
+        <div className="w-full h-1/2 overflow-scroll flex flex-col gap-y-2">
           {locationData.map((location: any, i: number) => (
             <Card key={i} className="">
               <CardHeader>
@@ -85,7 +76,19 @@ export function LocationSearch() {
                 </div>
               </CardBody>
               <CardFooter>
-                <Button variant="ghost" color="default">
+                <Button
+                  variant="ghost"
+                  color="default"
+                  onClick={() => {
+                    // Fetch the meetings at the selected location
+                    dispatch(
+                      fetchMeetingsThunk({
+                        latitude: String(location.geometry.lat),
+                        longitude: String(location.geometry.lng),
+                      }),
+                    );
+                  }}
+                >
                   Select
                 </Button>
               </CardFooter>

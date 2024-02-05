@@ -9,7 +9,7 @@ import { Congregation } from "@/lib/types/models/congregation";
 export const fetchMeetingsThunk = createAsyncThunk<
   Congregation[],
   FetchMeetingsThunkArg
->("localMeetings/fetchMeetings", async (arg, { rejectWithValue }) => {
+>("meetings/fetchMeetings", async (arg, { rejectWithValue }) => {
   try {
     return await fetchMeetings(arg.latitude, arg.longitude);
   } catch (error) {

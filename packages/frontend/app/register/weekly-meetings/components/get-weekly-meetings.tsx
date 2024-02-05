@@ -14,7 +14,7 @@ import { WeeklyMeetingsList } from "./weekly-meetings-list";
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { localMeetingsSlice } from "@/lib/stores/local-meetings";
-import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-local-meetings";
+import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-meetings";
 import { getUserCoordsThunk } from "@/lib/stores/thunks/get-user-coords";
 
 const DynamicMapView = dynamic(
@@ -69,9 +69,8 @@ export function GetWeeklyMeetings() {
       <h2 className="text-2xl">Register a Congregation</h2>
 
       <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
-        {!(state.userCoords?.latitude && state.userCoords.longitude) ? (
-          <LocationSearch />
-        ) : null}
+        {!(state.userCoords?.latitude && state.userCoords.longitude) &&
+          !state.displayCongregations.length && <LocationSearch />}
 
         {state.displayCongregations.length && <WeeklyMeetingsList />}
 
