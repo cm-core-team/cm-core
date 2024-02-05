@@ -63,14 +63,21 @@ export function GetWeeklyMeetings() {
     );
   }, [state.userCoords, dispatch]);
 
+  const renderLocationSearch = () => {
+    if (
+      !(state.userCoords?.latitude && state.userCoords.longitude) &&
+      !state.displayCongregations.length
+    )
+      return <LocationSearch />;
+  };
+
   return (
     <div className="grid place-items-center space-y-8 md:p-4 p-1">
       <h2 className="text-2xl">Register a Congregation</h2>
 
-      <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
-        {!(state.userCoords?.latitude && state.userCoords.longitude) &&
-          !state.displayCongregations.length && <LocationSearch />}
+      {renderLocationSearch()}
 
+      <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
         {state.displayCongregations.length ? <WeeklyMeetingsList /> : null}
 
         <div className="md:grid-rows-2 space-y-16 w-full">
