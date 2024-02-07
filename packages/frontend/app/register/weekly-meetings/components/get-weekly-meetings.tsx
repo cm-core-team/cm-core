@@ -25,6 +25,9 @@ const DynamicMapView = dynamic(
 const { regroupCongregations, setDisplayCongregations } = meetingsSlice.actions;
 
 export function GetWeeklyMeetings() {
+  const [useCurrentLocation, setUseCurrentLocation] =
+    React.useState<boolean>(false);
+
   const { isSmall } = useScreenWidth();
 
   const router = useRouter();
@@ -33,9 +36,13 @@ export function GetWeeklyMeetings() {
   const dispatch: AppDispatch = useDispatch();
 
   React.useEffect(() => {
-    // Get LatLon on page load
-    dispatch(getUserCoordsThunk());
-  }, [dispatch]);
+    if (useCurrentLocation) {
+      dispatch(getUserCoordsThunk());
+      return;
+    }
+
+    return;
+  }, [dispatch, useCurrentLocation]);
 
   // Whenever localCongregations is modified
   React.useEffect(() => {
@@ -64,11 +71,8 @@ export function GetWeeklyMeetings() {
   }, [state.userCoords, dispatch]);
 
   const renderLocationSearch = () => {
-    if (
-      !(state.userCoords?.latitude && state.userCoords.longitude) &&
-      !state.displayCongregations.length
-    )
-      return <LocationSearch />;
+    if (!useCurrentLocation && !state.displayCongregations.length)
+      return <LocationSearch setUseCurrentLocation={setUseCurrentLocation} />;
   };
 
   return (
@@ -89,7 +93,7 @@ export function GetWeeklyMeetings() {
               className="space-y-8 sm:p-4 flex justify-center mx-auto"
               color="success"
               variant="ghost"
-              onClick={(e) => {
+              onClick={() => {
                 if (!state.selectedCongregation) {
                   return;
                 }
