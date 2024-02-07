@@ -80,25 +80,27 @@ export function GetWeeklyMeetings() {
       <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
         {state.displayCongregations.length ? <WeeklyMeetingsList /> : null}
 
-        <div className="md:grid-rows-2 space-y-16 w-full">
-          {!isSmall && <DynamicMapView />}
+        {state.displayCongregations.length ? (
+          <div className="md:grid-rows-2 space-y-16 w-full">
+            {!isSmall && <DynamicMapView />}
 
-          <Button
-            isDisabled={state.selectedCongregation === undefined}
-            className="space-y-8 sm:p-4 flex justify-center mx-auto"
-            color="success"
-            variant="ghost"
-            onClick={(e) => {
-              if (!state.selectedCongregation) {
-                return;
-              }
+            <Button
+              isDisabled={state.selectedCongregation === undefined}
+              className="space-y-8 sm:p-4 flex justify-center mx-auto"
+              color="success"
+              variant="ghost"
+              onClick={(e) => {
+                if (!state.selectedCongregation) {
+                  return;
+                }
 
-              router.replace("/register/phone-number");
-            }}
-          >
-            Create Congregation <MoveRight />
-          </Button>
-        </div>
+                router.replace("/register/phone-number");
+              }}
+            >
+              Create Congregation <MoveRight />
+            </Button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
