@@ -9,7 +9,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Locate } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Button as ShadButton } from "@/components/ui/button";
 import {
@@ -30,9 +30,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { backendRoutes } from "@/lib/config";
-import { AppDispatch } from "@/lib/stores/app-store";
+import { AppDispatch, RootState } from "@/lib/stores/app-store";
+import { MeetingsState, meetingsSlice } from "@/lib/stores/local-meetings";
 import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-meetings";
 import { LocationSearchFormData } from "@/lib/types/location-form";
+
+const { updateUserCoords } = meetingsSlice.actions;
 
 export function LocationSearch({
   setUseCurrentLocation,
@@ -43,6 +46,9 @@ export function LocationSearch({
   const [locationData, setLocationData] = React.useState<any | never>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const dispatch: AppDispatch = useDispatch();
+  const state: MeetingsState = useSelector(
+    (state: RootState) => state.meetings,
+  );
 
   const onSubmit = async (): Promise<void> => {
     setLocationData([]);
@@ -54,7 +60,6 @@ export function LocationSearch({
 
     setLocationData([...geoCodingRes.data.locations]);
     setIsLoading(false);
-    return;
   };
 
   return (
@@ -89,7 +94,6 @@ export function LocationSearch({
                 variant="outline"
                 onClick={() => {
                   setUseCurrentLocation(true);
-                  return;
                 }}
               >
                 <Locate />
@@ -132,6 +136,12 @@ export function LocationSearch({
                         fetchMeetingsThunk({
                           latitude: String(location.geometry.lat),
                           longitude: String(location.geometry.lng),
+                        }),
+                      );
+                      dispatch(
+                        updateUserCoords({
+                          latitude: location.geometry.lat,
+                          longitude: location.geometry.lng,
                         }),
                       );
                     }}

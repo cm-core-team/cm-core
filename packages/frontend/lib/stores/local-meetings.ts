@@ -14,7 +14,7 @@ export interface MeetingsState {
   isLoading: boolean;
   selectedCongregation?: Congregation;
   errorMsg: string;
-  userCoords?: { latitude: number; longitude: number };
+  userCoords: { latitude: number; longitude: number };
 
   // Some congregations have the same location
   // This is a way to track which area specifically.
@@ -33,6 +33,7 @@ const initialState: MeetingsState = {
   errorMsg: "",
   displayCongregations: [],
   groupedCongregationsByLocation: {},
+  userCoords: { latitude: 0, longitude: 0 },
 };
 
 // A slice (or part) of our state (this is to do with our Local Meetings)
@@ -54,6 +55,10 @@ export const meetingsSlice = createSlice({
       actions: PayloadAction<Congregation[]>,
     ) => {
       state.displayCongregations = actions.payload;
+    },
+    updateUserCoords: (state, action) => {
+      state.userCoords.latitude = action.payload.latitude;
+      state.userCoords.longitude = action.payload.longitude;
     },
   },
   extraReducers: (builder) => {
