@@ -38,10 +38,7 @@ export function GetWeeklyMeetings() {
   React.useEffect(() => {
     if (useCurrentLocation) {
       dispatch(getUserCoordsThunk());
-      return;
     }
-
-    return;
   }, [dispatch, useCurrentLocation]);
 
   // Whenever localCongregations is modified

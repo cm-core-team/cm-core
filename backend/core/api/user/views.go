@@ -257,9 +257,18 @@ func FindLocation(ctx *gin.Context) {
 	response, err := client.Geocode(ocCtx, locationQuery, nil)
 
 	if err != nil {
-		fmt.Println("[FindLocation] Location could not be found")
+		fmt.Println("[FindLocation] An unexpected error has occurred")
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.Unknown: "An unexpected error has occurred",
+		})
+		return
+	}
+
+	// If the results array is empty there is no error so this check is necessary
+	if len(response.Results) == 0 {
+		fmt.Println("[FindLocation] No locations were found")
 		ctx.JSON(http.StatusNotFound, gin.H{
-			common.UserErrorInstance.UserErrKey: "The location could not be found",
+			common.UserErrorInstance.UserErrKey: "No locations were found",
 		})
 		return
 	}
