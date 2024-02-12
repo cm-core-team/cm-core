@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-faker/faker/v4 v4.2.0
+	github.com/go-faker/faker/v4 v4.3.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	gorm.io/datatypes v1.2.0
 	gorm.io/gorm v1.25.6
