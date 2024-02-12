@@ -7,7 +7,7 @@ require (
 	github.com/go-faker/faker/v4 v4.2.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	gorm.io/datatypes v1.2.0
-	gorm.io/gorm v1.25.6
+	gorm.io/gorm v1.25.7-0.20240204074919-46816ad31dde
 )
 
 require (
@@ -58,5 +58,5 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/postgres v1.5.4
+	gorm.io/driver/postgres v1.5.6
 )
