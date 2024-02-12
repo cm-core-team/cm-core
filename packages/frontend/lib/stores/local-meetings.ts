@@ -57,8 +57,7 @@ export const meetingsSlice = createSlice({
       state.displayCongregations = actions.payload;
     },
     updateUserCoords: (state, action) => {
-      state.userCoords.latitude = action.payload.latitude;
-      state.userCoords.longitude = action.payload.longitude;
+      state.userCoords = action.payload;
     },
   },
   extraReducers: (builder) => {
