@@ -47,7 +47,7 @@ describe("Location search", async () => {
     expect(status).toBe(200);
   });
 
-  it("should not find any locations", async () => {
+  it("should not find any locations with erroneous query", async () => {
     const { data, status } = await getLocationDataAndStatus(
       // just to make sure it wouldn't find some place at the ends of the earth
       "asldasldalsdaklsdasjkdhas",
