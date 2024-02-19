@@ -46,9 +46,8 @@ export function LocationSearch({
   const [locationData, setLocationData] = React.useState<any | never>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const dispatch: AppDispatch = useDispatch();
-  const state: MeetingsState = useSelector(
-    (state: RootState) => state.meetings,
-  );
+
+  const state = useSelector((state: RootState) => state.location);
 
   const onSubmit = async (): Promise<void> => {
     setLocationData([]);
