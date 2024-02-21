@@ -20,4 +20,5 @@ export const locationSearchResponse = z.object({
 });
 
 export type LocationSearchFormData = z.infer<typeof locationSearchSchema>;
+export type LocationSearchResult = z.infer<typeof locationSearchResult>;
 export type LocationSearchResponse = z.infer<typeof locationSearchResponse>;

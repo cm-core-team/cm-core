@@ -4,10 +4,10 @@ import { backendRoutes } from "../config";
 import { requestOptions } from "../request-options";
 import { locationSearchResponse } from "../types/location";
 
-export async function getLocationResults() {
+export async function getLocationResults(query: string) {
   try {
     const res = await axios.get(
-      backendRoutes.user.findLocation,
+      `${backendRoutes.user.findLocation}?q=${query}`,
       requestOptions(),
     );
 

@@ -7,10 +7,10 @@ import { LocationSearchResponse } from "@/lib/types/location";
 
 export const getLocationSearchResultsThunk = createAsyncThunk<
   LocationSearchResponse,
-  void
->("user/getCurrentUser", async (_, { rejectWithValue }) => {
+  string
+>("locationSearch/getSearchResults", async (arg, { rejectWithValue }) => {
   try {
-    return await getLocationResults();
+    return await getLocationResults(arg);
   } catch (error) {
     return rejectWithValue(handleThunkError(error));
   }
