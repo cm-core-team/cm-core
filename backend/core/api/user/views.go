@@ -259,7 +259,7 @@ func FindLocation(ctx *gin.Context) {
 	if err != nil {
 		fmt.Println("[FindLocation] An unexpected error has occurred")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			common.UserErrorInstance.Unknown: err,
+			common.UserErrorInstance.Unknown: "An unexpected error has occurred",
 		})
 		return
 	}
