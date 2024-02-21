@@ -43,6 +43,8 @@ describe("Location search", async () => {
   it("should return a list of locations", async () => {
     const { data, status } = await getLocationDataAndStatus("hayes");
 
+    console.log(data);
+
     expect(data).not.toBe(undefined);
     expect(status).toBe(200);
   });
@@ -52,6 +54,8 @@ describe("Location search", async () => {
       // just to make sure it wouldn't find some place at the ends of the earth
       "asldasldalsdaklsdasjkdhas",
     );
+
+    console.log(data);
 
     expect(data).not.toBe(undefined);
     expect(status).toBe(404);
