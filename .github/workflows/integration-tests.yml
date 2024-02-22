@@ -21,14 +21,14 @@ jobs:
       
       - name: Prepare .env.secret file
         run: |
+          cd backend/
+          
           echo "JWT_SECRET=${{secrets.JWT_SECRET}}" >> .env.secret
           echo "CORS_ALLOW_ORIGIN=${{vars.CORS_ALLOW_ORIGIN}}" >> .env.secret
           echo "DB_URL=${{vars.DB_URL}}" >> .env.secret
           echo "ENVIRONMENT=${{vars.ENVIRONMENT}}" >> .env.secret
           echo "GET_WEEKLY_MEETINGS_JW_API=${{vars.GET_WEEKLY_MEETINGS_JW_API}}" >> .env.secret
           echo "GEOCODING_API_KEY=${{secrets.GEOCODING_API_KEY}}" >> .env.secret
-
-          mv .env.secret backend/.env.secret
 
       - name: Build and Run Services
         run: |
