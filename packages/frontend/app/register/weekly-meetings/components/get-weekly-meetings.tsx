@@ -68,8 +68,9 @@ export function GetWeeklyMeetings() {
   }, [state.userCoords, dispatch]);
 
   const renderLocationSearch = () => {
-    if (!useCurrentLocation && !state.displayCongregations.length)
+    if (!useCurrentLocation && !state.displayCongregations.length) {
       return <LocationSearch setUseCurrentLocation={setUseCurrentLocation} />;
+    }
   };
 
   return (
@@ -78,10 +79,10 @@ export function GetWeeklyMeetings() {
 
       {renderLocationSearch()}
 
-      <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
-        {state.displayCongregations.length ? <WeeklyMeetingsList /> : null}
+      {state.displayCongregations.length ? (
+        <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
+          <WeeklyMeetingsList />
 
-        {state.displayCongregations.length ? (
           <div className="md:grid-rows-2 space-y-16 w-full">
             {!isSmall && <DynamicMapView />}
 
@@ -101,8 +102,8 @@ export function GetWeeklyMeetings() {
               Create Congregation <MoveRight />
             </Button>
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

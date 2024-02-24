@@ -7,7 +7,7 @@ export const locationSearchSchema = z.object({
     .max(100, "That location name is way too long!"),
 });
 
-export const locationSearchResult = z.object({
+export const locationSearchResultSchema = z.object({
   formatted: z.string(),
   city: z.string(),
   region: z.string(),
@@ -16,9 +16,9 @@ export const locationSearchResult = z.object({
 });
 
 export const locationSearchResponse = z.object({
-  results: z.array(locationSearchResult),
+  results: z.array(locationSearchResultSchema),
 });
 
 export type LocationSearchFormData = z.infer<typeof locationSearchSchema>;
-export type LocationSearchResult = z.infer<typeof locationSearchResult>;
+export type LocationSearchResult = z.infer<typeof locationSearchResultSchema>;
 export type LocationSearchResponse = z.infer<typeof locationSearchResponse>;

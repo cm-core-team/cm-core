@@ -1,5 +1,7 @@
 import { RootNavMenu } from "../../components/nav/root";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 export default function RegisterLayout({
   children,
 }: {
@@ -7,8 +9,10 @@ export default function RegisterLayout({
 }) {
   return (
     <section>
-      <RootNavMenu />
-      {children}
+      <TooltipProvider>
+        <RootNavMenu />
+        {children}
+      </TooltipProvider>
     </section>
   );
 }

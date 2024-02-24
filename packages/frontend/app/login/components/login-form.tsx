@@ -19,7 +19,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { isAuthorized } from "@/lib/auth/is-authorized";
 import { AppDispatch } from "@/lib/stores/app-store";
 import { loginUserThunk } from "@/lib/stores/thunks/login-user";
 import {
@@ -39,9 +38,10 @@ export function LoginForm() {
   };
 
   React.useEffect(() => {
-    if (sessionStorage?.getItem("sessionToken"))
+    if (sessionStorage?.getItem("sessionToken")) {
       return router.replace("/dashboard");
-  }, []);
+    }
+  }, [router]);
 
   return (
     <Form {...form}>
