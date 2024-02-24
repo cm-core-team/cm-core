@@ -1,6 +1,10 @@
 package user
 
-import "backend/core/db/models"
+import (
+	"backend/core/db/models"
+
+	opencage "github.com/alexliesenfeld/opencage"
+)
 
 type CreateUserDTO struct {
 	FirstName string `json:"firstName" validate:"required"`
@@ -23,4 +27,16 @@ type BindAdminToCongregationDTO struct {
 type JoinTokenMatchDTO struct {
 	Email          string `json:"email" validate:"required"`
 	JoinTokenValue string `json:"tokenValue" validate:"required"`
+}
+
+type LocationResult struct {
+	Formatted string            `json:"formatted" validate:"required"`
+	City      string            `json:"city" validate:"required"`
+	Region    string            `json:"region" validate:"required"`
+	Country   string            `json:"country" validate:"required"`
+	Geometry  opencage.Geometry `json:"geometry" validate:"required"`
+}
+
+type LocationResults struct {
+	Results []LocationResult `json:"results" validate:"required"`
 }

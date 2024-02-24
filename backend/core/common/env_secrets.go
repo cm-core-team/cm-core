@@ -14,6 +14,7 @@ type EnvSecrets struct {
 	JwtSecret               string
 	Environment             string
 	GetWeeklyMeetings_JwAPI string
+	GeocodingAPIKey         string
 }
 
 func GetEnvSecrets() EnvSecrets {
@@ -23,6 +24,7 @@ func GetEnvSecrets() EnvSecrets {
 		JwtSecret:               os.Getenv("JWT_SECRET"),
 		Environment:             os.Getenv("ENVIRONMENT"),
 		GetWeeklyMeetings_JwAPI: os.Getenv("GET_WEEKLY_MEETINGS_JW_API"),
+		GeocodingAPIKey:         os.Getenv("GEOCODING_API_KEY"),
 	}
 }
 

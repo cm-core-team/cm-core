@@ -44,7 +44,7 @@ export function PhoneNumberCheck() {
   });
   const router = useRouter();
   const selectedCongregation = useSelector(
-    (state: RootState) => state.localMeetings.selectedCongregation,
+    (state: RootState) => state.meetings.selectedCongregation,
   );
 
   const startCountdown = React.useCallback((duration: number) => {

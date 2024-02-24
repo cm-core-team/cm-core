@@ -6,15 +6,15 @@ import {
 } from "../congregation/group-by-coords";
 import { Congregation } from "../types/models/congregation";
 
-import { fetchLocalMeetingsThunk } from "./thunks/fetch-local-meetings";
+import { fetchMeetingsThunk } from "./thunks/fetch-meetings";
 import { getUserCoordsThunk } from "./thunks/get-user-coords";
 
-export interface LocalMeetingsState {
+export interface MeetingsState {
   localCongregations: Congregation[];
   isLoading: boolean;
   selectedCongregation?: Congregation;
   errorMsg: string;
-  userCoords?: GeolocationCoordinates;
+  userCoords: { latitude: number; longitude: number };
 
   // Some congregations have the same location
   // This is a way to track which area specifically.
@@ -22,22 +22,23 @@ export interface LocalMeetingsState {
   displayCongregations: Congregation[];
 }
 
-export interface FetchLocalMeetingsThunkArg {
+export interface FetchMeetingsThunkArg {
   latitude: string;
   longitude: string;
 }
 
-const initialState: LocalMeetingsState = {
+const initialState: MeetingsState = {
   localCongregations: [],
   isLoading: false,
   errorMsg: "",
   displayCongregations: [],
   groupedCongregationsByLocation: {},
+  userCoords: { latitude: 0, longitude: 0 },
 };
 
 // A slice (or part) of our state (this is to do with our Local Meetings)
-export const localMeetingsSlice = createSlice({
-  name: "localMeetings",
+export const meetingsSlice = createSlice({
+  name: "meetings",
   initialState,
   reducers: {
     setSelectedCongregation: (
@@ -55,17 +56,20 @@ export const localMeetingsSlice = createSlice({
     ) => {
       state.displayCongregations = actions.payload;
     },
+    updateUserCoords: (state, action) => {
+      state.userCoords = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLocalMeetingsThunk.pending, (state) => {
+      .addCase(fetchMeetingsThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchLocalMeetingsThunk.fulfilled, (state, action) => {
+      .addCase(fetchMeetingsThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.localCongregations = action.payload;
       })
-      .addCase(fetchLocalMeetingsThunk.rejected, (state, action) => {
+      .addCase(fetchMeetingsThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMsg = action.payload as string;
       })

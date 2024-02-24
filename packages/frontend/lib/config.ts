@@ -1,4 +1,5 @@
 export const baseBackendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export const backendRoutes = {
   congregation: {
     create: baseBackendUrl + "/congregation/create",
@@ -14,11 +15,12 @@ export const backendRoutes = {
     me: baseBackendUrl + "/user/me",
     bind: baseBackendUrl + "/user/bind",
     verifyToken: baseBackendUrl + "/user/verify-token",
+    findLocation: baseBackendUrl + "/user/location",
   },
   token: {
     create: baseBackendUrl + "/token/create",
   },
-  getLocalMeetings: baseBackendUrl + "/meetings",
+  getMeetings: baseBackendUrl + "/meetings",
 };
 
 export const userErrors = {

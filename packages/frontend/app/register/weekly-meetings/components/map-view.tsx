@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { generateKey } from "@/lib/congregation/group-by-coords";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { localMeetingsSlice } from "@/lib/stores/local-meetings";
+import { meetingsSlice } from "@/lib/stores/local-meetings";
 import { Congregation } from "@/lib/types/models/congregation";
 
 delete (L.Icon.Default as any).prototype._getIconUrl;
@@ -23,11 +23,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "/marker-shadow.png",
 });
 
-const { setDisplayCongregations } = localMeetingsSlice.actions;
+const { setDisplayCongregations } = meetingsSlice.actions;
 
 export function MapView() {
   const dispatch: AppDispatch = useDispatch();
-  const state = useSelector((state: RootState) => state.localMeetings);
+  const state = useSelector((state: RootState) => state.meetings);
 
   const eventHandlers = React.useCallback(
     (meeting: Congregation) => {

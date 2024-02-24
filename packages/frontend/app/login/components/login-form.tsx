@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-import { RootNavMenu } from "@/components/nav/root";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { isAuthorized } from "@/lib/auth/is-authorized";
 import { AppDispatch } from "@/lib/stores/app-store";
 import { loginUserThunk } from "@/lib/stores/thunks/login-user";
 import {
@@ -37,6 +37,11 @@ export function LoginForm() {
   const onSubmit = async (data: LoginUserFormData) => {
     await dispatch(loginUserThunk({ ...data, router }));
   };
+
+  React.useEffect(() => {
+    if (sessionStorage?.getItem("sessionToken"))
+      return router.replace("/dashboard");
+  }, []);
 
   return (
     <Form {...form}>

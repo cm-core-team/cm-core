@@ -8,12 +8,13 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
+import { LocationSearch } from "./location-search";
 import { WeeklyMeetingsList } from "./weekly-meetings-list";
 
 import { useScreenWidth } from "@/lib/hooks/screen-width";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
-import { localMeetingsSlice } from "@/lib/stores/local-meetings";
-import { fetchLocalMeetingsThunk } from "@/lib/stores/thunks/fetch-local-meetings";
+import { meetingsSlice } from "@/lib/stores/local-meetings";
+import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-meetings";
 import { getUserCoordsThunk } from "@/lib/stores/thunks/get-user-coords";
 
 const DynamicMapView = dynamic(
@@ -21,21 +22,24 @@ const DynamicMapView = dynamic(
   { ssr: false },
 );
 
-const { regroupCongregations, setDisplayCongregations } =
-  localMeetingsSlice.actions;
+const { regroupCongregations, setDisplayCongregations } = meetingsSlice.actions;
 
 export function GetWeeklyMeetings() {
+  const [useCurrentLocation, setUseCurrentLocation] =
+    React.useState<boolean>(false);
+
   const { isSmall } = useScreenWidth();
 
   const router = useRouter();
-  const state = useSelector((state: RootState) => state.localMeetings);
+  const state = useSelector((state: RootState) => state.meetings);
   // If you do not correctly type your dispatch, then TS may throw an error
   const dispatch: AppDispatch = useDispatch();
 
   React.useEffect(() => {
-    // Get LatLon on page load
-    dispatch(getUserCoordsThunk());
-  }, [dispatch]);
+    if (useCurrentLocation) {
+      dispatch(getUserCoordsThunk());
+    }
+  }, [dispatch, useCurrentLocation]);
 
   // Whenever localCongregations is modified
   React.useEffect(() => {
@@ -56,39 +60,48 @@ export function GetWeeklyMeetings() {
 
     // Fetch all local meetings at this location
     dispatch(
-      fetchLocalMeetingsThunk({
+      fetchMeetingsThunk({
         latitude: String(state.userCoords.latitude),
         longitude: String(state.userCoords.longitude),
       }),
     );
   }, [state.userCoords, dispatch]);
 
+  const renderLocationSearch = () => {
+    if (!useCurrentLocation && !state.displayCongregations.length)
+      return <LocationSearch setUseCurrentLocation={setUseCurrentLocation} />;
+  };
+
   return (
     <div className="grid place-items-center space-y-8 md:p-4 p-1">
       <h2 className="text-2xl">Register a Congregation</h2>
 
+      {renderLocationSearch()}
+
       <div className="grid place-items-center md:grid-cols-2 w-full gap-8">
-        <WeeklyMeetingsList />
+        {state.displayCongregations.length ? <WeeklyMeetingsList /> : null}
 
-        <div className="md:grid-rows-2 space-y-16 w-full">
-          {!isSmall && <DynamicMapView />}
+        {state.displayCongregations.length ? (
+          <div className="md:grid-rows-2 space-y-16 w-full">
+            {!isSmall && <DynamicMapView />}
 
-          <Button
-            isDisabled={state.selectedCongregation === undefined}
-            className="space-y-8 sm:p-4 flex justify-center mx-auto"
-            color="success"
-            variant="ghost"
-            onClick={(e) => {
-              if (!state.selectedCongregation) {
-                return;
-              }
+            <Button
+              isDisabled={state.selectedCongregation === undefined}
+              className="space-y-8 sm:p-4 flex justify-center mx-auto"
+              color="success"
+              variant="ghost"
+              onClick={() => {
+                if (!state.selectedCongregation) {
+                  return;
+                }
 
-              router.replace("/register/phone-number");
-            }}
-          >
-            Create Congregation <MoveRight />
-          </Button>
-        </div>
+                router.replace("/register/phone-number");
+              }}
+            >
+              Create Congregation <MoveRight />
+            </Button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

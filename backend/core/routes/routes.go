@@ -34,6 +34,7 @@ func SetupRoutes(r *gin.Engine) *gin.Engine {
 	base.GET("/user/me", middleware.Authenticate(), user.GetCurrentUser)
 	base.POST("/user/bind", middleware.Authenticate(), user.BindAdminToCongregation)
 	base.POST("/user/logout", middleware.Authenticate(), user.LogoutUser)
+	base.GET("/user/location", middleware.Authenticate(), user.FindLocation)
 
 	// Tokens
 	base.POST("/token/create", middleware.Authenticate(), token.CreateToken)

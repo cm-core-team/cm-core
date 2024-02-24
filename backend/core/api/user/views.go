@@ -10,8 +10,10 @@ import (
 	"strconv"
 	"time"
 
+	opencage "github.com/alexliesenfeld/opencage"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/net/context"
 	"gorm.io/gorm"
 )
 
@@ -236,4 +238,48 @@ func BindAdminToCongregation(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, adminUser)
+}
+
+func FindLocation(ctx *gin.Context) {
+	locationQuery := ctx.Request.URL.Query().Get("q")
+
+	if locationQuery == "" {
+		fmt.Println("[FindLocation] No query")
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
+		})
+		return
+	}
+
+	client := opencage.New(common.GetEnvSecrets().GeocodingAPIKey)
+
+	ocCtx := context.Background()
+	response, err := client.Geocode(ocCtx, locationQuery, nil)
+
+	if err != nil {
+		fmt.Println("[FindLocation] An unexpected error has occurred")
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			common.UserErrorInstance.Unknown: "An unexpected error has occurred",
+		})
+		return
+	}
+
+	// If the results array is empty there is no error so this check is necessary
+	if len(response.Results) == 0 {
+		fmt.Println("[FindLocation] No locations were found")
+		ctx.JSON(http.StatusNotFound, gin.H{
+			common.UserErrorInstance.UserErrKey: "No locations were found",
+		})
+		return
+	}
+
+	var cleanedLocationResults []LocationResult
+
+	for _, result := range response.Results {
+		cleanedLocationResults = append(cleanedLocationResults, LocationResult{Formatted: result.Formatted, City: result.Components.City, Region: result.Components.Region, Country: result.Components.Country, Geometry: result.Geometry})
+	}
+
+	locationData := gin.H{"results": cleanedLocationResults}
+
+	ctx.JSON(http.StatusOK, locationData)
 }
