@@ -2,41 +2,34 @@
 
 import React from "react";
 
-import { Button } from "@nextui-org/button";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Spinner } from "@nextui-org/spinner";
-import axios from "axios";
 import { motion } from "framer-motion";
 import { Locate } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button as ShadButton } from "@/components/ui/button";
 import {
   Form,
-  FormField,
-  FormItem,
   FormControl,
   FormDescription,
+  FormField,
+  FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { AppDispatch, RootState } from "@/lib/stores/app-store";
 import { meetingsSlice } from "@/lib/stores/local-meetings";
-import { LocationSearchState } from "@/lib/stores/location-search";
 import { fetchMeetingsThunk } from "@/lib/stores/thunks/fetch-meetings";
 import { getLocationSearchResultsThunk } from "@/lib/stores/thunks/get-location-search-results";
 import {
-  LocationSearchResult,
   LocationSearchFormData,
+  LocationSearchResult,
 } from "@/lib/types/location";
 
 const { updateUserCoords } = meetingsSlice.actions;
@@ -48,10 +41,15 @@ export function LocationSearch({
 }) {
   const form = useForm<LocationSearchFormData>();
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
 
-  const state: LocationSearchState = useSelector(
-    (state: RootState) => state.locationSearch,
-  );
+  const state = useSelector((state: RootState) => state.locationSearch);
+
+  React.useEffect(() => {
+    getCurrentUser().catch(() => {
+      router.replace("/register/user");
+    });
+  });
 
   const onSubmit = async (): Promise<void> => {
     await dispatch(getLocationSearchResultsThunk(form.getValues().query));
@@ -70,8 +68,8 @@ export function LocationSearch({
             // Fetch the meetings at the selected location
             dispatch(
               fetchMeetingsThunk({
-                latitude: String(location.geometry.lat),
-                longitude: String(location.geometry.lng),
+                latitude: location.geometry.lat,
+                longitude: location.geometry.lng,
               }),
             );
             dispatch(
@@ -135,10 +133,11 @@ export function LocationSearch({
       {state.isLoading && (
         <Spinner className="flex mx-auto" label="Finding locations..." />
       )}
-      <ScrollArea>
-        {state.response && (
+
+      {state.response && (
+        <ScrollArea className="h-96 border-secondary border-2 rounded">
           <motion.div
-            className="flex flex-col gap-y-2"
+            className="flex flex-col gap-y-2 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { ease: "easeIn" } }}
             exit={{ opacity: 0 }}
@@ -146,10 +145,10 @@ export function LocationSearch({
             <big>Select your location</big>
             {renderLocationCards()}
           </motion.div>
-        )}
-        <ScrollBar orientation="vertical" />
-      </ScrollArea>
-
+          <ScrollBar orientation="vertical" />
+        </ScrollArea>
+      )}
+      <hr className="w-1/3" />
       <big>Or</big>
 
       <ShadButton

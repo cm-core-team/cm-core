@@ -61,8 +61,8 @@ export function GetWeeklyMeetings() {
     // Fetch all local meetings at this location
     dispatch(
       fetchMeetingsThunk({
-        latitude: String(state.userCoords.latitude),
-        longitude: String(state.userCoords.longitude),
+        latitude: state.userCoords.latitude,
+        longitude: state.userCoords.longitude,
       }),
     );
   }, [state.userCoords, dispatch]);
