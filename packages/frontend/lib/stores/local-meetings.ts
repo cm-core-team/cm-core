@@ -23,8 +23,8 @@ export interface MeetingsState {
 }
 
 export interface FetchMeetingsThunkArg {
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 }
 
 const initialState: MeetingsState = {
