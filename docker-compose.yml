@@ -19,7 +19,7 @@ services:
 
     environment:
       DB_URL: host=db port=5432 user=postgres dbname=cms-db sslmode=disable password=postgres
-      CORS_ALLOW_ORIGIN: http://localhost:3000
+      CORS_ALLOW_ORIGIN: http://localhost:3000 http://localhost:8000
 
   db:
     image: postgres:latest
