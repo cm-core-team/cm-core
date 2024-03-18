@@ -5,7 +5,7 @@ import (
 )
 
 func Hello(c *gin.Context) {
-	/* Hello world endpoint */
+    /* Health check */
 
 	c.JSON(200, gin.H{
 		"message": "Hello world!",
