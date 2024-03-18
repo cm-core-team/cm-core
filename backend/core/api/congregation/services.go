@@ -47,7 +47,8 @@ func ScheduleVerificationCodeRemoval(verificationCode models.CongregationVerific
 
 func CheckVerificationCode(dto VerifyCongregationPhoneDTO, dbOps db.DatabaseOps, ctx *gin.Context) error {
 	// If we are testing locally, allow any input
-	if common.GetEnvSecrets().Environment == "local" {
+	env := common.GetEnvSecrets().Environment
+	if env == "local" || env == "dev" {
 		return nil
 	}
 
