@@ -17,11 +17,10 @@ import (
 	"gorm.io/gorm"
 )
 
+/**
+ * Create a new user in the DB
+ */
 func CreateUser(ctx *gin.Context) {
-	/**
-	 * Create a new user in the DB
-	 */
-
 	var dto CreateUserDTO
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
@@ -51,14 +50,19 @@ func CreateUser(ctx *gin.Context) {
 		return
 	}
 
+	// Send verification Email
+	go func(u models.User) {
+		sbclient := common.GetSupabaseClient()
+		SendVerificationEmail(sbclient, user)
+	}(user)
+
 	ctx.JSON(http.StatusCreated, gin.H{"user": user})
 }
 
+/**
+ * Compare the password hash and set a USER-level JWT.
+ */
 func LoginUser(ctx *gin.Context) {
-	/**
-	 * Compare the password hash and set a USER-level JWT.
-	 */
-
 	var dto LoginUserDTO
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
@@ -99,7 +103,6 @@ func LoginUser(ctx *gin.Context) {
 	}
 
 	sessionTokenExpiry := int(time.Hour * 24 * 14 / time.Second)
-
 	cookie := &http.Cookie{
 		Name:     "sessionToken",
 		Value:    sessionToken,
@@ -110,7 +113,6 @@ func LoginUser(ctx *gin.Context) {
 		Secure:   true,
 		SameSite: http.SameSiteNoneMode,
 	}
-
 	http.SetCookie(ctx.Writer, cookie)
 
 	ctx.JSON(http.StatusAccepted, gin.H{
@@ -118,11 +120,10 @@ func LoginUser(ctx *gin.Context) {
 	})
 }
 
+/**
+ * Remove the session token from the client.
+ */
 func LogoutUser(ctx *gin.Context) {
-	/**
-	 * Remove the session token from the client.
-	 */
-
 	cookie := &http.Cookie{
 		Name:     "sessionToken",
 		Value:    "",
@@ -139,10 +140,10 @@ func LogoutUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{})
 }
 
+/**
+ * Verify that a user's token matches it's assigned token
+ */
 func VerifyToken(ctx *gin.Context) {
-	/**
-	 * Verify that a user's token matches it's assigned token
-	 */
 
 	var dto JoinTokenMatchDTO
 	err := common.BindAndValidate(ctx, &dto)
@@ -240,9 +241,11 @@ func BindAdminToCongregation(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, adminUser)
 }
 
+/**
+ * Find location info such as city, region, country, given a query string.
+ */
 func FindLocation(ctx *gin.Context) {
 	locationQuery := ctx.Request.URL.Query().Get("q")
-
 	if locationQuery == "" {
 		fmt.Println("[FindLocation] No query")
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -252,7 +255,6 @@ func FindLocation(ctx *gin.Context) {
 	}
 
 	client := opencage.New(common.GetEnvSecrets().GeocodingAPIKey)
-
 	ocCtx := context.Background()
 	response, err := client.Geocode(ocCtx, locationQuery, nil)
 
@@ -273,13 +275,17 @@ func FindLocation(ctx *gin.Context) {
 		return
 	}
 
-	var cleanedLocationResults []LocationResult
-
+	var cleanedResults []LocationResult
 	for _, result := range response.Results {
-		cleanedLocationResults = append(cleanedLocationResults, LocationResult{Formatted: result.Formatted, City: result.Components.City, Region: result.Components.Region, Country: result.Components.Country, Geometry: result.Geometry})
+		locationResult := LocationResult{
+			Formatted: result.Formatted,
+			City:      result.Components.City,
+			Region:    result.Components.Region,
+			Country:   result.Components.Country,
+			Geometry:  result.Geometry,
+		}
+		cleanedResults = append(cleanedResults, locationResult)
 	}
 
-	locationData := gin.H{"results": cleanedLocationResults}
-
-	ctx.JSON(http.StatusOK, locationData)
+	ctx.JSON(http.StatusOK, gin.H{"results": cleanedResults})
 }
