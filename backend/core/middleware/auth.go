@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"backend/core/common"
-	"backend/core/services/security"
+	"backend/core/security"
 	"errors"
 	"fmt"
 	"net/http"
