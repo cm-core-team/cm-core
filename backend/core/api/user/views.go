@@ -4,7 +4,7 @@ import (
 	"backend/core/common"
 	"backend/core/db"
 	"backend/core/db/models"
-	"backend/core/services/security"
+	"backend/core/security"
 	"fmt"
 	"net/http"
 	"strconv"
