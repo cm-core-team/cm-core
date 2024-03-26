@@ -3,9 +3,11 @@ package user
 import (
 	"backend/core/db"
 	"backend/core/db/models"
+	"context"
 	"errors"
 	"fmt"
 
+	"github.com/nedpals/supabase-go"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
@@ -74,4 +76,9 @@ func BindUserToCongregation(dto JoinTokenMatchDTO, dbOps db.DatabaseOps) (models
 	}
 
 	return user, nil
+}
+
+func SendVerificationEmail(client *supabase.Client, user models.User) {
+	ctx := context.Background()
+	client.Auth.SendMagicLink(ctx, user.Email)
 }
