@@ -1,5 +1,5 @@
 interface LoginResponse {
-  sessionToken: string
+  sessionToken: string;
 }
 
-export type { LoginResponse }
+export type { LoginResponse };

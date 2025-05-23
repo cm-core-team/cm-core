@@ -1,13 +1,11 @@
 import { describe, expect, it } from "bun:test";
-
-import ky from "ky";
-import { z } from "zod";
-
 import { backendRoutes } from "frontend/src/lib/config";
 import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
 import { congregationSchema } from "frontend/src/lib/types/models/congregation";
 import { tokenSchema } from "frontend/src/lib/types/models/token";
 import { userSchema } from "frontend/src/lib/types/models/user";
+import ky from "ky";
+import { z } from "zod";
 
 import { bindAdminToCongregation, loginUser } from "../auth";
 import { DBClient } from "../pool";
@@ -48,7 +46,7 @@ describe("Join Token Security", () => {
       json: {
         ...joinUser,
         password: "hello,. world/!",
-      }
+      },
     });
     // Check the response
     const adminPayload = createUserSchema.parse(adminResponse.data);
@@ -61,16 +59,13 @@ describe("Join Token Security", () => {
     await bindAdminToCongregation(congregation, sessionToken);
 
     // Make the admin create the session token
-    const tokenResponse = await ky.post(
-      backendRoutes.token.create,
-      {
-        json: {
-          userEmail: joinPayload.user.email,
-          createdByUserId: adminPayload.user.id,
-        },
-        headers: { Authorization: sessionToken }
+    const tokenResponse = await ky.post(backendRoutes.token.create, {
+      json: {
+        userEmail: joinPayload.user.email,
+        createdByUserId: adminPayload.user.id,
       },
-    );
+      headers: { Authorization: sessionToken },
+    });
     const tokenPayload = createTokenSchema.parse(tokenResponse.data);
 
     expect(tokenPayload.token.value).toBeTruthy();
@@ -91,7 +86,7 @@ describe("Join Token Security", () => {
         json: {
           email: joinUser.email,
           tokenValue: val,
-        }
+        },
       });
     await verifyToken(tokenValue);
 

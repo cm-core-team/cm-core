@@ -1,7 +1,5 @@
-import { describe, expect, it } from "bun:test";
-
 import ky from "axios";
-
+import { describe, expect, it } from "bun:test";
 import { backendRoutes } from "frontend/src/lib/config";
 import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
 import {
@@ -15,10 +13,9 @@ describe("Congregation CRUD Actions", () => {
     console.log(backendRoutes.congregation.create);
 
     const selectedCongregation = ModelGenerator.instance.randomCongregation();
-    const response = await ky.post(
-      backendRoutes.congregation.create,
-      { json: selectedCongregation },
-    );
+    const response = await ky.post(backendRoutes.congregation.create, {
+      json: selectedCongregation,
+    });
 
     // First check backend response matches
     const responseMatch = congregationSchema.safeParse(
@@ -43,10 +40,9 @@ describe("Congregation CRUD Actions", () => {
 
   it("should correctly identify invalid signatures", async () => {
     const selectedCongregation = ModelGenerator.instance.randomCongregation();
-    const response = await ky.post(
-      backendRoutes.congregation.create,
-      { json: selectedCongregation },
-    );
+    const response = await ky.post(backendRoutes.congregation.create, {
+      json: selectedCongregation,
+    });
 
     // First check backend response matches
     const responseMatch = congregationSchema.safeParse(
@@ -59,7 +55,9 @@ describe("Congregation CRUD Actions", () => {
 
     expect(async () => {
       // This should throw because the congregation should already exist
-      await ky.post(backendRoutes.congregation.create, { json: selectedCongregation });
+      await ky.post(backendRoutes.congregation.create, {
+        json: selectedCongregation,
+      });
     }).toThrow();
   });
 });

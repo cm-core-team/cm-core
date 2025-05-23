@@ -1,9 +1,9 @@
 import axios, { Axios, AxiosError } from "axios";
-import ky from "ky"
 import { describe, it, expect } from "bun:test";
 import { backendRoutes } from "frontend/src/lib/config";
 import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
 import { locationSearchResponse } from "frontend/src/lib/types/location";
+import ky from "ky";
 
 import { loginUser } from "../auth";
 
@@ -15,7 +15,7 @@ async function getLocationDataAndStatus(query: string) {
     json: {
       ...adminUser,
       password: adminPassword,
-    }
+    },
   });
 
   const sessionToken = await loginUser(adminUser, "testpass123");

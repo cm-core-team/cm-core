@@ -1,7 +1,7 @@
-import ky from "ky";
 import { describe, expect, it } from "bun:test";
 import { backendRoutes } from "frontend/src/lib/config";
 import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
+import ky from "ky";
 
 import { DBClient } from "../pool";
 
@@ -14,7 +14,7 @@ describe("Congregation Phone Verification", () => {
     await ky.post(backendRoutes.congregation.sendVerificationCode, {
       json: {
         congregation,
-        phoneNumber
+        phoneNumber,
       },
     });
 
@@ -28,7 +28,7 @@ describe("Congregation Phone Verification", () => {
     await ky.post(backendRoutes.congregation.verifyPhone, {
       json: {
         userCode: correctCode,
-        congregation
+        congregation,
       },
     });
   });
@@ -40,7 +40,7 @@ describe("Congregation Phone Verification", () => {
     await ky.post(backendRoutes.congregation.sendVerificationCode, {
       json: {
         congregation,
-        phoneNumber
+        phoneNumber,
       },
     });
 
@@ -49,7 +49,7 @@ describe("Congregation Phone Verification", () => {
         await ky.post(backendRoutes.congregation.verifyPhone, {
           json: {
             userCode: "qjaspkmf1343333", // Should fail
-            congregation
+            congregation,
           },
         }),
     ).toThrow();
