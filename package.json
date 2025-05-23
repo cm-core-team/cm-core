@@ -21,7 +21,7 @@
     "packages/*"
   ],
   "scripts": {
-    "frontend": "cd packages/frontend && bun dev",
+    "dev-frontend": "cd packages/frontend && bun dev",
     "lint": "eslint ./packages --fix"
   },
   "dependencies": {
