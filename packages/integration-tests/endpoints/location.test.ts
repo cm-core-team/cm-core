@@ -1,8 +1,9 @@
 import axios, { Axios, AxiosError } from "axios";
+import ky from "ky"
 import { describe, it, expect } from "bun:test";
-import { backendRoutes } from "frontend/lib/config";
-import { ModelGenerator } from "frontend/lib/fixtures/generate";
-import { locationSearchResponse } from "frontend/lib/types/location";
+import { backendRoutes } from "frontend/src/lib/config";
+import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
+import { locationSearchResponse } from "frontend/src/lib/types/location";
 
 import { loginUser } from "../auth";
 
@@ -10,15 +11,17 @@ async function getLocationDataAndStatus(query: string) {
   // Create a random admin user
   const adminUser = ModelGenerator.instance.randomUser();
   const adminPassword = "testpass123";
-  await axios.post(backendRoutes.user.create, {
-    ...adminUser,
-    password: adminPassword,
+  await ky.post(backendRoutes.user.create, {
+    json: {
+      ...adminUser,
+      password: adminPassword,
+    }
   });
 
   const sessionToken = await loginUser(adminUser, "testpass123");
   expect(sessionToken).toBeTruthy();
 
-  const res = await axios.get(`${backendRoutes.user.findLocation}?q=${query}`, {
+  const res = await ky.get(`${backendRoutes.user.findLocation}?q=${query}`, {
     headers: { Authorization: `${sessionToken}` },
   });
   const data = locationSearchResponse.parse(res.data);

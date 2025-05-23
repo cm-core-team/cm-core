@@ -1,17 +1,17 @@
-import axios from "axios";
-import { backendRoutes } from "frontend/lib/config";
-import { Congregation } from "frontend/lib/types/models/congregation";
-import { User } from "frontend/lib/types/models/user";
+import ky from "ky"
+
+import { backendRoutes } from "frontend/src/lib/config";
+import { Congregation } from "frontend/src/lib/types/models/congregation";
+import { User } from "frontend/src/lib/types/models/user";
+import { LoginResponse } from "frontend/src/lib/types/api/user"
 
 export async function loginUser(user: User, password: string): Promise<string> {
-  const res = await axios.post(
+  const res = await ky.post<LoginResponse>(
     backendRoutes.user.login,
-    { email: user.email, password },
-    {
-      withCredentials: true,
-    },
-  );
-  const sessionToken: string = res.data.sessionToken;
+    { json: { email: user.email, password }, credentials: "include" },
+  ).json();
+
+  const sessionToken: string = res.sessionToken;
 
   return sessionToken;
 }
@@ -20,11 +20,12 @@ export async function bindAdminToCongregation(
   congregation: Congregation,
   sessionToken: string,
 ) {
-  await axios.post(
+  await ky.post(
     backendRoutes.user.bind,
     {
-      congregationId: congregation.id,
+      json: { congregationId: congregation.id },
+      credentials: "include",
+      headers: { Authorization: sessionToken }
     },
-    { withCredentials: true, headers: { Authorization: sessionToken } },
   );
 }

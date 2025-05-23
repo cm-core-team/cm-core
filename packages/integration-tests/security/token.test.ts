@@ -1,11 +1,13 @@
-import axios from "axios";
 import { describe, expect, it } from "bun:test";
-import { backendRoutes } from "frontend/lib/config";
-import { ModelGenerator } from "frontend/lib/fixtures/generate";
-import { congregationSchema } from "frontend/lib/types/models/congregation";
-import { tokenSchema } from "frontend/lib/types/models/token";
-import { userSchema } from "frontend/lib/types/models/user";
+
+import ky from "ky";
 import { z } from "zod";
+
+import { backendRoutes } from "frontend/src/lib/config";
+import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
+import { congregationSchema } from "frontend/src/lib/types/models/congregation";
+import { tokenSchema } from "frontend/src/lib/types/models/token";
+import { userSchema } from "frontend/src/lib/types/models/user";
 
 import { bindAdminToCongregation, loginUser } from "../auth";
 import { DBClient } from "../pool";
@@ -25,9 +27,9 @@ describe("Join Token Security", () => {
     const randomCongregation = ModelGenerator.instance.randomCongregation();
 
     // Create a congregation that the admin is linked to
-    const congregationResponse = await axios.post(
+    const congregationResponse = await ky.post(
       backendRoutes.congregation.create,
-      randomCongregation,
+      { json: randomCongregation },
     );
     const congregation = z
       .object({
@@ -37,14 +39,16 @@ describe("Join Token Security", () => {
 
     // Create the users
     const adminPassword = "hello! worldQ!";
-    const adminResponse = await axios.post(backendRoutes.user.create, {
+    const adminResponse = await ky.post(backendRoutes.user.create, {
       ...adminUser,
       password: adminPassword,
     });
 
-    const joinResponse = await axios.post(backendRoutes.user.create, {
-      ...joinUser,
-      password: "hello,. world/!",
+    const joinResponse = await ky.post(backendRoutes.user.create, {
+      json: {
+        ...joinUser,
+        password: "hello,. world/!",
+      }
     });
     // Check the response
     const adminPayload = createUserSchema.parse(adminResponse.data);
@@ -57,13 +61,15 @@ describe("Join Token Security", () => {
     await bindAdminToCongregation(congregation, sessionToken);
 
     // Make the admin create the session token
-    const tokenResponse = await axios.post(
+    const tokenResponse = await ky.post(
       backendRoutes.token.create,
       {
-        userEmail: joinPayload.user.email,
-        createdByUserId: adminPayload.user.id,
+        json: {
+          userEmail: joinPayload.user.email,
+          createdByUserId: adminPayload.user.id,
+        },
+        headers: { Authorization: sessionToken }
       },
-      { headers: { Authorization: sessionToken } },
     );
     const tokenPayload = createTokenSchema.parse(tokenResponse.data);
 
@@ -81,9 +87,11 @@ describe("Join Token Security", () => {
     const tokenValue: string = result.rows[0].value;
 
     const verifyToken = async (val: string) =>
-      await axios.post(backendRoutes.user.verifyToken, {
-        email: joinUser.email,
-        tokenValue: val,
+      await ky.post(backendRoutes.user.verifyToken, {
+        json: {
+          email: joinUser.email,
+          tokenValue: val,
+        }
       });
     await verifyToken(tokenValue);
 

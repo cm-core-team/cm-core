@@ -1,7 +1,7 @@
-import axios from "axios";
+import ky from "ky";
 import { describe, expect, it } from "bun:test";
-import { backendRoutes } from "frontend/lib/config";
-import { ModelGenerator } from "frontend/lib/fixtures/generate";
+import { backendRoutes } from "frontend/src/lib/config";
+import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
 
 import { DBClient } from "../pool";
 
@@ -11,9 +11,11 @@ describe("Congregation Phone Verification", () => {
     const congregation = ModelGenerator.instance.randomCongregation();
     const phoneNumber = congregation.phoneNumbers[0].phone;
 
-    await axios.post(backendRoutes.congregation.sendVerificationCode, {
-      congregation,
-      phoneNumber,
+    await ky.post(backendRoutes.congregation.sendVerificationCode, {
+      json: {
+        congregation,
+        phoneNumber
+      },
     });
 
     const result = await client.query(
@@ -23,9 +25,11 @@ describe("Congregation Phone Verification", () => {
     expect(result.rows.length).toBe(1);
 
     const correctCode = result.rows[0].code;
-    await axios.post(backendRoutes.congregation.verifyPhone, {
-      userCode: correctCode,
-      congregation,
+    await ky.post(backendRoutes.congregation.verifyPhone, {
+      json: {
+        userCode: correctCode,
+        congregation
+      },
     });
   });
 
@@ -33,16 +37,20 @@ describe("Congregation Phone Verification", () => {
     const congregation = ModelGenerator.instance.randomCongregation();
     const phoneNumber = congregation.phoneNumbers[0].phone;
 
-    await axios.post(backendRoutes.congregation.sendVerificationCode, {
-      congregation,
-      phoneNumber,
+    await ky.post(backendRoutes.congregation.sendVerificationCode, {
+      json: {
+        congregation,
+        phoneNumber
+      },
     });
 
     expect(
       async () =>
-        await axios.post(backendRoutes.congregation.verifyPhone, {
-          userCode: "qjaspkmf1343333", // Should fail
-          congregation,
+        await ky.post(backendRoutes.congregation.verifyPhone, {
+          json: {
+            userCode: "qjaspkmf1343333", // Should fail
+            congregation
+          },
         }),
     ).toThrow();
   });

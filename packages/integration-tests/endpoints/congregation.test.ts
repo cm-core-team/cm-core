@@ -1,11 +1,13 @@
-import axios from "axios";
 import { describe, expect, it } from "bun:test";
-import { backendRoutes } from "frontend/lib/config";
-import { ModelGenerator } from "frontend/lib/fixtures/generate";
+
+import ky from "axios";
+
+import { backendRoutes } from "frontend/src/lib/config";
+import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
 import {
   congregationSchema,
   Congregation,
-} from "frontend/lib/types/models/congregation.ts";
+} from "frontend/src/lib/types/models/congregation";
 
 describe("Congregation CRUD Actions", () => {
   it("should correctly create a congregation", async () => {
@@ -13,9 +15,9 @@ describe("Congregation CRUD Actions", () => {
     console.log(backendRoutes.congregation.create);
 
     const selectedCongregation = ModelGenerator.instance.randomCongregation();
-    const response = await axios.post(
+    const response = await ky.post(
       backendRoutes.congregation.create,
-      selectedCongregation,
+      { json: selectedCongregation },
     );
 
     // First check backend response matches
@@ -41,9 +43,9 @@ describe("Congregation CRUD Actions", () => {
 
   it("should correctly identify invalid signatures", async () => {
     const selectedCongregation = ModelGenerator.instance.randomCongregation();
-    const response = await axios.post(
+    const response = await ky.post(
       backendRoutes.congregation.create,
-      selectedCongregation,
+      { json: selectedCongregation },
     );
 
     // First check backend response matches
@@ -57,7 +59,7 @@ describe("Congregation CRUD Actions", () => {
 
     expect(async () => {
       // This should throw because the congregation should already exist
-      await axios.post(backendRoutes.congregation.create, selectedCongregation);
+      await ky.post(backendRoutes.congregation.create, { json: selectedCongregation });
     }).toThrow();
   });
 });
