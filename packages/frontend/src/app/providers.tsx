@@ -1,9 +1,9 @@
 "use client";
 
 import { NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider } from "./theme-provider";
 
 import StoreProvider from "./store-provider";
+import { ThemeProvider } from "./theme-provider";
 
 import { Toaster } from "@/components/ui/sonner";
 
