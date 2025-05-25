@@ -1,7 +1,7 @@
 import { Congregation } from "../models/congregation";
 
 interface CreateCongregationResponse {
-  congregation: Congregation
+  congregation: Congregation;
 }
 
-export type { CreateCongregationResponse }
+export type { CreateCongregationResponse };
