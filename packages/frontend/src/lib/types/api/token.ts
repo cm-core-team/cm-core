@@ -1,7 +1,7 @@
-import { Token } from "../models/token"
+import { Token } from "../models/token";
 
 interface CreateSessionTokenResponse {
-  token: Token
+  token: Token;
 }
 
-export type { CreateSessionTokenResponse }
+export type { CreateSessionTokenResponse };

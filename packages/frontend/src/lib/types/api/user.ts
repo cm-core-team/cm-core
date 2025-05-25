@@ -1,7 +1,7 @@
 import { User } from "../models/user";
 
 interface CreateUserResponse {
-  user: User
+  user: User;
 }
 
 interface LoginResponse {
