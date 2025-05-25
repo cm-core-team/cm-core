@@ -4,7 +4,7 @@ import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
 import {
   LocationSearchResponse,
   locationSearchResponse,
-} from "frontend/src/lib/types/location";
+} from "frontend/src/lib/types/api/location";
 import ky, { HTTPError } from "ky";
 
 import { loginUser } from "../auth";
