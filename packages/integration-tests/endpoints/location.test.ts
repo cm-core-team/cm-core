@@ -1,9 +1,11 @@
-import axios, { Axios, AxiosError } from "axios";
 import { describe, it, expect } from "bun:test";
 import { backendRoutes } from "frontend/src/lib/config";
 import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
-import { locationSearchResponse } from "frontend/src/lib/types/location";
-import ky from "ky";
+import {
+  LocationSearchResponse,
+  locationSearchResponse,
+} from "frontend/src/lib/types/location";
+import ky, { HTTPError } from "ky";
 
 import { loginUser } from "../auth";
 
@@ -21,10 +23,13 @@ async function getLocationDataAndStatus(query: string) {
   const sessionToken = await loginUser(adminUser, "testpass123");
   expect(sessionToken).toBeTruthy();
 
-  const res = await ky.get(`${backendRoutes.user.findLocation}?q=${query}`, {
-    headers: { Authorization: `${sessionToken}` },
-  });
-  const data = locationSearchResponse.parse(res.data);
+  const res = await ky.get<LocationSearchResponse>(
+    `${backendRoutes.user.findLocation}?q=${query}`,
+    {
+      headers: { Authorization: `${sessionToken}` },
+    },
+  );
+  const data = locationSearchResponse.parse(await res.json());
 
   return { data, status: res.status };
 }
@@ -44,6 +49,6 @@ describe("Location search", async () => {
         // just to make sure it won't find some place at the ends of the earth
         "asldasldalsdaklsdasjkdhas",
       );
-    }).toThrow(AxiosError);
+    }).toThrow(HTTPError);
   });
 });

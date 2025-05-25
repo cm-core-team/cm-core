@@ -1,11 +1,12 @@
-import ky from "axios";
 import { describe, expect, it } from "bun:test";
 import { backendRoutes } from "frontend/src/lib/config";
 import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
+import { CreateCongregationResponse } from "frontend/src/lib/types/api/congregation";
 import {
   congregationSchema,
   Congregation,
 } from "frontend/src/lib/types/models/congregation";
+import ky from "ky";
 
 describe("Congregation CRUD Actions", () => {
   it("should correctly create a congregation", async () => {
@@ -13,18 +14,18 @@ describe("Congregation CRUD Actions", () => {
     console.log(backendRoutes.congregation.create);
 
     const selectedCongregation = ModelGenerator.instance.randomCongregation();
-    const response = await ky.post(backendRoutes.congregation.create, {
-      json: selectedCongregation,
-    });
+    const response = await ky
+      .post<CreateCongregationResponse>(backendRoutes.congregation.create, {
+        json: selectedCongregation,
+      })
+      .json();
 
     // First check backend response matches
-    const responseMatch = congregationSchema.safeParse(
-      response.data.congregation,
-    );
+    const responseMatch = congregationSchema.safeParse(response.congregation);
 
     expect(responseMatch.success).toBe(true);
 
-    const createdCongregation: Congregation = response.data.congregation;
+    const createdCongregation: Congregation = response.congregation;
 
     // Check that the createCongregation matches our selectedCongregation
     expect(createdCongregation.address).toBe(selectedCongregation.address);
@@ -40,17 +41,17 @@ describe("Congregation CRUD Actions", () => {
 
   it("should correctly identify invalid signatures", async () => {
     const selectedCongregation = ModelGenerator.instance.randomCongregation();
-    const response = await ky.post(backendRoutes.congregation.create, {
-      json: selectedCongregation,
-    });
+    const response = await ky
+      .post<CreateCongregationResponse>(backendRoutes.congregation.create, {
+        json: selectedCongregation,
+      })
+      .json();
 
     // First check backend response matches
-    const responseMatch = congregationSchema.safeParse(
-      response.data.congregation,
-    );
+    const responseMatch = congregationSchema.safeParse(response.congregation);
     expect(responseMatch.success).toBe(true);
 
-    const createdCongregation: Congregation = response.data.congregation;
+    const createdCongregation: Congregation = response.congregation;
     expect(createdCongregation.signature).toBeTruthy();
 
     expect(async () => {

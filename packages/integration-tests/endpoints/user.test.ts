@@ -1,8 +1,9 @@
-import axios from "axios";
 import { it, describe, expect } from "bun:test";
-import { backendRoutes } from "frontend/lib/config";
-import { ModelGenerator } from "frontend/lib/fixtures/generate";
-import { userSchema } from "frontend/lib/types/models/user";
+import { backendRoutes } from "frontend/src/lib/config";
+import { ModelGenerator } from "frontend/src/lib/fixtures/generate";
+import { CreateUserResponse } from "frontend/src/lib/types/api/user";
+import { userSchema } from "frontend/src/lib/types/models/user";
+import ky from "ky";
 
 import { DBClient } from "../pool";
 
@@ -10,15 +11,17 @@ describe("User CRUD", () => {
   it("should correctly create a user", async () => {
     const client = await DBClient.shared.getClient();
     const user = ModelGenerator.instance.randomUser();
-    const response = await axios.post(backendRoutes.user.create, {
-      ...user,
-      password: "hello world",
-    });
+    const response = await ky
+      .post<CreateUserResponse>(backendRoutes.user.create, {
+        ...user,
+        password: "hello world",
+      })
+      .json();
 
-    expect(response.data.user).not.toBe(undefined);
+    expect(response.user).not.toBe(undefined);
 
     // Check that the response matches
-    const matchResult = userSchema.safeParse(response.data.user);
+    const matchResult = userSchema.safeParse(response.user);
     expect(matchResult.success).toBeTrue();
 
     if (!matchResult.success) return;
