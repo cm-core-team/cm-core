@@ -1,16 +1,9 @@
-FROM ubuntu:20.04
+FROM golang:1.24-alpine
 
-# Install necessary packages and add Go repository
-RUN apt-get update && \
-    apt-get install -y software-properties-common ca-certificates curl && \
-    add-apt-repository ppa:longsleep/golang-backports
-
-# Install Go
-RUN apt-get update && \
-    apt-get install -y golang-go
-
-
-RUN go install github.com/cosmtrek/air@latest
+RUN apk add --update \
+    curl \
+    && rm -rf /var/cache/apk/* \
+    && go install github.com/air-verse/air@latest
 
 ENV GO111MODULE=on
 
