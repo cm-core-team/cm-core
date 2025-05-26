@@ -5,7 +5,7 @@ import (
 	"backend/core/db"
 	"backend/core/db/models"
 	"backend/core/services/security"
-	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -34,7 +34,7 @@ func CreateUser(ctx *gin.Context) {
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 	user, err := GenerateUserModel(dto, db)
 	if err != nil {
-		fmt.Println("[CreateUser] Could not generate user model.")
+		log.Println("[CreateUser] Could not generate user model.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -43,8 +43,8 @@ func CreateUser(ctx *gin.Context) {
 
 	result := db.Create(&user)
 	if result.Error != nil {
-		fmt.Println("[CreateUser] Could not create user in database.")
-		fmt.Println(result.Error)
+		log.Println("[CreateUser] Could not create user in database.")
+		log.Println(result.Error)
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserAlreadyExists,
 		})
@@ -73,7 +73,7 @@ func LoginUser(ctx *gin.Context) {
 	var foundUser models.User
 	result := db.First(&foundUser, "email = ?", dto.Email)
 	if result.Error != nil {
-		fmt.Println("[LoginUser] Could not find user")
+		log.Println("[LoginUser] Could not find user")
 		ctx.JSON(http.StatusNotFound, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserNotFound,
 		})
@@ -81,7 +81,7 @@ func LoginUser(ctx *gin.Context) {
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(foundUser.PasswordHash), []byte(dto.Password))
 	if err != nil {
-		fmt.Println("[LoginUser] Incorrect password")
+		log.Println("[LoginUser] Incorrect password")
 
 		ctx.JSON(http.StatusNotAcceptable, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserPasswordInvalid,
@@ -91,7 +91,7 @@ func LoginUser(ctx *gin.Context) {
 
 	sessionToken, err := security.GenerateJWT(strconv.FormatUint(uint64(foundUser.ID), 10))
 	if err != nil {
-		fmt.Println("[LoginUser] Couldn't generate JWT")
+		log.Println("[LoginUser] Couldn't generate JWT")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})
@@ -219,8 +219,8 @@ func BindAdminToCongregation(ctx *gin.Context) {
 	var adminUser models.User
 	result := db.First(&adminUser, "id = ?", tokenPayload.UserID)
 	if result.Error != nil {
-		fmt.Println("[BindAdminToCongregation]")
-		fmt.Println(result.Error)
+		log.Println("[BindAdminToCongregation]")
+		log.Println(result.Error)
 		ctx.JSON(http.StatusNotFound, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -231,7 +231,7 @@ func BindAdminToCongregation(ctx *gin.Context) {
 	adminUser.CongregationID = &dto.CongregationID
 	updateResult := db.Save(&adminUser)
 	if updateResult.Error != nil {
-		fmt.Println(updateResult.Error)
+		log.Println(updateResult.Error)
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})
@@ -245,7 +245,7 @@ func FindLocation(ctx *gin.Context) {
 	locationQuery := ctx.Request.URL.Query().Get("q")
 
 	if locationQuery == "" {
-		fmt.Println("[FindLocation] No query")
+		log.Println("[FindLocation] No query")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -258,7 +258,7 @@ func FindLocation(ctx *gin.Context) {
 	response, err := client.Geocode(ocCtx, locationQuery, nil)
 
 	if err != nil {
-		fmt.Println("[FindLocation] An unexpected error has occurred")
+		log.Println("[FindLocation] An unexpected error has occurred")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.Unknown: "An unexpected error has occurred",
 		})
@@ -267,7 +267,7 @@ func FindLocation(ctx *gin.Context) {
 
 	// If the results array is empty there is no error so this check is necessary
 	if len(response.Results) == 0 {
-		fmt.Println("[FindLocation] No locations were found")
+		log.Println("[FindLocation] No locations were found")
 		ctx.JSON(http.StatusNotFound, gin.H{
 			common.UserErrorInstance.UserErrKey: "No locations were found",
 		})

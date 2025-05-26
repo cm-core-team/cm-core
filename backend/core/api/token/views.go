@@ -4,7 +4,7 @@ import (
 	"backend/core/common"
 	"backend/core/db/models"
 	"backend/core/services/security"
-	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -24,7 +24,7 @@ func CreateToken(ctx *gin.Context) {
 
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
-		fmt.Println("[CreateToken] incorrect payload.")
+		log.Println("[CreateToken] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -34,7 +34,7 @@ func CreateToken(ctx *gin.Context) {
 	// Check that the sessionToken user ID matches the CreatedByUserId
 	tokenMatches := jwtPayload.UserID == strconv.FormatUint(uint64(dto.CreatedByUserId), 10)
 	if !tokenMatches {
-		fmt.Println("[CreateToken] token does not match created by user.")
+		log.Println("[CreateToken] token does not match created by user.")
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.AuthInvalid,
 		})
@@ -47,7 +47,7 @@ func CreateToken(ctx *gin.Context) {
 	var targetUser models.User
 	queryResult := db.First(&targetUser, "email = ?", dto.UserEmail)
 	if queryResult.Error != nil {
-		fmt.Println("[CreateToken] Can't find the target user.")
+		log.Println("[CreateToken] Can't find the target user.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.UserNotFound,
 		})
@@ -60,8 +60,8 @@ func CreateToken(ctx *gin.Context) {
 	var adminUser models.User
 	queryResult = db.First(&adminUser, "id = ?", dto.CreatedByUserId)
 	if queryResult.Error != nil {
-		fmt.Println("[CreateToken] Can't find the admin user.")
-		fmt.Println(queryResult.Error.Error())
+		log.Println("[CreateToken] Can't find the admin user.")
+		log.Println(queryResult.Error.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -70,7 +70,7 @@ func CreateToken(ctx *gin.Context) {
 
 	// Check that the admin user has already been assigned a congregation
 	if adminUser.CongregationID == nil {
-		fmt.Println("[CreateToken] Can't find the admin user's congregation.")
+		log.Println("[CreateToken] Can't find the admin user's congregation.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationNotFound,
 		})

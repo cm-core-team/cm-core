@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/core/db/models"
-	"fmt"
+	"log"
 	"reflect"
 
 	faker "github.com/go-faker/faker/v4"
@@ -41,9 +41,9 @@ func main() {
 		}
 		db.Create(&user)
 
-		fmt.Println("Created:")
-		fmt.Println("Congregation: ", congregation.ID)
-		fmt.Println("User: ", user.ID)
-		fmt.Println()
+		log.Println("Created:")
+		log.Println("Congregation: ", congregation.ID)
+		log.Println("User: ", user.ID)
+		log.Println()
 	}
 }

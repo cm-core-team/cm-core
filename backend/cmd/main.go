@@ -5,7 +5,7 @@ import (
 	"backend/core/db/models"
 	"backend/core/middleware"
 	"backend/core/routes"
-	"fmt"
+	"log"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -20,8 +20,8 @@ func main() {
 	DB_URL := envSecrets.DbUrl
 	r := gin.Default()
 
-	fmt.Println("USING DB: ")
-	fmt.Println(DB_URL)
+	log.Println("USING DB: ")
+	log.Println(DB_URL)
 
 	db, err := gorm.Open(postgres.Open(DB_URL), &gorm.Config{})
 	if err != nil {

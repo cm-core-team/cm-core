@@ -4,7 +4,7 @@ import (
 	"backend/core/common"
 	"backend/core/services/security"
 	"errors"
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,8 +24,8 @@ func Authenticate() gin.HandlerFunc {
 
 		payload, err := security.VerifyJWT(sessionToken)
 		if err != nil {
-			fmt.Println("[-] Invalid session token")
-			fmt.Println(err)
+			log.Println("[-] Invalid session token")
+			log.Println(err)
 			jsonUnauthorized(ctx)
 			return
 		}
@@ -47,7 +47,7 @@ func GetSessionToken(ctx *gin.Context) (string, error) {
 	// If no cookie, check the body for the session token
 	sessionToken := ctx.GetHeader("Authorization")
 	if sessionToken == "" {
-		fmt.Println("[-] No session token in cookie or Authorization header.")
+		log.Println("[-] No session token in cookie or Authorization header.")
 		return "", errors.New("no session token")
 	}
 
