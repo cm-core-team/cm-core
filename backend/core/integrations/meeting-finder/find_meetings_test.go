@@ -16,6 +16,7 @@ func TestFindLocalMeetings(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+	t.Log("Meetings found: ", len(meetings))
 
 	if len(meetings) == 0 {
 		t.Error("Expected to find meetings")
@@ -23,6 +24,9 @@ func TestFindLocalMeetings(t *testing.T) {
 
 	if meetings[0].Name == "" {
 		t.Error("Expected to find congregation name")
+	}
+	for _, meeting := range meetings {
+		t.Log("Meeting Name: ", meeting.Name)
 	}
 
 	if meetings[0].Address == "" {

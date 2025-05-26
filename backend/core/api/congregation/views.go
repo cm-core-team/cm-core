@@ -5,7 +5,7 @@ import (
 	"backend/core/db"
 	"backend/core/db/models"
 	"backend/core/db/repositories"
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +20,7 @@ func CreateCongregation(ctx *gin.Context) {
 	var dto models.Congregation
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
-		fmt.Println("[CreateCongregation] incorrect payload.")
+		log.Println("[CreateCongregation] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -33,7 +33,7 @@ func CreateCongregation(ctx *gin.Context) {
 	dto.GenerateSignature()
 	isUnique, err := HasUniqueSignature(dto, ormDb)
 	if err != nil {
-		fmt.Println("[CreateCongregation] (signature check) Error creating congregation in database.")
+		log.Println("[CreateCongregation] (signature check) Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.FailedToCreateCongregation,
 		})
@@ -41,7 +41,7 @@ func CreateCongregation(ctx *gin.Context) {
 	}
 
 	if !isUnique {
-		fmt.Println("[CreateCongregation] Congregation is not unique.")
+		log.Println("[CreateCongregation] Congregation is not unique.")
 		ctx.JSON(http.StatusConflict, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationAlreadyExists,
 		})
@@ -52,7 +52,7 @@ func CreateCongregation(ctx *gin.Context) {
 	dto.InformationBoard = []models.InformationBoardItem{}
 	err = CreateCongregationInDB(&dto, ormDb)
 	if err != nil {
-		fmt.Println("[CreateCongregation] Error creating congregation in database.")
+		log.Println("[CreateCongregation] Error creating congregation in database.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.FailedToCreateCongregation,
 		})
@@ -71,7 +71,7 @@ func DeleteCongregation(ctx *gin.Context) {
 	var dto DeleteCongregationDTO
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
-		fmt.Println("[DeleteCongregation] incorrect payload.")
+		log.Println("[DeleteCongregation] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -81,7 +81,7 @@ func DeleteCongregation(ctx *gin.Context) {
 	db, _ := ctx.MustGet("db").(*gorm.DB)
 	dbInst := db.Delete(&models.Congregation{}, dto.CongregationId)
 	if dbInst.Error != nil {
-		fmt.Println("[DeleteCongregation] couldn't delete congregation.")
+		log.Println("[DeleteCongregation] couldn't delete congregation.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.CongregationNotFound,
 		})
@@ -95,7 +95,7 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 	var dto SendCongregationVerificationCodeDTO
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
-		fmt.Println("[SendCongregationVerificationCode] incorrect payload.")
+		log.Println("[SendCongregationVerificationCode] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -120,7 +120,7 @@ func SendCongregationVerificationCode(ctx *gin.Context) {
 	// Expire verification code
 	err = ScheduleVerificationCodeRemoval(verificationCode, db)
 	if err != nil {
-		fmt.Println("[SendCongregationVerificationCode] Couldn't schedule verification code removal.")
+		log.Println("[SendCongregationVerificationCode] Couldn't schedule verification code removal.")
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})
@@ -134,7 +134,7 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 	var dto VerifyCongregationPhoneDTO
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
-		fmt.Println("[VerifyCongregationPhone] incorrect payload.")
+		log.Println("[VerifyCongregationPhone] incorrect payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.BadRequestOrData,
 		})
@@ -143,9 +143,7 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 	dto.Congregation.GenerateSignature()
 
 	ormDb, _ := ctx.MustGet("db").(*gorm.DB)
-	dbOps := &db.OrmDatabaseOps{
-		DB: ormDb,
-	}
+	dbOps := &db.OrmDatabaseOps{DB: ormDb}
 
 	userErr := CheckVerificationCode(dto, dbOps, ctx)
 	if userErr != nil {
@@ -162,7 +160,6 @@ func VerifyCongregationPhone(ctx *gin.Context) {
 // Returns all the information board items for the congregation of the current user
 func GetCongregationInformationBoard(ctx *gin.Context) {
 	db, _ := ctx.MustGet("db").(*gorm.DB)
-
 	foundUser := repositories.GetCurrentUser(ctx)
 
 	var foundInformationBoardItems []models.InformationBoardItem
@@ -180,9 +177,9 @@ func GetCongregationInformationBoard(ctx *gin.Context) {
 
 func AddInformationBoardItem(ctx *gin.Context) {
 	var dto models.InformationBoardItem
-
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
+		log.Println("[AddInformationBoardItem] Error validating payload.")
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			common.UserErrorInstance.UserErrKey: common.UserErrorInstance.Unknown,
 		})

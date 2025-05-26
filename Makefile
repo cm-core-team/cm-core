@@ -1,9 +1,8 @@
-.PHONY: all db-access rebuild down integration-test
+.PHONY: db-access rebuild down integration-test
 
 UNAME ?= postgres
 DBNAME ?= cms-db
 CONTAINER ?= db
-
 
 all:
 	@echo "Specify a command to run."

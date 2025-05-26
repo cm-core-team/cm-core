@@ -5,7 +5,7 @@ import (
 	"backend/core/db"
 	"backend/core/db/models"
 	"errors"
-	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -31,7 +31,7 @@ func HasUniqueSignature(congregation models.Congregation, db *gorm.DB) (bool, er
 }
 
 func SendVerificationCode(verificationCode models.CongregationVerificationCode) {
-	fmt.Println("[SendVerificationCode] sending!")
+	log.Println("[SendVerificationCode] sending!")
 
 	// TODO
 }
@@ -55,9 +55,9 @@ func CheckVerificationCode(dto VerifyCongregationPhoneDTO, dbOps db.DatabaseOps,
 	// Find a verificationCode with a matching signature
 	verificationCode, err := dbOps.FindVerificationCodeWithSignature(dto.Congregation.Signature)
 	if err != nil {
-		fmt.Println("[VerifyCongregationPhone] congregation not found.")
+		log.Println("[VerifyCongregationPhone] congregation not found.")
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			fmt.Println("[VerifyCongregationPhone] Verification code was not found")
+			log.Println("[VerifyCongregationPhone] Verification code was not found")
 		}
 
 		return errors.New(common.UserErrorInstance.CongregationNotFound)
@@ -89,7 +89,7 @@ func CreateVerificationCode(dto SendCongregationVerificationCodeDTO, db *gorm.DB
 
 	dbInst := db.Create(&verificationCode)
 	if dbInst.Error != nil {
-		fmt.Println("[SendCongregationVerificationCode] couldn't create verification code")
+		log.Println("[SendCongregationVerificationCode] couldn't create verification code")
 		return models.CongregationVerificationCode{}, errors.New(common.UserErrorInstance.Unknown)
 	}
 

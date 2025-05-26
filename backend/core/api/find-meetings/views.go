@@ -3,7 +3,7 @@ package findmeetings
 import (
 	"backend/core/common"
 	meetingfinder "backend/core/integrations/meeting-finder"
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ func FindLocalMeetings(ctx *gin.Context) {
 
 	err := common.BindAndValidate(ctx, &dto)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

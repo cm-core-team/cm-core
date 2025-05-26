@@ -4,7 +4,7 @@ import (
 	"backend/core/db"
 	"backend/core/db/models"
 	"errors"
-	"fmt"
+	"log"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -36,22 +36,22 @@ func VerifyTokenMatch(dto JoinTokenMatchDTO, dbOps db.DatabaseOps) error {
 	user, err := dbOps.FindUserByEmailWithToken(dto.Email)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			fmt.Println("[Error] User not found")
+			log.Println("[Error] User not found")
 			return errors.New("user not found")
 		} else {
-			fmt.Println("[Error]", err)
+			log.Println("[Error]", err)
 			return err
 		}
 	}
 
 	if user.JoinToken == nil {
-		fmt.Println("[Error] Token is nil")
+		log.Println("[Error] Token is nil")
 		return errors.New("token doesn't exist")
 	}
 
 	tokenMatches := user.JoinToken.Value == dto.JoinTokenValue
 	if !tokenMatches {
-		fmt.Println("[Error] Token does not match")
+		log.Println("[Error] Token does not match")
 		return errors.New("incorrect token provided")
 	}
 
@@ -62,14 +62,14 @@ func BindUserToCongregation(dto JoinTokenMatchDTO, dbOps db.DatabaseOps) (models
 	// Find the token object that matches the token value
 	token, err := dbOps.FindToken(dto.JoinTokenValue)
 	if err != nil {
-		fmt.Println("[Error]", err)
+		log.Println("[Error]", err)
 		return models.User{}, err
 	}
 
 	// Update the user's congregation to the token's congregation
 	user, err := dbOps.FindAndUpdateUser(dto.Email, token.CongregationID)
 	if err != nil {
-		fmt.Println("[Error]", err)
+		log.Println("[Error]", err)
 		return models.User{}, err
 	}
 

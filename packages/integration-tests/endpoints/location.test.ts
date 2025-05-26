@@ -1,5 +1,5 @@
-import axios, { Axios, AxiosError } from "axios";
-import { describe, it, expect } from "bun:test";
+import axios, { AxiosError } from "axios";
+import { describe, expect, it } from "bun:test";
 import { backendRoutes } from "frontend/lib/config";
 import { ModelGenerator } from "frontend/lib/fixtures/generate";
 import { locationSearchResponse } from "frontend/lib/types/location";
